@@ -61,3 +61,22 @@ func AdminRuleAll(c *gin.Context) {
 
 	c.SecureJSON(http.StatusOK, ruleData)
 }
+
+func AdminMenu(c *gin.Context) {
+	var q struct {
+		RuleId int64 `json:"adminRuleId"`
+	}
+	err := c.ShouldBindQuery(&q)
+	if err != nil {
+		c.SecureJSON(http.StatusOK, "传入参数错误")
+		return
+	}
+
+	err, ruleData := logic.AdminRuleAll(q.RuleId)
+	if err != nil {
+		c.SecureJSON(http.StatusOK, err.Error())
+		return
+	}
+
+	c.SecureJSON(http.StatusOK, ruleData)
+}

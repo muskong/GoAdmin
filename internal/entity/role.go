@@ -20,6 +20,7 @@ type (
 )
 
 func GetRole(roleId int64) (*AdminRole, error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	var role AdminRole
 	err := db.Where("id = ?", roleId).First(&role).Error
 	if err != nil {
@@ -28,6 +29,7 @@ func GetRole(roleId int64) (*AdminRole, error) {
 	return &role, err
 }
 func GetRoleAll() (roles []*AdminRole, err error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Find(&roles).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -41,6 +43,7 @@ func GetRoleAll() (roles []*AdminRole, err error) {
 // field  排序字段
 // sort  排序   DESC 倒叙 ， ASC 正序
 func GetRoles(offset, limit int) (roles []*AdminRole, count int64, err error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&roles).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -48,6 +51,7 @@ func GetRoles(offset, limit int) (roles []*AdminRole, count int64, err error) {
 	return
 }
 func InsertAdminRole(role *AdminRole) (err error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Create(role).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -55,6 +59,7 @@ func InsertAdminRole(role *AdminRole) (err error) {
 	return
 }
 func UpdateAdminRoleRules(roleId int64, ruleIds []int64) error {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err := db.Where("id=?", roleId).Update("rules", ruleIds).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

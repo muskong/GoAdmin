@@ -3,6 +3,7 @@ package entity
 import (
 	"database/sql"
 
+	"github.com/muskong/GoPkg/gorm"
 	"github.com/muskong/GoPkg/zaplog"
 )
 
@@ -23,6 +24,7 @@ type (
 )
 
 func GetRule(ruleId int64) (*AdminRule, error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	var rule AdminRule
 	err := db.Where("id = ?", ruleId).First(&rule).Error
 	if err != nil {
@@ -32,6 +34,7 @@ func GetRule(ruleId int64) (*AdminRule, error) {
 }
 
 func GetRuleAllByPid(pid int64) (rules []*AdminRule, err error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	err = db.Where("pid = ?", pid).Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -40,6 +43,7 @@ func GetRuleAllByPid(pid int64) (rules []*AdminRule, err error) {
 }
 
 func GetRuleAll() (rules []*AdminRule, err error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	err = db.Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -49,6 +53,7 @@ func GetRuleAll() (rules []*AdminRule, err error) {
 
 // 按选项查询集合
 func GetRules(offset, limit int) (rules []*AdminRule, count int64, err error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	err = db.Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -56,6 +61,7 @@ func GetRules(offset, limit int) (rules []*AdminRule, count int64, err error) {
 	return
 }
 func InsertAdminRule(rule *AdminRule) (*AdminRule, error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	err := db.Create(rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
