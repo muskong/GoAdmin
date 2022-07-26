@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"time"
 
-	"internal"
+	"github.com/muskong/GoAdmin/internal"
 
 	"github.com/muskong/GoCore/config"
 	"github.com/muskong/GoPkg/gorm"

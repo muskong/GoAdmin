@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"handler"
+	"github.com/muskong/GoAdmin/internal/handler"
 
 	"github.com/gin-gonic/gin"
 	"github.com/muskong/GoCore/middlewares"
