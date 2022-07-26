@@ -2,15 +2,14 @@ package logic
 
 type (
 	Page struct {
-		Page  int64 `json:"page"`
-		Limit int64 `json:"limit"`
+		Page  int `json:"page"`
+		Limit int `json:"limit"`
 	}
 	Result struct {
 		Data       interface{}
 		Pagination struct {
 			Total int64
-			Page  int64
-			Limit int64
+			Page
 		}
 	}
 	SelectInterface struct {
@@ -20,13 +19,12 @@ type (
 	}
 
 	RoleRuleObject struct {
-		RoleId  int64 `json:"roleId"`
-		RuleId  int64 `json:"ruleId"`
-		Checked bool  `json:"checked"`
+		RoleId  int64   `json:"roleId"`
+		RuleIds []int64 `json:"ruleIds"`
 	}
 )
 
-func (p *Page) getOffset() int64 {
+func (p *Page) getOffset() int {
 	if p.Page <= 0 {
 		p.Page = 1
 	}

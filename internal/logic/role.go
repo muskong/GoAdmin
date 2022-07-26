@@ -8,25 +8,23 @@ import (
 
 func AdminRoleList(page Page) (err error, result Result) {
 
-	userCount := entity.GetRoleCount()
-	userData := entity.GetRoles(page.getOffset(), page.Limit, "admin_role_id", "desc")
-	if len(userData) <= 0 {
+	userData, userCount, err := entity.GetRoles(page.getOffset(), page.Limit)
+	if len(userData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
 
 	result.Data = userData
-	result.Pagination.Limit = page.Limit
-	result.Pagination.Page = page.Page
+	result.Pagination.Page = page
 	result.Pagination.Total = userCount
 
 	return
 }
 
-func AdminRoleAll() (err error, result []entity.AdminRoleObject) {
+func AdminRoleAll() (err error, result []*entity.AdminRole) {
 
-	result = entity.GetRoleAll()
-	if len(result) <= 0 {
+	result, err = entity.GetRoleAll()
+	if len(result) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
@@ -36,28 +34,26 @@ func AdminRoleAll() (err error, result []entity.AdminRoleObject) {
 
 func AdminRoleRuleList(roleId int64) (err error, result []SelectInterface) {
 
-	ruleData := entity.GetRuleAll()
-	if len(ruleData) <= 0 {
+	ruleData, err := entity.GetRuleAll()
+	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
 
-	roleRuleData := entity.GetRuleAllByRoleId(roleId)
-	if len(roleRuleData) <= 0 {
-		err = errors.New("无数据")
-		return
-	}
 	roleRuleSelected := map[int64]bool{}
-	for _, v := range roleRuleData {
-		roleRuleSelected[v.RuleId] = true
+	rule, err := entity.GetRole(roleId)
+	if rule.Id > 0 && err == nil {
+		for _, v := range rule.Rules {
+			roleRuleSelected[v] = true
+		}
 	}
 
 	for _, rule := range ruleData {
 		ruleSelect := SelectInterface{
-			rule.AdminRuleId,
-			rule.AdminRuleTitle,
+			rule.Id,
+			rule.Title,
 			false}
-		if roleRuleSelected[rule.AdminRuleId] {
+		if roleRuleSelected[rule.Id] {
 			ruleSelect.Checked = true
 		}
 		result = append(result, ruleSelect)
@@ -66,27 +62,18 @@ func AdminRoleRuleList(roleId int64) (err error, result []SelectInterface) {
 	return
 }
 
-func AdminRoleCreate(u entity.AdminRoleObject) error {
-	id := entity.InsertAdminRole(u)
-	if id <= 0 {
+func AdminRoleCreate(u entity.AdminRole) error {
+	err := entity.InsertAdminRole(&u)
+	if u.Id <= 0 || err != nil {
 		return errors.New("新增失败")
 	}
-	return nil
+	return err
 }
 
-func AdminRoleSaveRule(roleRule RoleRuleObject) error {
-	var row int64 = 0
-	data := entity.AdminRoleRuleObject{
-		RoleId: roleRule.RoleId,
-		RuleId: roleRule.RuleId,
-	}
-	if roleRule.Checked {
-		row = entity.InsertAdminRoleRule(data)
-	} else {
-		row = entity.DeleteAdminRoleRule(data)
-	}
-	if row <= 0 {
+func AdminRoleSaveRule(ou RoleRuleObject) error {
+	err := entity.UpdateAdminRoleRules(ou.RoleId, ou.RuleIds)
+	if err != nil {
 		return errors.New("设置失败")
 	}
-	return nil
+	return err
 }

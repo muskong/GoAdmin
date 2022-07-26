@@ -27,7 +27,7 @@ func AdminRoleList(c *gin.Context) {
 }
 
 func AdminRoleCreate(c *gin.Context) {
-	var user entity.AdminRoleObject
+	var user entity.AdminRole
 	err := c.ShouldBind(&user)
 	if err != nil {
 		c.SecureJSON(http.StatusOK, "传入参数错误")

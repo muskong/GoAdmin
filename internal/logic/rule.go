@@ -8,24 +8,22 @@ import (
 
 func AdminRuleList(page Page) (err error, result Result) {
 
-	ruleCount := entity.GetRuleCount()
-	ruleData := entity.GetRules(page.getOffset(), page.Limit, "admin_rule_id", "desc")
-	if len(ruleData) <= 0 {
+	ruleData, ruleCount, err := entity.GetRules(page.getOffset(), page.Limit)
+	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
 
 	result.Data = ruleData
-	result.Pagination.Limit = page.Limit
-	result.Pagination.Page = page.Page
+	result.Pagination.Page = page
 	result.Pagination.Total = ruleCount
 
 	return
 }
 
-func AdminRuleCreate(u entity.AdminRuleObject) error {
-	id := entity.InsertAdminRule(u)
-	if id <= 0 {
+func AdminRuleCreate(u entity.AdminRule) error {
+	rule, err := entity.InsertAdminRule(&u)
+	if rule.Id <= 0 || err != nil {
 		return errors.New("新增失败")
 	}
 	return nil
@@ -33,16 +31,16 @@ func AdminRuleCreate(u entity.AdminRuleObject) error {
 
 func AdminRuleAll(id int64) (err error, result Result) {
 
-	ruleData := entity.GetRuleAllByPid(id)
-	if len(ruleData) <= 0 {
+	ruleData, err := entity.GetRuleAllByPid(id)
+	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
 	ruleAll := []SelectInterface{}
 	for _, rule := range ruleData {
 		ruleAll = append(ruleAll, SelectInterface{
-			rule.AdminRuleId,
-			rule.AdminRuleTitle,
+			rule.Id,
+			rule.Title,
 			false})
 	}
 	result.Data = ruleAll

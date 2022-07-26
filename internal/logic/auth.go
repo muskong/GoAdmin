@@ -21,20 +21,20 @@ type (
 
 func LoginVerify(data LoginData) (jwtData JwtData, err error) {
 
-	userData := entity.GetAdminName(data.Username)
-	if userData.AdminUserId <= 0 {
+	userData, err := entity.GetAdminName(data.Username)
+	if userData.Id <= 0 || err != nil {
 		err = errors.New("用户或密码出错1")
 		return
 	}
 
-	is := checkHashPassword(data.Password, userData.AdminUserPassword)
+	is := checkHashPassword(data.Password, userData.Password)
 	if !is {
 		err = errors.New("用户或密码出错2")
 		return
 	}
 
-	jwtData.Name = userData.AdminUserName
-	jwtData.Token = jwt.Jwt.GenerateToken(userData.AdminUserId)
+	jwtData.Name = userData.Name
+	jwtData.Token = jwt.Jwt.GenerateToken(userData.Id)
 
 	return
 }

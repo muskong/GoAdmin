@@ -27,7 +27,7 @@ func AdminRuleList(c *gin.Context) {
 }
 
 func AdminRuleCreate(c *gin.Context) {
-	var user entity.AdminRuleObject
+	var user entity.AdminRule
 	err := c.ShouldBind(&user)
 	if err != nil {
 		c.SecureJSON(http.StatusOK, "传入参数错误")

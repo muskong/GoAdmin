@@ -6,12 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
-	"github.com/muskong/GoPkg/work"
 )
 
 func AdminUserList(c *gin.Context) {
 	var page logic.Page
-	err := work.Context.GetJson(&page)
+	err := c.ShouldBind(&page)
 	if err != nil {
 		c.SecureJSON(http.StatusOK, "传入参数错误")
 		return
@@ -28,8 +27,8 @@ func AdminUserList(c *gin.Context) {
 }
 
 func AdminUserCreate(c *gin.Context) {
-	var user entity.AdminUserObject
-	err := work.Context.GetJson(&user)
+	var user entity.AdminUser
+	err := c.ShouldBind(&user)
 	if err != nil {
 		c.SecureJSON(http.StatusOK, "传入参数错误")
 		return
