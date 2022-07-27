@@ -44,7 +44,7 @@ func AdminRoleCreate(c *gin.Context) {
 
 func AdminRoleRuleList(c *gin.Context) {
 	var q struct {
-		RoleId int64 `json:"roleId"`
+		RoleId int `json:"roleId"`
 	}
 	err := c.ShouldBindQuery(&q)
 	if q.RoleId <= 0 {

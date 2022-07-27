@@ -8,7 +8,7 @@ import (
 
 func AdminRoleList(page Page) (err error, result Result) {
 
-	userData, userCount, err := entity.GetRoles(page.getOffset(), page.Limit)
+	userData, userCount, err := entity.Role.GetRoles(page.getOffset(), page.Limit)
 	if len(userData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
@@ -23,7 +23,7 @@ func AdminRoleList(page Page) (err error, result Result) {
 
 func AdminRoleAll() (err error, result []*entity.AdminRole) {
 
-	result, err = entity.GetRoleAll()
+	result, err = entity.Role.GetRoleAll()
 	if len(result) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
@@ -32,16 +32,16 @@ func AdminRoleAll() (err error, result []*entity.AdminRole) {
 	return
 }
 
-func AdminRoleRuleList(roleId int64) (err error, result []SelectInterface) {
+func AdminRoleRuleList(roleId int) (err error, result []SelectInterface) {
 
-	ruleData, err := entity.GetRuleAll()
+	ruleData, err := entity.Rule.GetRuleAll()
 	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
 	}
 
-	roleRuleSelected := map[int64]bool{}
-	rule, err := entity.GetRole(roleId)
+	roleRuleSelected := map[int]bool{}
+	rule, err := entity.Role.GetRole(roleId)
 	if rule.Id > 0 && err == nil {
 		for _, v := range rule.Rules {
 			roleRuleSelected[v] = true
@@ -63,7 +63,7 @@ func AdminRoleRuleList(roleId int64) (err error, result []SelectInterface) {
 }
 
 func AdminRoleCreate(u entity.AdminRole) error {
-	err := entity.InsertAdminRole(&u)
+	err := entity.Role.InsertAdminRole(&u)
 	if u.Id <= 0 || err != nil {
 		return errors.New("新增失败")
 	}
@@ -71,7 +71,7 @@ func AdminRoleCreate(u entity.AdminRole) error {
 }
 
 func AdminRoleSaveRule(ou RoleRuleObject) error {
-	err := entity.UpdateAdminRoleRules(ou.RoleId, ou.RuleIds)
+	err := entity.Role.UpdateAdminRoleRules(ou.RoleId, ou.RuleIds)
 	if err != nil {
 		return errors.New("设置失败")
 	}

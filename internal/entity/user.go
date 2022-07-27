@@ -24,9 +24,12 @@ type (
 		UpdatedAt sql.NullString `json:"updatedAt,omitempty" db:"updated_at"`
 		DeletedAt sql.NullString `json:"deletedAt,omitempty" db:"deleted_at"`
 	}
+	user struct{}
 )
 
-func GetAdminName(name string) (*AdminUser, error) {
+var User = &user{}
+
+func (*user) GetAdminName(name string) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 
 	var user AdminUser
@@ -37,7 +40,7 @@ func GetAdminName(name string) (*AdminUser, error) {
 	return &user, err
 }
 
-func GetUser(adminId int64) (*AdminUser, error) {
+func (*user) GetUser(adminId int64) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	var user AdminUser
 	err := db.Where("id = ?", adminId).First(&user).Error
@@ -48,7 +51,7 @@ func GetUser(adminId int64) (*AdminUser, error) {
 }
 
 // 按选项查询集合
-func GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
+func (*user) GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	err = db.Count(&count).Order("id desc").Limit(limit).Offset(page).Find(&users).Error
 	if err != nil {
@@ -57,7 +60,7 @@ func GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
 	return
 }
 
-func InsertAdminUser(user *AdminUser) (*AdminUser, error) {
+func (*user) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	err := db.Create(user).Error
 	if err != nil {

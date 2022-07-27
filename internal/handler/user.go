@@ -16,7 +16,7 @@ func AdminUserList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.AdminUserList(page)
+	err, data := logic.User.AdminUserList(page)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -34,7 +34,7 @@ func AdminUserCreate(c *gin.Context) {
 		return
 	}
 
-	err = logic.AdminUserCreate(user)
+	err = logic.User.AdminUserCreate(user)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())

@@ -31,6 +31,7 @@ func GinRouter() *gin.Engine {
 	adm := router.Group("/admin")
 
 	adm.GET("/sites", handler.Sites)
+	adm.GET("/dashboard", handler.Dashboard)
 
 	adminUser := adm.Group("/user")
 	{
@@ -50,6 +51,7 @@ func GinRouter() *gin.Engine {
 
 	adminRule := adm.Group("/rule")
 	{
+		adminRule.GET("/menu", handler.AdminMenu)
 		adminRule.GET("/all", handler.AdminRuleAll)
 		adminRule.GET("/list", handler.AdminRuleList)
 		adminRule.POST("/create", handler.AdminRuleCreate)

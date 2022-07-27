@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
+	"github.com/muskong/GoCore/helper"
+	"github.com/spf13/cast"
 )
 
 func AdminRuleList(c *gin.Context) {
@@ -16,7 +18,7 @@ func AdminRuleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.AdminRuleList(page)
+	err, data := logic.Rule.AdminRuleList(page)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -34,7 +36,7 @@ func AdminRuleCreate(c *gin.Context) {
 		return
 	}
 
-	err = logic.AdminRuleCreate(user)
+	err = logic.Rule.AdminRuleCreate(user)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -45,7 +47,7 @@ func AdminRuleCreate(c *gin.Context) {
 
 func AdminRuleAll(c *gin.Context) {
 	var q struct {
-		RuleId int64 `json:"adminRuleId"`
+		RuleId int `json:"adminRuleId"`
 	}
 	err := c.ShouldBindQuery(&q)
 	if err != nil {
@@ -53,30 +55,39 @@ func AdminRuleAll(c *gin.Context) {
 		return
 	}
 
-	err, ruleData := logic.AdminRuleAll(q.RuleId)
+	err, ruleData := logic.Rule.AdminRuleAll(q.RuleId)
 	if err != nil {
-		c.SecureJSON(http.StatusOK, err.Error())
+		c.SecureJSON(helper.Error(err.Error()))
 		return
 	}
 
-	c.SecureJSON(http.StatusOK, ruleData)
+	c.SecureJSON(helper.Success(ruleData))
 }
 
 func AdminMenu(c *gin.Context) {
-	var q struct {
-		RuleId int64 `json:"adminRuleId"`
+	userId, ok := c.Get("userId")
+	if !ok {
+		c.SecureJSON(http.StatusOK, "未登录")
 	}
-	err := c.ShouldBindQuery(&q)
+
+	user, err := logic.User.GetUser(cast.ToInt64(userId))
 	if err != nil {
-		c.SecureJSON(http.StatusOK, "传入参数错误")
+		c.SecureJSON(helper.Error(err.Error()))
 		return
 	}
 
-	err, ruleData := logic.AdminRuleAll(q.RuleId)
+	menu, err := logic.Rule.AdminRuleTree(user.Roles)
 	if err != nil {
-		c.SecureJSON(http.StatusOK, err.Error())
+		c.SecureJSON(helper.Error(err.Error()))
 		return
 	}
 
-	c.SecureJSON(http.StatusOK, ruleData)
+	c.SecureJSON(helper.Success(map[string]any{
+		"adminInfo": user,
+		"menus":     menu,
+		"siteConfig": map[string]string{
+			"siteName": "test",
+			"version":  "version",
+		},
+	}))
 }

@@ -21,7 +21,7 @@ type (
 
 func LoginVerify(data LoginData) (jwtData JwtData, err error) {
 
-	userData, err := entity.GetAdminName(data.Username)
+	userData, err := entity.User.GetAdminName(data.Username)
 	if userData.Id <= 0 || err != nil {
 		err = errors.New("用户或密码出错1")
 		return

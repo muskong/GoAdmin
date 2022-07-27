@@ -9,17 +9,20 @@ import (
 
 type (
 	AdminRole struct {
-		Id          int64          `json:"Id,omitempty" db:"id"`
+		Id          int            `json:"Id,omitempty" db:"id"`
 		Name        string         `json:"Name,omitempty" db:"name"`
-		Rules       gorm.JsonInt64 `json:"Rules,omitempty" db:"rules"`
+		Rules       gorm.JsonInt   `json:"Rules,omitempty" db:"rules"`
 		Description string         `json:"Description,omitempty" db:"description"`
 		CreatedAt   string         `json:"createdAt,omitempty" db:"created_at"`
 		UpdatedAt   sql.NullString `json:"updatedAt,omitempty" db:"updated_at"`
 		DeletedAt   sql.NullString `json:"deletedAt,omitempty" db:"deleted_at"`
 	}
+	role struct{}
 )
 
-func GetRole(roleId int64) (*AdminRole, error) {
+var Role = &role{}
+
+func (*role) GetRole(roleId int) (*AdminRole, error) {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	var role AdminRole
 	err := db.Where("id = ?", roleId).First(&role).Error
@@ -28,9 +31,17 @@ func GetRole(roleId int64) (*AdminRole, error) {
 	}
 	return &role, err
 }
-func GetRoleAll() (roles []*AdminRole, err error) {
+func (*role) GetRoleAll() (roles []*AdminRole, err error) {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Find(&roles).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return
+}
+func (*role) GetRolesByNames(roleName []string) (roles []*AdminRole, err error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
+	err = db.Where("name IN ?", roleName).Order("id desc").Find(&roles).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -42,7 +53,7 @@ func GetRoleAll() (roles []*AdminRole, err error) {
 // limit 读取数量
 // field  排序字段
 // sort  排序   DESC 倒叙 ， ASC 正序
-func GetRoles(offset, limit int) (roles []*AdminRole, count int64, err error) {
+func (*role) GetRoles(offset, limit int) (roles []*AdminRole, count int64, err error) {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&roles).Error
 	if err != nil {
@@ -50,7 +61,7 @@ func GetRoles(offset, limit int) (roles []*AdminRole, count int64, err error) {
 	}
 	return
 }
-func InsertAdminRole(role *AdminRole) (err error) {
+func (*role) InsertAdminRole(role *AdminRole) (err error) {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err = db.Create(role).Error
 	if err != nil {
@@ -58,7 +69,7 @@ func InsertAdminRole(role *AdminRole) (err error) {
 	}
 	return
 }
-func UpdateAdminRoleRules(roleId int64, ruleIds []int64) error {
+func (*role) UpdateAdminRoleRules(roleId int, ruleIds []int) error {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err := db.Where("id=?", roleId).Update("rules", ruleIds).Error
 	if err != nil {

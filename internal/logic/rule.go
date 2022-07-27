@@ -6,9 +6,13 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 )
 
-func AdminRuleList(page Page) (err error, result Result) {
+type _rule struct{}
 
-	ruleData, ruleCount, err := entity.GetRules(page.getOffset(), page.Limit)
+var Rule = &_rule{}
+
+func (*_rule) AdminRuleList(page Page) (err error, result Result) {
+
+	ruleData, ruleCount, err := entity.Rule.GetRules(page.getOffset(), page.Limit)
 	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
@@ -21,17 +25,17 @@ func AdminRuleList(page Page) (err error, result Result) {
 	return
 }
 
-func AdminRuleCreate(u entity.AdminRule) error {
-	rule, err := entity.InsertAdminRule(&u)
+func (*_rule) AdminRuleCreate(u entity.AdminRule) error {
+	rule, err := entity.Rule.InsertAdminRule(&u)
 	if rule.Id <= 0 || err != nil {
 		return errors.New("新增失败")
 	}
 	return nil
 }
 
-func AdminRuleAll(id int64) (err error, result Result) {
+func (*_rule) AdminRuleAll(id int) (err error, result Result) {
 
-	ruleData, err := entity.GetRuleAllByPid(id)
+	ruleData, err := entity.Rule.GetRuleAllByPid(id)
 	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return
@@ -46,4 +50,72 @@ func AdminRuleAll(id int64) (err error, result Result) {
 	result.Data = ruleAll
 
 	return
+}
+
+func (*_rule) AdminRuleTree(roles []string) (result any, err error) {
+	roleData, err := entity.Role.GetRolesByNames(roles)
+	if len(roleData) <= 0 || err != nil {
+		err = errors.New("无角色数据")
+		return
+	}
+
+	var ids []int
+	for _, v := range roleData {
+		ids = append(ids, v.Rules...)
+	}
+	var isAll bool
+	for _, id := range ids {
+		if id == 0 {
+			isAll = true
+		}
+	}
+	var ruleData []*entity.AdminRule
+	if isAll {
+		ruleData, err = entity.Rule.GetRuleAll()
+	} else {
+		ruleData, err = entity.Rule.GetRulesByIds(ids)
+	}
+
+	if len(ruleData) <= 0 || err != nil {
+		err = errors.New("无数据")
+		return
+	}
+
+	result = _tree(ruleData, 0)
+
+	return
+}
+
+func _tree(rules []*entity.AdminRule, pid int) []Tree {
+
+	pdata := map[int][]TreeNode{}
+	for _, rule := range rules {
+		pdata[rule.Pid] = append(pdata[rule.Pid], TreeNode{
+			Id:        rule.Id,
+			Pid:       rule.Pid,
+			Type:      rule.Type,
+			Title:     rule.Title,
+			Link:      rule.Link,
+			Path:      rule.Path,
+			Icon:      rule.Icon,
+			MenuType:  rule.MenuType,
+			Url:       rule.Url,
+			Component: rule.Component,
+			Extend:    rule.Extend,
+			KeepAlive: rule.Keepalive,
+		})
+	}
+
+	return children(pid, pdata)
+}
+
+func children(pid int, pdata map[int][]TreeNode) (tree []Tree) {
+	for _, rule := range pdata[pid] {
+		var _tree Tree
+		_tree.TreeNode = rule
+		_tree.Children = children(rule.Id, pdata)
+
+		tree = append(tree, _tree)
+	}
+	return tree
 }

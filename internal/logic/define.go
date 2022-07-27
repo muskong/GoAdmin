@@ -13,14 +13,33 @@ type (
 		}
 	}
 	SelectInterface struct {
-		Value   int64  `json:"value"`
+		Value   int    `json:"value"`
 		Name    string `json:"name"`
 		Checked bool   `json:"checked"`
 	}
 
 	RoleRuleObject struct {
-		RoleId  int64   `json:"roleId"`
-		RuleIds []int64 `json:"ruleIds"`
+		RoleId  int   `json:"roleId"`
+		RuleIds []int `json:"ruleIds"`
+	}
+	TreeNode struct {
+		Id        int    `json:"id"`
+		Pid       int    `json:"pid"`
+		Type      string `json:"type"`
+		Title     string `json:"title"`
+		Link      string `json:"name"`
+		Path      string `json:"path"`
+		Icon      string `json:"icon"`
+		MenuType  string `json:"menuType"`
+		Url       string `json:"url"`
+		Component string `json:"component"`
+		Extend    string `json:"extend"`
+		KeepAlive string `json:"keepAlive,omitempty"`
+	}
+
+	Tree struct {
+		TreeNode
+		Children []Tree `json:"children,omitempty"`
 	}
 )
 
