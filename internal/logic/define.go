@@ -22,7 +22,7 @@ type (
 		RoleId  int   `json:"roleId"`
 		RuleIds []int `json:"ruleIds"`
 	}
-	TreeNode struct {
+	RuleTreeNode struct {
 		Id        int    `json:"id"`
 		Pid       int    `json:"pid"`
 		Type      string `json:"type"`
@@ -37,9 +37,24 @@ type (
 		KeepAlive string `json:"keepAlive,omitempty"`
 	}
 
-	Tree struct {
-		TreeNode
-		Children []Tree `json:"children,omitempty"`
+	RuleTree struct {
+		RuleTreeNode
+		Children []RuleTree `json:"children,omitempty"`
+	}
+
+	RoleTreeNode struct {
+		Id          int    `json:"id"`
+		Pid         int    `json:"pid"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		State       string `json:"state"`
+		CreatedAt   string `json:"createdAt,omitempty" db:"created_at"`
+		UpdatedAt   string `json:"updatedAt,omitempty" db:"updated_at"`
+	}
+
+	RoleTree struct {
+		RoleTreeNode
+		Children []RoleTree `json:"children,omitempty"`
 	}
 )
 

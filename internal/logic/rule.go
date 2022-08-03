@@ -86,11 +86,11 @@ func (*_rule) AdminRuleTree(roles []string) (result any, err error) {
 	return
 }
 
-func _tree(rules []*entity.AdminRule, pid int) []Tree {
+func _tree(rules []*entity.AdminRule, pid int) []RuleTree {
 
-	pdata := map[int][]TreeNode{}
+	pdata := map[int][]RuleTreeNode{}
 	for _, rule := range rules {
-		pdata[rule.Pid] = append(pdata[rule.Pid], TreeNode{
+		pdata[rule.Pid] = append(pdata[rule.Pid], RuleTreeNode{
 			Id:        rule.Id,
 			Pid:       rule.Pid,
 			Type:      rule.Type,
@@ -106,14 +106,14 @@ func _tree(rules []*entity.AdminRule, pid int) []Tree {
 		})
 	}
 
-	return children(pid, pdata)
+	return _ruleChildren(pid, pdata)
 }
 
-func children(pid int, pdata map[int][]TreeNode) (tree []Tree) {
+func _ruleChildren(pid int, pdata map[int][]RuleTreeNode) (tree []RuleTree) {
 	for _, rule := range pdata[pid] {
-		var _tree Tree
-		_tree.TreeNode = rule
-		_tree.Children = children(rule.Id, pdata)
+		var _tree RuleTree
+		_tree.RuleTreeNode = rule
+		_tree.Children = _ruleChildren(rule.Id, pdata)
 
 		tree = append(tree, _tree)
 	}

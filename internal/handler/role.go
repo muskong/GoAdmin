@@ -16,7 +16,7 @@ func AdminRoleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.AdminRoleList(page)
+	err, data := logic.Role.AdminRoleList(page)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -34,7 +34,7 @@ func AdminRoleCreate(c *gin.Context) {
 		return
 	}
 
-	err = logic.AdminRoleCreate(user)
+	err = logic.Role.AdminRoleCreate(user)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -52,7 +52,7 @@ func AdminRoleRuleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.AdminRoleRuleList(q.RoleId)
+	err, data := logic.Role.AdminRoleRuleList(q.RoleId)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -63,7 +63,7 @@ func AdminRoleRuleList(c *gin.Context) {
 }
 
 func AdminRoleAll(c *gin.Context) {
-	err, data := logic.AdminRoleAll()
+	err, data := logic.Role.AdminRoleAll()
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
@@ -81,11 +81,28 @@ func AdminRoleSaveRule(c *gin.Context) {
 		return
 	}
 
-	err = logic.AdminRoleSaveRule(roleRule)
+	err = logic.Role.AdminRoleSaveRule(roleRule)
 
 	if err != nil {
 		c.SecureJSON(http.StatusOK, err.Error())
 		return
 	}
 	c.SecureJSON(http.StatusOK, "设置成功")
+}
+
+// 00000000  AdminRoleGroup ---
+type roleGrop struct{}
+
+var Role = &roleGrop{}
+
+func (*roleGrop) AdminRoleGroup(c *gin.Context) {
+
+	data, err := logic.Role.AdminRoleGroupList()
+
+	if err != nil {
+		c.SecureJSON(http.StatusOK, err.Error())
+		return
+	}
+
+	c.SecureJSON(http.StatusOK, data)
 }

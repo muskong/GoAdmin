@@ -42,6 +42,9 @@ func GinRouter() *gin.Engine {
 
 	adminRole := adm.Group("/role")
 	{
+		// admin/auth.group/index
+		adminRole.GET("/group", handler.Role.AdminRoleGroup)
+
 		adminRole.GET("/rules", handler.AdminRoleRuleList)
 		adminRole.GET("/all", handler.AdminRoleAll)
 		adminRole.GET("/list", handler.AdminRoleList)
