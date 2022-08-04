@@ -35,13 +35,13 @@ func GinRouter() *gin.Engine {
 
 	adminUser := adm.Group("/user")
 	{
-		adminUser.POST("/login", handler.AuthLogin)
+		adminUser.POST("/login", handler.Auth.Login)
 
-		adminUser.GET(":userId", handler.AdminUser)
-		adminUser.GET("/list", handler.AdminUserList)
-		adminUser.POST("/create", handler.AdminUserCreate)
-		adminUser.POST("/update", handler.AdminUserUpdate)
-		adminUser.DELETE("/delete/:userId", handler.AdminUserDelete)
+		adminUser.GET(":userId", handler.User.AdminUser)
+		adminUser.GET("/list", handler.User.AdminUserList)
+		adminUser.POST("/create", handler.User.AdminUserCreate)
+		adminUser.POST("/update", handler.User.AdminUserUpdate)
+		adminUser.DELETE("/delete/:userId", handler.User.AdminUserDelete)
 	}
 
 	adminRole := adm.Group("/role")

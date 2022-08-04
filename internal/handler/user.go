@@ -7,7 +7,11 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-func AdminUser(c *gin.Context) {
+type userController struct{}
+
+var User = &userController{}
+
+func (*userController) AdminUser(c *gin.Context) {
 	var q struct {
 		UserId int `json:"userId"`
 	}
@@ -27,7 +31,7 @@ func AdminUser(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func AdminUserList(c *gin.Context) {
+func (*userController) AdminUserList(c *gin.Context) {
 	var page logic.Page
 	err := c.ShouldBind(&page)
 	if err != nil {
@@ -45,7 +49,7 @@ func AdminUserList(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func AdminUserCreate(c *gin.Context) {
+func (*userController) AdminUserCreate(c *gin.Context) {
 	var user entity.AdminUser
 	err := c.ShouldBind(&user)
 	if err != nil {
@@ -63,7 +67,7 @@ func AdminUserCreate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func AdminUserUpdate(c *gin.Context) {
+func (*userController) AdminUserUpdate(c *gin.Context) {
 	var user entity.AdminUser
 	err := c.ShouldBind(&user)
 	if err != nil {
@@ -81,7 +85,7 @@ func AdminUserUpdate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func AdminUserDelete(c *gin.Context) {
+func (*userController) AdminUserDelete(c *gin.Context) {
 	var q struct {
 		UserId int `json:"userId"`
 	}

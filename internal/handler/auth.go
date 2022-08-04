@@ -6,7 +6,11 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-func AuthLogin(c *gin.Context) {
+type authController struct{}
+
+var Auth = &authController{}
+
+func (*authController) Login(c *gin.Context) {
 	var userForm logic.LoginData
 	err := c.ShouldBind(&userForm)
 	if err != nil {
@@ -22,14 +26,4 @@ func AuthLogin(c *gin.Context) {
 	}
 
 	c.SecureJSON(respond.Data(data))
-}
-func Sites(ctx *gin.Context) {
-	ctx.SecureJSON(respond.Data(map[string]any{
-		"siteName":     "站点名称",
-		"recordNumber": "测试ICP备8888888号-1",
-		"version":      "v1.0.0",
-	}))
-}
-func Index(ctx *gin.Context) {
-	ctx.SecureJSON(respond.Data("ok"))
 }
