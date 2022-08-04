@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/muskong/GoAdmin/internal/entity"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/utils"
 )
 
@@ -102,7 +101,7 @@ func _roleTree(roles []*entity.AdminRole, pid int) []RoleTree {
 	var updatedAt string = ""
 
 	for _, role := range roles {
-		updatedAt = utils.TimeToFormat(role.UpdatedAt, "2006-01-02 15:04")
+		updatedAt = utils.NullStringToFormat(role.UpdatedAt, utils.YMDHI)
 
 		pdata[role.Pid] = append(pdata[role.Pid], RoleTreeNode{
 			Id:          role.Id,
@@ -110,7 +109,7 @@ func _roleTree(roles []*entity.AdminRole, pid int) []RoleTree {
 			Name:        role.Name,
 			Description: role.Description,
 			State:       role.State,
-			CreatedAt:   idworker.FormatTimeByString(role.CreatedAt),
+			CreatedAt:   utils.StringToFormat(role.CreatedAt, utils.YMDHI),
 			UpdatedAt:   updatedAt,
 		})
 	}
