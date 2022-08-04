@@ -10,6 +10,13 @@ type _user struct{}
 
 var User = &_user{}
 
+func (*_user) AdminUser(userId int) (user *entity.AdminUser, err error) {
+	user, err = entity.User.GetUser(userId)
+	if user.Id <= 0 || err != nil {
+		err = errors.New("新增用户失败")
+	}
+	return
+}
 func (*_user) AdminUserList(page Page) (err error, result Result) {
 
 	userData, userCount, err := entity.User.GetUsers(page.getOffset(), page.Limit)
@@ -33,10 +40,18 @@ func (*_user) AdminUserCreate(u entity.AdminUser) error {
 	return nil
 }
 
-func (*_user) GetUser(userId int64) (user *entity.AdminUser, err error) {
-	user, err = entity.User.GetUser(userId)
+func (*_user) AdminUserUpdate(u entity.AdminUser) error {
+	user, err := entity.User.UpdateAdminUser(&u)
 	if user.Id <= 0 || err != nil {
-		err = errors.New("新增用户失败")
+		return errors.New("新增用户失败")
 	}
-	return
+	return nil
+}
+
+func (*_user) AdminUserDelete(userId int) error {
+	err := entity.User.DeleteAdminUser(userId)
+	if err != nil {
+		return errors.New("新增用户失败")
+	}
+	return nil
 }

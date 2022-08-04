@@ -11,6 +11,15 @@ type _role struct{}
 
 var Role = &_role{}
 
+func (*_role) AdminRole(roleId int) (role *entity.AdminRole, err error) {
+	role, err = entity.Role.GetRole(roleId)
+	if err != nil {
+		err = errors.New("获取失败")
+		return
+	}
+	return
+}
+
 func (*_role) AdminRoleList(page Page) (err error, result Result) {
 
 	userData, userCount, err := entity.Role.GetRoles(page.getOffset(), page.Limit)
@@ -24,6 +33,27 @@ func (*_role) AdminRoleList(page Page) (err error, result Result) {
 	result.Pagination.Total = userCount
 
 	return
+}
+func (*_role) AdminRoleCreate(u entity.AdminRole) error {
+	err := entity.Role.InsertAdminRole(&u)
+	if u.Id <= 0 || err != nil {
+		return errors.New("新增失败")
+	}
+	return err
+}
+func (*_role) AdminRoleUpdate(u entity.AdminRole) error {
+	err := entity.Role.UpdateAdminRole(&u)
+	if u.Id <= 0 || err != nil {
+		return errors.New("更新失败")
+	}
+	return err
+}
+func (*_role) AdminRoleDelete(roleId int) error {
+	err := entity.Role.DeleteAdminRole(roleId)
+	if err != nil {
+		return errors.New("删除失败")
+	}
+	return err
 }
 
 func (*_role) AdminRoleAll() (err error, result []*entity.AdminRole) {
@@ -65,14 +95,6 @@ func (*_role) AdminRoleRuleList(roleId int) (err error, result []SelectInterface
 	}
 
 	return
-}
-
-func (*_role) AdminRoleCreate(u entity.AdminRole) error {
-	err := entity.Role.InsertAdminRole(&u)
-	if u.Id <= 0 || err != nil {
-		return errors.New("新增失败")
-	}
-	return err
 }
 
 func (*_role) AdminRoleSaveRule(ou RoleRuleObject) error {

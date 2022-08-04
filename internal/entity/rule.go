@@ -2,6 +2,7 @@ package entity
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/muskong/GoPkg/gorm"
 	"github.com/muskong/GoPkg/zaplog"
@@ -47,7 +48,7 @@ func (m *rule) ActiveDeny() string {
 	return "deny"
 }
 
-func (u *rule) GetRule(ruleId int64) (*AdminRule, error) {
+func (u *rule) GetRule(ruleId int) (*AdminRule, error) {
 	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	var rule AdminRule
 	err := db.Where("id = ?", ruleId).First(&rule).Error
@@ -100,4 +101,23 @@ func (u *rule) InsertAdminRule(rule *AdminRule) (*AdminRule, error) {
 		zaplog.Sugar.Error(err)
 	}
 	return rule, err
+}
+func (u *rule) UpdateAdminRule(rule *AdminRule) (*AdminRule, error) {
+	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
+	err := db.Updates(rule).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return rule, err
+}
+func (u *rule) DeleteAdminRule(ruleId int) error {
+	db := gorm.ClientNew().Model(&AdminRule{}).Where("deleted_at IS NULL")
+	deletedAt := sql.NullString{
+		String: time.Now().Format("2006-01-02 15:04:05"),
+	}
+	err := db.Where("id=?", ruleId).Updates(AdminRule{DeletedAt: deletedAt}).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return err
 }

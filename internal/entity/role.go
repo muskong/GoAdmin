@@ -2,6 +2,7 @@ package entity
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/muskong/GoPkg/gorm"
 	"github.com/muskong/GoPkg/zaplog"
@@ -71,6 +72,26 @@ func (*role) InsertAdminRole(role *AdminRole) (err error) {
 	}
 	return
 }
+func (*role) UpdateAdminRole(role *AdminRole) (err error) {
+	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
+	err = db.Updates(role).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return
+}
+func (*role) DeleteAdminRole(roleId int) error {
+	db := gorm.ClientNew().Model(&AdminRole{}).Where("deleted_at IS NULL")
+	deletedAt := sql.NullString{
+		String: time.Now().Format("2006-01-02 15:04:05"),
+	}
+	err := db.Where("id=?", roleId).Updates(AdminRole{DeletedAt: deletedAt}).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return err
+}
+
 func (*role) UpdateAdminRoleRules(roleId int, ruleIds []int) error {
 	db := gorm.ClientNew().Model(AdminRole{}).Where("deleted_at IS NULL")
 	err := db.Where("id=?", roleId).Update("rules", ruleIds).Error

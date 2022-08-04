@@ -10,6 +10,17 @@ type _rule struct{}
 
 var Rule = &_rule{}
 
+func (*_rule) AdminRule(ruleId int) (rule *entity.AdminRule, err error) {
+
+	rule, err = entity.Rule.GetRule(ruleId)
+	if rule.Id <= 0 || err != nil {
+		err = errors.New("无数据")
+		return
+	}
+
+	return
+}
+
 func (*_rule) AdminRuleList(page Page) (err error, result Result) {
 
 	ruleData, ruleCount, err := entity.Rule.GetRules(page.getOffset(), page.Limit)
@@ -30,7 +41,23 @@ func (*_rule) AdminRuleCreate(u entity.AdminRule) error {
 	if rule.Id <= 0 || err != nil {
 		return errors.New("新增失败")
 	}
-	return nil
+	return err
+}
+
+func (*_rule) AdminRuleUpdate(u entity.AdminRule) error {
+	rule, err := entity.Rule.UpdateAdminRule(&u)
+	if rule.Id <= 0 || err != nil {
+		return errors.New("更新失败")
+	}
+	return err
+}
+
+func (*_rule) AdminRuleDelete(ruleId int) error {
+	err := entity.Rule.DeleteAdminRule(ruleId)
+	if err != nil {
+		return errors.New("删除失败")
+	}
+	return err
 }
 
 func (*_rule) AdminRuleAll(id int) (err error, result Result) {
