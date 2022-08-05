@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
@@ -10,15 +9,15 @@ import (
 
 type (
 	AdminRole struct {
-		Id          int            `json:"Id,omitempty" db:"id"`
-		Pid         int            `json:"Pid,omitempty" db:"pid"`
-		Name        string         `json:"Name,omitempty" db:"name"`
-		Rules       gorm.JsonInt   `json:"Rules,omitempty" db:"rules"`
-		Description string         `json:"Description,omitempty" db:"description"`
-		State       string         `json:"State,omitempty" db:"state"`
-		CreatedAt   string         `json:"createdAt,omitempty" db:"created_at"`
-		UpdatedAt   sql.NullString `json:"updatedAt,omitempty" db:"updated_at"`
-		DeletedAt   sql.NullString `json:"deletedAt,omitempty" db:"deleted_at"`
+		Id          int             `json:"Id,omitempty" db:"id"`
+		Pid         int             `json:"Pid,omitempty" db:"pid"`
+		Name        string          `json:"Name,omitempty" db:"name"`
+		Rules       gorm.JsonInt    `json:"Rules,omitempty" db:"rules"`
+		Description string          `json:"Description,omitempty" db:"description"`
+		State       string          `json:"State,omitempty" db:"state"`
+		CreatedAt   gorm.TimeString `json:"createdAt,omitempty" db:"created_at"`
+		UpdatedAt   gorm.TimeString `json:"updatedAt,omitempty" db:"updated_at"`
+		DeletedAt   gorm.TimeString `json:"deletedAt,omitempty" db:"deleted_at"`
 	}
 	role struct{}
 )
@@ -82,9 +81,7 @@ func (*role) UpdateAdminRole(role *AdminRole) (err error) {
 }
 func (*role) DeleteAdminRole(roleId int) error {
 	db := gorm.ClientNew().Model(&AdminRole{}).Where("deleted_at IS NULL")
-	deletedAt := sql.NullString{
-		String: time.Now().Format("2006-01-02 15:04:05"),
-	}
+	deletedAt := gorm.TimeString(time.Now().Format("2006-01-02 15:04:05"))
 	err := db.Where("id=?", roleId).Updates(AdminRole{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/muskong/GoAdmin/internal/entity"
-	"github.com/muskong/GoPkg/utils"
 )
 
 type _role struct{}
@@ -120,10 +119,8 @@ func (*_role) AdminRoleGroupList() (result []RoleTree, err error) {
 func _roleTree(roles []*entity.AdminRole, pid int) []RoleTree {
 
 	pdata := map[int][]RoleTreeNode{}
-	var updatedAt string = ""
 
 	for _, role := range roles {
-		updatedAt = utils.NullStringToFormat(role.UpdatedAt, utils.YMDHI)
 
 		pdata[role.Pid] = append(pdata[role.Pid], RoleTreeNode{
 			Id:          role.Id,
@@ -131,8 +128,8 @@ func _roleTree(roles []*entity.AdminRole, pid int) []RoleTree {
 			Name:        role.Name,
 			Description: role.Description,
 			State:       role.State,
-			CreatedAt:   utils.StringToFormat(role.CreatedAt, utils.YMDHI),
-			UpdatedAt:   updatedAt,
+			CreatedAt:   string(role.CreatedAt),
+			UpdatedAt:   string(role.UpdatedAt),
 		})
 	}
 

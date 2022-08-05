@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
@@ -20,10 +19,10 @@ type (
 		Roles gorm.JsonString `json:"Roles,omitempty" db:"roles"`
 
 		/** 发布时间 **/
-		CreatedAt string `json:"createdAt,omitempty" db:"created_at"`
+		CreatedAt gorm.TimeString `json:"createdAt,omitempty" db:"created_at"`
 		/** 更新时间 **/
-		UpdatedAt sql.NullString `json:"updatedAt,omitempty" db:"updated_at"`
-		DeletedAt sql.NullString `json:"deletedAt,omitempty" db:"deleted_at"`
+		UpdatedAt gorm.TimeString `json:"updatedAt,omitempty" db:"updated_at"`
+		DeletedAt gorm.TimeString `json:"deletedAt,omitempty" db:"deleted_at"`
 	}
 	user struct{}
 )
@@ -81,9 +80,7 @@ func (*user) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
 
 func (*user) DeleteAdminUser(userId int) error {
 	db := gorm.ClientNew().Model(&AdminUser{}).Where("deleted_at IS NULL")
-	deletedAt := sql.NullString{
-		String: time.Now().Format("2006-01-02 15:04:05"),
-	}
+	deletedAt := gorm.TimeString(time.Now().Format("2006-01-02 15:04:05"))
 	err := db.Where("id=?", userId).Updates(AdminUser{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
