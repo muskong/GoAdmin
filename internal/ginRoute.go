@@ -13,7 +13,7 @@ func GinRouter() *gin.Engine {
 	tokenName := jwt.Jwt.GetTokenName()
 	notAuth := map[string]bool{
 		"/admin/user/login": true,
-		"/admin/sites":      true,
+		// "/admin/sites":      true,
 	}
 
 	router := gin.Default()

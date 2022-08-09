@@ -2,7 +2,9 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
+	"github.com/spf13/cast"
 )
 
 func Dashboard(c *gin.Context) {
@@ -12,10 +14,33 @@ func Dashboard(c *gin.Context) {
 }
 
 func Sites(ctx *gin.Context) {
+	userId, ok := ctx.Get("userId")
+	if !ok || userId == "" {
+		ctx.AbortWithStatusJSON(respond.Message("未登录"))
+		// ctx.SecureJSON(respond.Message("未登录"))
+		return
+	}
+
+	user, err := logic.User.AdminUser(cast.ToInt(userId))
+	if err != nil {
+		ctx.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+
+	menu, err := logic.Rule.AdminRuleTree(user.Roles)
+	if err != nil {
+		ctx.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+
 	ctx.SecureJSON(respond.Data(map[string]any{
-		"siteName":     "站点名称",
-		"recordNumber": "测试ICP备8888888号-1",
-		"version":      "v1.0.0",
+		"adminInfo": user,
+		"menus":     menu,
+		"siteConfig": map[string]string{
+			"siteName":     "站点名称",
+			"recordNumber": "测试ICP备8888888号-1",
+			"version":      "v1.0.0",
+		},
 	}))
 }
 func Index(ctx *gin.Context) {
