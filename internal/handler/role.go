@@ -148,9 +148,9 @@ func (*roleGrop) AdminRoleSaveRule(c *gin.Context) {
 	c.SecureJSON(respond.Data("设置成功"))
 }
 
-func (*roleGrop) AdminRoleGroup(c *gin.Context) {
+func (*roleGrop) AdminRoleTree(c *gin.Context) {
 
-	data, err := logic.Role.AdminRoleGroupList()
+	data, err := logic.Role.AdminRoleTree()
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))

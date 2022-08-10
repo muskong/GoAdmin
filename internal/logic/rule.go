@@ -79,7 +79,7 @@ func (*_rule) AdminRuleAll(id int) (err error, result Result) {
 	return
 }
 
-func (*_rule) AdminRuleTree(roles []string) (result any, err error) {
+func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
 	roleData, err := entity.Role.GetRolesByNames(roles)
 	if len(roleData) <= 0 || err != nil {
 		err = errors.New("无角色数据")
@@ -145,4 +145,47 @@ func _ruleChildren(pid int, pdata map[int][]RuleTreeNode) (tree []RuleTree) {
 		tree = append(tree, _tree)
 	}
 	return tree
+}
+
+func (*_rule) AdminRuleTree(roles []string) (result any, err error) {
+	roleData, err := entity.Role.GetRolesByNames(roles)
+	if len(roleData) <= 0 || err != nil {
+		err = errors.New("无角色数据")
+		return
+	}
+
+	var ids []int
+	for _, v := range roleData {
+		ids = append(ids, v.Rules...)
+	}
+	var isAll bool
+	for _, id := range ids {
+		if id == 0 {
+			isAll = true
+		}
+	}
+	var ruleData []*entity.AdminRule
+	if isAll {
+		ruleData, err = entity.Rule.GetRuleAll()
+	} else {
+		ruleData, err = entity.Rule.GetRulesByIds(ids)
+	}
+
+	if len(ruleData) <= 0 || err != nil {
+		err = errors.New("无数据")
+		return
+	}
+
+	pdata := map[string][]AntTreeNode{}
+
+	for _, item := range ruleData {
+		pdata[item.ParentNanoid] = append(pdata[item.ParentNanoid], AntTreeNode{
+			Value: item.Nanoid,
+			Title: item.Title,
+		})
+	}
+
+	result = AntdTree("", pdata)
+
+	return
 }

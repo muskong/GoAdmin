@@ -9,15 +9,17 @@ import (
 
 type (
 	AdminRole struct {
-		Id          int             `json:"Id,omitempty" db:"id"`
-		Pid         int             `json:"Pid,omitempty" db:"pid"`
-		Name        string          `json:"Name,omitempty" db:"name"`
-		Rules       gorm.JsonInt    `json:"Rules,omitempty" db:"rules"`
-		Description string          `json:"Description,omitempty" db:"description"`
-		State       string          `json:"State,omitempty" db:"state"`
-		CreatedAt   gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt   gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt   gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		Id           int             `json:"Id,omitempty" db:"id"`
+		Pid          int             `json:"Pid,omitempty" db:"pid"`
+		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
+		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
+		Name         string          `json:"Name,omitempty" db:"name"`
+		Rules        gorm.JsonInt    `json:"Rules,omitempty" db:"rules"`
+		Description  string          `json:"Description,omitempty" db:"description"`
+		State        string          `json:"State,omitempty" db:"state"`
+		CreatedAt    gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt    gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
+		DeletedAt    gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 	role struct{}
 )

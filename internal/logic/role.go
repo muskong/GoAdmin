@@ -146,3 +146,24 @@ func _roleChildren(pid int, pdata map[int][]RoleTreeNode) (tree []RoleTree) {
 	}
 	return tree
 }
+
+func (*_role) AdminRoleTree() (result []AntTreeSelect, err error) {
+	roleData, err := entity.Role.GetRoleAll()
+	if len(roleData) <= 0 || err != nil {
+		err = errors.New("无角色数据")
+		return
+	}
+
+	pdata := map[string][]AntTreeNode{}
+
+	for _, item := range roleData {
+		pdata[item.ParentNanoid] = append(pdata[item.ParentNanoid], AntTreeNode{
+			Value: item.Nanoid,
+			Title: item.Name,
+		})
+	}
+
+	result = AntdTree("", pdata)
+
+	return
+}

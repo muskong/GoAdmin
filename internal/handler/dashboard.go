@@ -27,7 +27,7 @@ func Sites(ctx *gin.Context) {
 		return
 	}
 
-	menu, err := logic.Rule.AdminRuleTree(user.Roles)
+	menu, err := logic.Rule.AdminRuleGroup(user.Roles)
 	if err != nil {
 		ctx.SecureJSON(respond.Message(err.Error()))
 		return

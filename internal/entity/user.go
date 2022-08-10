@@ -10,7 +10,8 @@ import (
 type (
 	AdminUser struct {
 		/** ID **/
-		Id int `json:"Id,omitempty" db:"id"`
+		Id     int    `json:"Id,omitempty" db:"id"`
+		Nanoid string `json:"Nanoid,omitempty" db:"nanoid"`
 		/** 用户名 **/
 		Name string `json:"Name,omitempty" db:"name"`
 		/** 密码 **/

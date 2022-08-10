@@ -56,6 +56,15 @@ type (
 		RoleTreeNode
 		Children []RoleTree `json:"Children,omitempty"`
 	}
+
+	AntTreeNode struct {
+		Title string `json:"title"`
+		Value string `json:"value"`
+	}
+	AntTreeSelect struct {
+		AntTreeNode
+		Children []AntTreeSelect `json:"children,omitempty"`
+	}
 )
 
 func (p *Page) getOffset() int {
@@ -63,4 +72,15 @@ func (p *Page) getOffset() int {
 		p.Page = 1
 	}
 	return p.Limit * (p.Page - 1)
+}
+
+func AntdTree(parentNanoid string, pdata map[string][]AntTreeNode) (tree []AntTreeSelect) {
+	for _, role := range pdata[parentNanoid] {
+		var _tree AntTreeSelect
+		_tree.AntTreeNode = role
+		_tree.Children = AntdTree(role.Value, pdata)
+
+		tree = append(tree, _tree)
+	}
+	return tree
 }

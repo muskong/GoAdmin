@@ -10,24 +10,26 @@ import (
 type (
 	rule      struct{}
 	AdminRule struct {
-		Id        int             `json:"Id,omitempty" db:"id"`
-		Pid       int             `json:"Pid,omitempty" db:"pid"`
-		Type      string          `json:"Type,omitempty" db:"type"`
-		Title     string          `json:"Title,omitempty" db:"title"`
-		Link      string          `json:"Link,omitempty" db:"link"`
-		Path      string          `json:"Path,omitempty" db:"path"`
-		Icon      string          `json:"Icon,omitempty" db:"icon"`
-		MenuType  string          `json:"MenuType,omitempty" db:"menu_type"`
-		Url       string          `json:"Url,omitempty" db:"url"`
-		Component string          `json:"Component,omitempty" db:"component"`
-		Keepalive string          `json:"Keepalive,omitempty" db:"keepalive"`
-		Extend    string          `json:"Extend,omitempty" db:"extend"`
-		Remark    string          `json:"Remark,omitempty" db:"remark"`
-		Active    string          `json:"Active,omitempty" db:"active"`
-		Sequence  string          `json:"Sequence,omitempty" db:"sequence"`
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		Id           int             `json:"Id,omitempty" db:"id"`
+		Pid          int             `json:"Pid,omitempty" db:"pid"`
+		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
+		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
+		Type         string          `json:"Type,omitempty" db:"type"`
+		Title        string          `json:"Title,omitempty" db:"title"`
+		Link         string          `json:"Link,omitempty" db:"link"`
+		Path         string          `json:"Path,omitempty" db:"path"`
+		Icon         string          `json:"Icon,omitempty" db:"icon"`
+		MenuType     string          `json:"MenuType,omitempty" db:"menu_type"`
+		Url          string          `json:"Url,omitempty" db:"url"`
+		Component    string          `json:"Component,omitempty" db:"component"`
+		Keepalive    string          `json:"Keepalive,omitempty" db:"keepalive"`
+		Extend       string          `json:"Extend,omitempty" db:"extend"`
+		Remark       string          `json:"Remark,omitempty" db:"remark"`
+		Active       string          `json:"Active,omitempty" db:"active"`
+		Sequence     string          `json:"Sequence,omitempty" db:"sequence"`
+		CreatedAt    gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt    gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
+		DeletedAt    gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 )
 

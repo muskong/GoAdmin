@@ -132,7 +132,7 @@ func (*ruleGrop) AdminMenu(c *gin.Context) {
 		return
 	}
 
-	menu, err := logic.Rule.AdminRuleTree(user.Roles)
+	menu, err := logic.Rule.AdminRuleGroup(user.Roles)
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
 		return
