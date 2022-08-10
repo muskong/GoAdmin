@@ -25,9 +25,9 @@ type (
 		Remark    string          `json:"Remark,omitempty" db:"remark"`
 		Active    string          `json:"Active,omitempty" db:"active"`
 		Sequence  string          `json:"Sequence,omitempty" db:"sequence"`
-		CreatedAt gorm.TimeString `json:"createdAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"updatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.TimeString `json:"deletedAt,omitempty" db:"deleted_at"`
+		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
+		DeletedAt gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 )
 

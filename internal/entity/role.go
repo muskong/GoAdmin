@@ -15,9 +15,9 @@ type (
 		Rules       gorm.JsonInt    `json:"Rules,omitempty" db:"rules"`
 		Description string          `json:"Description,omitempty" db:"description"`
 		State       string          `json:"State,omitempty" db:"state"`
-		CreatedAt   gorm.TimeString `json:"createdAt,omitempty" db:"created_at"`
-		UpdatedAt   gorm.TimeString `json:"updatedAt,omitempty" db:"updated_at"`
-		DeletedAt   gorm.TimeString `json:"deletedAt,omitempty" db:"deleted_at"`
+		CreatedAt   gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt   gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
+		DeletedAt   gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 	role struct{}
 )

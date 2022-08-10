@@ -2,8 +2,8 @@ package logic
 
 type (
 	Page struct {
-		Page  int `json:"page"`
-		Limit int `json:"limit"`
+		Page  int `json:"Page"`
+		Limit int `json:"Limit"`
 	}
 	Result struct {
 		Data       interface{}
@@ -13,48 +13,48 @@ type (
 		}
 	}
 	SelectInterface struct {
-		Value   int    `json:"value"`
-		Name    string `json:"name"`
-		Checked bool   `json:"checked"`
+		Value   int    `json:"Value"`
+		Name    string `json:"Name"`
+		Checked bool   `json:"Checked"`
 	}
 
 	RoleRuleObject struct {
-		RoleId  int   `json:"roleId"`
-		RuleIds []int `json:"ruleIds"`
+		RoleId  int   `json:"RoleId"`
+		RuleIds []int `json:"RuleIds"`
 	}
 	RuleTreeNode struct {
-		Id        int    `json:"id"`
-		Pid       int    `json:"pid"`
-		Type      string `json:"type"`
-		Title     string `json:"title"`
-		Link      string `json:"name"`
-		Path      string `json:"path"`
-		Icon      string `json:"icon"`
-		MenuType  string `json:"menuType"`
-		Url       string `json:"url"`
-		Component string `json:"component"`
-		Extend    string `json:"extend"`
-		KeepAlive string `json:"keepAlive,omitempty"`
+		Id        int    `json:"Id"`
+		Pid       int    `json:"Pid"`
+		Type      string `json:"Type"`
+		Title     string `json:"Title"`
+		Link      string `json:"Name"`
+		Path      string `json:"Path"`
+		Icon      string `json:"Icon"`
+		MenuType  string `json:"MenuType"`
+		Url       string `json:"Url"`
+		Component string `json:"Component"`
+		Extend    string `json:"Extend"`
+		KeepAlive string `json:"KeepAlive,omitempty"`
 	}
 
 	RuleTree struct {
 		RuleTreeNode
-		Children []RuleTree `json:"children,omitempty"`
+		Children []RuleTree `json:"Children,omitempty"`
 	}
 
 	RoleTreeNode struct {
-		Id          int    `json:"id"`
-		Pid         int    `json:"pid"`
-		Name        string `json:"name"`
-		Description string `json:"description"`
-		State       string `json:"state"`
-		CreatedAt   string `json:"createdAt,omitempty" db:"created_at"`
-		UpdatedAt   string `json:"updatedAt,omitempty" db:"updated_at"`
+		Id          int    `json:"Id"`
+		Pid         int    `json:"Pid"`
+		Name        string `json:"Name"`
+		Description string `json:"Description"`
+		State       string `json:"State"`
+		CreatedAt   string `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt   string `json:"UpdatedAt,omitempty" db:"updated_at"`
 	}
 
 	RoleTree struct {
 		RoleTreeNode
-		Children []RoleTree `json:"children,omitempty"`
+		Children []RoleTree `json:"Children,omitempty"`
 	}
 )
 

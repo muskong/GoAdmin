@@ -19,10 +19,10 @@ type (
 		Roles gorm.JsonString `json:"Roles,omitempty" db:"roles"`
 
 		/** 发布时间 **/
-		CreatedAt gorm.TimeString `json:"createdAt,omitempty" db:"created_at"`
+		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		/** 更新时间 **/
-		UpdatedAt gorm.TimeString `json:"updatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.TimeString `json:"deletedAt,omitempty" db:"deleted_at"`
+		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
+		DeletedAt gorm.TimeString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 	user struct{}
 )

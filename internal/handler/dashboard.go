@@ -34,12 +34,12 @@ func Sites(ctx *gin.Context) {
 	}
 
 	ctx.SecureJSON(respond.Data(map[string]any{
-		"adminInfo": user,
-		"menus":     menu,
-		"siteConfig": map[string]string{
-			"siteName":     "站点名称",
-			"recordNumber": "测试ICP备8888888号-1",
-			"version":      "v1.0.0",
+		"AdminInfo": user,
+		"Menus":     menu,
+		"SiteConfig": map[string]string{
+			"SiteName":     "站点名称",
+			"RecordNumber": "测试ICP备8888888号-1",
+			"Version":      "v1.0.0",
 		},
 	}))
 }
