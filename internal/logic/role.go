@@ -111,36 +111,31 @@ func (*_role) AdminRoleGroupList() (result []RoleTree, err error) {
 		return
 	}
 
-	result = _roleTree(roleData, 0)
+	pdata := map[string][]RoleTreeNode{}
 
-	return
-}
+	for _, role := range roleData {
 
-func _roleTree(roles []*entity.AdminRole, pid int) []RoleTree {
-
-	pdata := map[int][]RoleTreeNode{}
-
-	for _, role := range roles {
-
-		pdata[role.Pid] = append(pdata[role.Pid], RoleTreeNode{
-			Id:          role.Id,
-			Pid:         role.Pid,
-			Name:        role.Name,
-			Description: role.Description,
-			State:       role.State,
-			CreatedAt:   string(role.CreatedAt),
-			UpdatedAt:   string(role.UpdatedAt),
+		pdata[role.ParentNanoid] = append(pdata[role.ParentNanoid], RoleTreeNode{
+			Id:           role.Id,
+			Nanoid:       role.Nanoid,
+			ParentNanoid: role.ParentNanoid,
+			Name:         role.Name,
+			Description:  role.Description,
+			State:        role.State,
+			CreatedAt:    string(role.CreatedAt),
+			UpdatedAt:    string(role.UpdatedAt),
 		})
 	}
 
-	return _roleChildren(pid, pdata)
+	result = _roleChildren("", pdata)
+	return
 }
 
-func _roleChildren(pid int, pdata map[int][]RoleTreeNode) (tree []RoleTree) {
+func _roleChildren(pid string, pdata map[string][]RoleTreeNode) (tree []RoleTree) {
 	for _, role := range pdata[pid] {
 		var _tree RoleTree
 		_tree.RoleTreeNode = role
-		_tree.Children = _roleChildren(role.Id, pdata)
+		_tree.Children = _roleChildren(role.Nanoid, pdata)
 
 		tree = append(tree, _tree)
 	}

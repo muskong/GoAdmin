@@ -162,3 +162,15 @@ func (*roleGrop) AdminRoleTree(c *gin.Context) {
 
 	c.SecureJSON(respond.Data(data))
 }
+
+func (*roleGrop) AdminRoleGroup(c *gin.Context) {
+
+	data, err := logic.Role.AdminRoleGroupList()
+
+	if err != nil {
+		c.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+
+	c.SecureJSON(respond.Data(data))
+}

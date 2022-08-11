@@ -43,13 +43,14 @@ type (
 	}
 
 	RoleTreeNode struct {
-		Id          int    `json:"Id"`
-		Pid         int    `json:"Pid"`
-		Name        string `json:"Name"`
-		Description string `json:"Description"`
-		State       string `json:"State"`
-		CreatedAt   string `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt   string `json:"UpdatedAt,omitempty" db:"updated_at"`
+		Id           int    `json:"Id"`
+		Nanoid       string `json:"Nanoid"`
+		ParentNanoid string `json:"ParentNanoid"`
+		Name         string `json:"Name"`
+		Description  string `json:"Description"`
+		State        string `json:"State"`
+		CreatedAt    string `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt    string `json:"UpdatedAt,omitempty" db:"updated_at"`
 	}
 
 	RoleTree struct {
