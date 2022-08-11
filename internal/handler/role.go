@@ -5,6 +5,7 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
+	"github.com/muskong/GoPkg/zaplog"
 )
 
 // 00000000  AdminRoleGroup ---
@@ -14,10 +15,10 @@ var Role = &roleGrop{}
 
 func (*roleGrop) AdminRole(c *gin.Context) {
 	var q struct {
-		RoleId int `json:"roleId"`
+		RoleId string `json:"roleId"`
 	}
 	err := c.ShouldBindQuery(&q)
-	if q.RoleId <= 0 {
+	if q.RoleId == "" {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
@@ -53,6 +54,7 @@ func (*roleGrop) AdminRoleCreate(c *gin.Context) {
 	var user entity.AdminRole
 	err := c.ShouldBind(&user)
 	if err != nil {
+		zaplog.Sugar.Error(err)
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
@@ -63,6 +65,7 @@ func (*roleGrop) AdminRoleCreate(c *gin.Context) {
 		c.SecureJSON(respond.Message(err.Error()))
 		return
 	}
+	c.SecureJSON(respond.Data("ok"))
 }
 
 func (*roleGrop) AdminRoleUpdate(c *gin.Context) {
@@ -79,19 +82,19 @@ func (*roleGrop) AdminRoleUpdate(c *gin.Context) {
 		c.SecureJSON(respond.Message(err.Error()))
 		return
 	}
+	c.SecureJSON(respond.Data("ok"))
 }
 
 func (*roleGrop) AdminRoleDelete(c *gin.Context) {
-	var q struct {
-		RoleId int `json:"roleId"`
-	}
-	err := c.ShouldBindQuery(&q)
-	if q.RoleId <= 0 {
+	var q Id
+	err := c.ShouldBindUri(&q)
+	if err != nil {
+		zaplog.Sugar.Error(err)
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	err = logic.Role.AdminRoleDelete(q.RoleId)
+	err = logic.Role.AdminRoleDelete(q.Nanoid)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -102,10 +105,10 @@ func (*roleGrop) AdminRoleDelete(c *gin.Context) {
 
 func (*roleGrop) AdminRoleRuleList(c *gin.Context) {
 	var q struct {
-		RoleId int `json:"roleId"`
+		RoleId string `json:"roleId"`
 	}
 	err := c.ShouldBindQuery(&q)
-	if q.RoleId <= 0 {
+	if q.RoleId == "" {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}

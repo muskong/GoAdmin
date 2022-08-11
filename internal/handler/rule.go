@@ -5,7 +5,6 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
-	"github.com/spf13/cast"
 )
 
 type ruleGrop struct{}
@@ -14,7 +13,7 @@ var Rule = &ruleGrop{}
 
 func (*ruleGrop) AdminRule(c *gin.Context) {
 	var q struct {
-		RuleId int `json:"ruleId"`
+		RuleId string `json:"ruleId"`
 	}
 	err := c.ShouldBindUri(&q)
 	if err != nil {
@@ -103,7 +102,7 @@ func (*ruleGrop) AdminRuleDelete(c *gin.Context) {
 
 func (*ruleGrop) AdminRuleAll(c *gin.Context) {
 	var q struct {
-		RuleId int `json:"ruleId"`
+		RuleId string `json:"ruleId"`
 	}
 	err := c.ShouldBindQuery(&q)
 	if err != nil {
@@ -120,30 +119,13 @@ func (*ruleGrop) AdminRuleAll(c *gin.Context) {
 	c.SecureJSON(respond.Data(ruleData))
 }
 
-func (*ruleGrop) AdminMenu(c *gin.Context) {
-	userId, ok := c.Get("userId")
-	if !ok {
-		c.SecureJSON(respond.Message("未登录"))
-	}
+func (*ruleGrop) AdminRuleTree(c *gin.Context) {
+	data, err := logic.Rule.AdminRuleTree()
 
-	user, err := logic.User.AdminUser(cast.ToInt(userId))
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
 		return
 	}
 
-	menu, err := logic.Rule.AdminRuleGroup(user.Roles)
-	if err != nil {
-		c.SecureJSON(respond.Message(err.Error()))
-		return
-	}
-
-	c.SecureJSON(respond.Data(map[string]any{
-		"adminInfo": user,
-		"menus":     menu,
-		"siteConfig": map[string]string{
-			"siteName": "test",
-			"version":  "version",
-		},
-	}))
+	c.SecureJSON(respond.Data(data))
 }

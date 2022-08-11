@@ -10,7 +10,7 @@ type _role struct{}
 
 var Role = &_role{}
 
-func (*_role) AdminRole(roleId int) (role *entity.AdminRole, err error) {
+func (*_role) AdminRole(roleId string) (role *entity.AdminRole, err error) {
 	role, err = entity.Role.GetRole(roleId)
 	if err != nil {
 		err = errors.New("获取失败")
@@ -47,7 +47,7 @@ func (*_role) AdminRoleUpdate(u entity.AdminRole) error {
 	}
 	return err
 }
-func (*_role) AdminRoleDelete(roleId int) error {
+func (*_role) AdminRoleDelete(roleId string) error {
 	err := entity.Role.DeleteAdminRole(roleId)
 	if err != nil {
 		return errors.New("删除失败")
@@ -66,7 +66,7 @@ func (*_role) AdminRoleAll() (err error, result []*entity.AdminRole) {
 	return
 }
 
-func (*_role) AdminRoleRuleList(roleId int) (err error, result []SelectInterface) {
+func (*_role) AdminRoleRuleList(roleId string) (err error, result []SelectInterface) {
 
 	ruleData, err := entity.Rule.GetRuleAll()
 	if len(ruleData) <= 0 || err != nil {
@@ -74,7 +74,7 @@ func (*_role) AdminRoleRuleList(roleId int) (err error, result []SelectInterface
 		return
 	}
 
-	roleRuleSelected := map[int]bool{}
+	roleRuleSelected := map[string]bool{}
 	rule, err := entity.Role.GetRole(roleId)
 	if rule.Id > 0 && err == nil {
 		for _, v := range rule.Rules {
@@ -84,10 +84,10 @@ func (*_role) AdminRoleRuleList(roleId int) (err error, result []SelectInterface
 
 	for _, rule := range ruleData {
 		ruleSelect := SelectInterface{
-			rule.Id,
+			rule.Nanoid,
 			rule.Title,
 			false}
-		if roleRuleSelected[rule.Id] {
+		if roleRuleSelected[rule.Nanoid] {
 			ruleSelect.Checked = true
 		}
 		result = append(result, ruleSelect)

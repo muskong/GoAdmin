@@ -37,11 +37,11 @@ func GinRouter() *gin.Engine {
 	{
 		adminUser.POST("/login", handler.Auth.Login)
 
-		adminUser.GET(":userId", handler.User.AdminUser)
+		adminUser.GET(":nanoid", handler.User.AdminUser)
 		adminUser.GET("/list", handler.User.AdminUserList)
 		adminUser.POST("/create", handler.User.AdminUserCreate)
 		adminUser.POST("/update", handler.User.AdminUserUpdate)
-		adminUser.DELETE("/delete/:userId", handler.User.AdminUserDelete)
+		adminUser.DELETE("/delete/:nanoid", handler.User.AdminUserDelete)
 	}
 
 	adminRole := adm.Group("/role")
@@ -53,23 +53,23 @@ func GinRouter() *gin.Engine {
 		adminRole.GET("/all", handler.Role.AdminRoleAll)
 		adminRole.POST("/saveRule", handler.Role.AdminRoleSaveRule)
 
-		adminRole.GET(":roleId", handler.Role.AdminRole)
+		adminRole.GET(":nanoid", handler.Role.AdminRole)
 		adminRole.GET("/list", handler.Role.AdminRoleList)
 		adminRole.POST("/create", handler.Role.AdminRoleCreate)
 		adminRole.POST("/update", handler.Role.AdminRoleUpdate)
-		adminRole.DELETE("/delete/:roleId", handler.Role.AdminRoleDelete)
+		adminRole.DELETE("/delete/:nanoid", handler.Role.AdminRoleDelete)
 	}
 
 	adminRule := adm.Group("/rule")
 	{
-		adminRule.GET("/menu", handler.Rule.AdminMenu)
+		adminRule.GET("/tree", handler.Rule.AdminRuleTree)
 		adminRule.GET("/all", handler.Rule.AdminRuleAll)
 
-		adminRule.GET(":ruleId", handler.Rule.AdminRule)
+		adminRule.GET(":nanoid", handler.Rule.AdminRule)
 		adminRule.GET("/list", handler.Rule.AdminRuleList)
 		adminRule.POST("/create", handler.Rule.AdminRuleCreate)
 		adminRule.POST("/update", handler.Rule.AdminRuleUpdate)
-		adminRule.DELETE("/delete/:ruleId", handler.Rule.AdminRuleDelete)
+		adminRule.DELETE("/delete/:nanoid", handler.Rule.AdminRuleDelete)
 	}
 
 	return router

@@ -16,8 +16,7 @@ func Dashboard(c *gin.Context) {
 func Sites(ctx *gin.Context) {
 	userId, ok := ctx.Get("userId")
 	if !ok || userId == "" {
-		ctx.AbortWithStatusJSON(respond.Message("未登录"))
-		// ctx.SecureJSON(respond.Message("未登录"))
+		ctx.SecureJSON(respond.Message("未登录"))
 		return
 	}
 

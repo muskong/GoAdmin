@@ -10,7 +10,7 @@ type _rule struct{}
 
 var Rule = &_rule{}
 
-func (*_rule) AdminRule(ruleId int) (rule *entity.AdminRule, err error) {
+func (*_rule) AdminRule(ruleId string) (rule *entity.AdminRule, err error) {
 
 	rule, err = entity.Rule.GetRule(ruleId)
 	if rule.Id <= 0 || err != nil {
@@ -52,7 +52,7 @@ func (*_rule) AdminRuleUpdate(u entity.AdminRule) error {
 	return err
 }
 
-func (*_rule) AdminRuleDelete(ruleId int) error {
+func (*_rule) AdminRuleDelete(ruleId string) error {
 	err := entity.Rule.DeleteAdminRule(ruleId)
 	if err != nil {
 		return errors.New("删除失败")
@@ -60,7 +60,7 @@ func (*_rule) AdminRuleDelete(ruleId int) error {
 	return err
 }
 
-func (*_rule) AdminRuleAll(id int) (err error, result Result) {
+func (*_rule) AdminRuleAll(id string) (err error, result Result) {
 
 	ruleData, err := entity.Rule.GetRuleAllByPid(id)
 	if len(ruleData) <= 0 || err != nil {
@@ -70,7 +70,7 @@ func (*_rule) AdminRuleAll(id int) (err error, result Result) {
 	ruleAll := []SelectInterface{}
 	for _, rule := range ruleData {
 		ruleAll = append(ruleAll, SelectInterface{
-			rule.Id,
+			rule.Nanoid,
 			rule.Title,
 			false})
 	}
@@ -86,13 +86,13 @@ func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
 		return
 	}
 
-	var ids []int
+	var ids []string
 	for _, v := range roleData {
 		ids = append(ids, v.Rules...)
 	}
 	var isAll bool
 	for _, id := range ids {
-		if id == 0 {
+		if id == "" {
 			isAll = true
 		}
 	}
@@ -147,29 +147,10 @@ func _ruleChildren(pid int, pdata map[int][]RuleTreeNode) (tree []RuleTree) {
 	return tree
 }
 
-func (*_rule) AdminRuleTree(roles []string) (result any, err error) {
-	roleData, err := entity.Role.GetRolesByNames(roles)
-	if len(roleData) <= 0 || err != nil {
-		err = errors.New("无角色数据")
-		return
-	}
-
-	var ids []int
-	for _, v := range roleData {
-		ids = append(ids, v.Rules...)
-	}
-	var isAll bool
-	for _, id := range ids {
-		if id == 0 {
-			isAll = true
-		}
-	}
+func (*_rule) AdminRuleTree() (result any, err error) {
 	var ruleData []*entity.AdminRule
-	if isAll {
-		ruleData, err = entity.Rule.GetRuleAll()
-	} else {
-		ruleData, err = entity.Rule.GetRulesByIds(ids)
-	}
+
+	ruleData, err = entity.Rule.GetRuleAll()
 
 	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("无数据")

@@ -13,14 +13,14 @@ type (
 		}
 	}
 	SelectInterface struct {
-		Value   int    `json:"Value"`
+		Value   string `json:"Value"`
 		Name    string `json:"Name"`
 		Checked bool   `json:"Checked"`
 	}
 
 	RoleRuleObject struct {
-		RoleId  int   `json:"RoleId"`
-		RuleIds []int `json:"RuleIds"`
+		RoleId  string   `json:"RoleId"`
+		RuleIds []string `json:"RuleIds"`
 	}
 	RuleTreeNode struct {
 		Id        int    `json:"Id"`
