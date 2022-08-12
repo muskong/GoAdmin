@@ -63,6 +63,7 @@ func GinRouter() *gin.Engine {
 
 	adminRule := adm.Group("/rule")
 	{
+		adminRule.GET("/group", handler.Rule.AdminRuleGroup)
 		adminRule.GET("/tree", handler.Rule.AdminRuleTree)
 		adminRule.GET("/all", handler.Rule.AdminRuleAll)
 

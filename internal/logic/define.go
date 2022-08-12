@@ -23,18 +23,20 @@ type (
 		RuleIds []string `json:"RuleIds"`
 	}
 	RuleTreeNode struct {
-		Id        int    `json:"Id"`
-		Pid       int    `json:"Pid"`
-		Type      string `json:"Type"`
-		Title     string `json:"Title"`
-		Link      string `json:"Name"`
-		Path      string `json:"Path"`
-		Icon      string `json:"Icon"`
-		MenuType  string `json:"MenuType"`
-		Url       string `json:"Url"`
-		Component string `json:"Component"`
-		Extend    string `json:"Extend"`
-		KeepAlive string `json:"KeepAlive,omitempty"`
+		Id           int    `json:"Id"`
+		Nanoid       string `json:"Nanoid"`
+		ParentNanoid string `json:"ParentNanoid"`
+		Type         string `json:"Type"`
+		Title        string `json:"Title"`
+		Link         string `json:"Name"`
+		Path         string `json:"Path"`
+		Icon         string `json:"Icon"`
+		MenuType     string `json:"MenuType"`
+		Remark       string `json:"Remark"`
+		Active       string `json:"Active"`
+		Sequence     string `json:"Sequence"`
+		CreatedAt    string `json:"CreatedAt"`
+		UpdatedAt    string `json:"UpdatedAt"`
 	}
 
 	RuleTree struct {

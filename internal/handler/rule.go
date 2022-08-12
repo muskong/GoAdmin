@@ -119,6 +119,17 @@ func (*ruleGrop) AdminRuleAll(c *gin.Context) {
 	c.SecureJSON(respond.Data(ruleData))
 }
 
+func (*ruleGrop) AdminRuleGroup(c *gin.Context) {
+	data, err := logic.Rule.AdminRuleGroupList()
+
+	if err != nil {
+		c.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+
+	c.SecureJSON(respond.Data(data))
+}
+
 func (*ruleGrop) AdminRuleTree(c *gin.Context) {
 	data, err := logic.Rule.AdminRuleTree()
 

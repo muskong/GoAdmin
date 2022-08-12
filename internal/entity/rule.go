@@ -12,7 +12,6 @@ type (
 	rule      struct{}
 	AdminRule struct {
 		Id           int             `json:"Id,omitempty" db:"id"`
-		Pid          int             `json:"Pid,omitempty" db:"pid"`
 		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
 		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
 		Type         string          `json:"Type,omitempty" db:"type"`
@@ -21,10 +20,6 @@ type (
 		Path         string          `json:"Path,omitempty" db:"path"`
 		Icon         string          `json:"Icon,omitempty" db:"icon"`
 		MenuType     string          `json:"MenuType,omitempty" db:"menu_type"`
-		Url          string          `json:"Url,omitempty" db:"url"`
-		Component    string          `json:"Component,omitempty" db:"component"`
-		Keepalive    string          `json:"Keepalive,omitempty" db:"keepalive"`
-		Extend       string          `json:"Extend,omitempty" db:"extend"`
 		Remark       string          `json:"Remark,omitempty" db:"remark"`
 		Active       string          `json:"Active,omitempty" db:"active"`
 		Sequence     string          `json:"Sequence,omitempty" db:"sequence"`

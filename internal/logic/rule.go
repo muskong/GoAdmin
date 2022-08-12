@@ -113,34 +113,49 @@ func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
 	return
 }
 
-func _tree(rules []*entity.AdminRule, pid int) []RuleTree {
+func (*_rule) AdminRuleGroupList() (result any, err error) {
+	var ruleData []*entity.AdminRule
+	ruleData, err = entity.Rule.GetRuleAll()
+	if len(ruleData) <= 0 || err != nil {
+		err = errors.New("无数据")
+		return
+	}
 
-	pdata := map[int][]RuleTreeNode{}
-	for _, rule := range rules {
-		pdata[rule.Pid] = append(pdata[rule.Pid], RuleTreeNode{
-			Id:        rule.Id,
-			Pid:       rule.Pid,
-			Type:      rule.Type,
-			Title:     rule.Title,
-			Link:      rule.Link,
-			Path:      rule.Path,
-			Icon:      rule.Icon,
-			MenuType:  rule.MenuType,
-			Url:       rule.Url,
-			Component: rule.Component,
-			Extend:    rule.Extend,
-			KeepAlive: rule.Keepalive,
+	result = _tree(ruleData, 0)
+
+	return
+}
+
+func _tree(ruleData []*entity.AdminRule, pid int) []RuleTree {
+
+	pdata := map[string][]RuleTreeNode{}
+	for _, rule := range ruleData {
+		pdata[rule.ParentNanoid] = append(pdata[rule.ParentNanoid], RuleTreeNode{
+			Id:           rule.Id,
+			Nanoid:       rule.Nanoid,
+			ParentNanoid: rule.ParentNanoid,
+			Type:         rule.Type,
+			Title:        rule.Title,
+			Link:         rule.Link,
+			Path:         rule.Path,
+			Icon:         rule.Icon,
+			MenuType:     rule.MenuType,
+			Remark:       rule.Remark,
+			Active:       rule.Active,
+			Sequence:     rule.Sequence,
+			CreatedAt:    string(rule.CreatedAt),
+			UpdatedAt:    string(rule.UpdatedAt),
 		})
 	}
 
-	return _ruleChildren(pid, pdata)
+	return _ruleChildren("", pdata)
 }
 
-func _ruleChildren(pid int, pdata map[int][]RuleTreeNode) (tree []RuleTree) {
+func _ruleChildren(pid string, pdata map[string][]RuleTreeNode) (tree []RuleTree) {
 	for _, rule := range pdata[pid] {
 		var _tree RuleTree
 		_tree.RuleTreeNode = rule
-		_tree.Children = _ruleChildren(rule.Id, pdata)
+		_tree.Children = _ruleChildren(rule.Nanoid, pdata)
 
 		tree = append(tree, _tree)
 	}

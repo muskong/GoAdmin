@@ -11,7 +11,6 @@ import (
 type (
 	AdminRole struct {
 		Id           int             `json:"Id,omitempty" db:"id"`
-		Pid          int             `json:"Pid,omitempty" db:"pid"`
 		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
 		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
 		Name         string          `json:"Name,omitempty" db:"name"`
