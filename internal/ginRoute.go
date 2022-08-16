@@ -33,7 +33,7 @@ func GinRouter() *gin.Engine {
 	adm.GET("/sites", handler.Sites)
 	adm.GET("/dashboard", handler.Dashboard)
 
-	adminUser := adm.Group("/user")
+	adminUser := adm.Group("/admin")
 	{
 		adminUser.POST("/login", handler.Auth.Login)
 

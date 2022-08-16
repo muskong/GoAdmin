@@ -12,9 +12,7 @@ type userController struct{}
 var User = &userController{}
 
 func (*userController) AdminUser(c *gin.Context) {
-	var q struct {
-		UserId int `json:"userId"`
-	}
+	var q UserResquet
 	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
@@ -86,9 +84,7 @@ func (*userController) AdminUserUpdate(c *gin.Context) {
 }
 
 func (*userController) AdminUserDelete(c *gin.Context) {
-	var q struct {
-		UserId int `json:"userId"`
-	}
+	var q UserResquet
 	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
