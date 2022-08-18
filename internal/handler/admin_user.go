@@ -12,7 +12,7 @@ type userController struct{}
 var User = &userController{}
 
 func (*userController) AdminUser(c *gin.Context) {
-	var q UserResquet
+	var q UserRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
@@ -37,7 +37,7 @@ func (*userController) AdminUserList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.User.AdminUserList(page)
+	data, err := logic.User.AdminUserList(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -54,7 +54,7 @@ func (*userController) AdminUserCreate(c *gin.Context) {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
-
+	logic.User.Context(c)
 	err = logic.User.AdminUserCreate(user)
 
 	if err != nil {
@@ -73,6 +73,7 @@ func (*userController) AdminUserUpdate(c *gin.Context) {
 		return
 	}
 
+	logic.User.Context(c)
 	err = logic.User.AdminUserUpdate(user)
 
 	if err != nil {
@@ -84,13 +85,14 @@ func (*userController) AdminUserUpdate(c *gin.Context) {
 }
 
 func (*userController) AdminUserDelete(c *gin.Context) {
-	var q UserResquet
+	var q UserRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
+	logic.User.Context(c)
 	err = logic.User.AdminUserDelete(q.UserId)
 
 	if err != nil {

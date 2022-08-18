@@ -1,6 +1,16 @@
 package logic
 
+import (
+	"encoding/json"
+
+	"github.com/gin-gonic/gin"
+	"github.com/muskong/GoAdmin/internal/entity"
+)
+
 type (
+	Logic struct {
+		Ctx *gin.Context
+	}
 	Page struct {
 		Page  int `json:"Page"`
 		Limit int `json:"Limit"`
@@ -69,6 +79,27 @@ type (
 		Children []AntTreeSelect `json:"children,omitempty"`
 	}
 )
+
+func (l *Logic) Context(ctx *gin.Context) {
+	l.Ctx = ctx
+}
+
+func (l *Logic) Log(remark string, data any) {
+	param, _ := json.Marshal(data)
+	userId, _ := l.Ctx.Get("userId")
+	userName, _ := l.Ctx.Get("userName")
+	entity.AdminLog.InsertAdminLog(&entity.AdminLogEntity{
+		AdminId:   userId.(string),
+		AdminName: userName.(string),
+		Ip:        l.Ctx.ClientIP(),
+		Url:       l.Ctx.Request.RequestURI,
+		Method:    l.Ctx.Request.Method,
+		Type:      l.Ctx.Request.Header.Get("Content-Type"),
+		Useragent: l.Ctx.Request.Header.Get("User-Agent"),
+		Param:     string(param),
+		Remark:    remark,
+	})
+}
 
 func (p *Page) getOffset() int {
 	if p.Page <= 0 {

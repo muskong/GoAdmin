@@ -40,7 +40,7 @@ func (*roleGrop) AdminRoleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.Role.AdminRoleList(page)
+	data, err := logic.Role.AdminRoleList(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -59,6 +59,7 @@ func (*roleGrop) AdminRoleCreate(c *gin.Context) {
 		return
 	}
 
+	logic.Log.Context(c)
 	err = logic.Role.AdminRoleCreate(user)
 
 	if err != nil {
@@ -76,6 +77,7 @@ func (*roleGrop) AdminRoleUpdate(c *gin.Context) {
 		return
 	}
 
+	logic.Role.Context(c)
 	err = logic.Role.AdminRoleCreate(user)
 
 	if err != nil {
@@ -94,6 +96,7 @@ func (*roleGrop) AdminRoleDelete(c *gin.Context) {
 		return
 	}
 
+	logic.Role.Context(c)
 	err = logic.Role.AdminRoleDelete(q.Nanoid)
 
 	if err != nil {
@@ -113,7 +116,7 @@ func (*roleGrop) AdminRoleRuleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.Role.AdminRoleRuleList(q.RoleId)
+	data, err := logic.Role.AdminRoleRuleList(q.RoleId)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -124,7 +127,7 @@ func (*roleGrop) AdminRoleRuleList(c *gin.Context) {
 }
 
 func (*roleGrop) AdminRoleAll(c *gin.Context) {
-	err, data := logic.Role.AdminRoleAll()
+	data, err := logic.Role.AdminRoleAll()
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -142,6 +145,7 @@ func (*roleGrop) AdminRoleSaveRule(c *gin.Context) {
 		return
 	}
 
+	logic.Role.Context(c)
 	err = logic.Role.AdminRoleSaveRule(roleRule)
 
 	if err != nil {

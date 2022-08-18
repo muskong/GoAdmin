@@ -17,9 +17,15 @@ type (
 		Name  string
 		Token string
 	}
+
+	_auth struct {
+		Logic
+	}
 )
 
-func LoginVerify(data LoginData) (jwtData JwtData, err error) {
+var Auth = &_auth{}
+
+func (l *_auth) LoginVerify(data LoginData) (jwtData JwtData, err error) {
 
 	userData, err := entity.User.GetAdminName(data.Username)
 	if userData.Id <= 0 || err != nil {
@@ -35,6 +41,8 @@ func LoginVerify(data LoginData) (jwtData JwtData, err error) {
 
 	jwtData.Name = userData.Name
 	jwtData.Token = jwt.Jwt.GenerateToken(userData.Id)
+
+	l.Log("登录", userData)
 
 	return
 }

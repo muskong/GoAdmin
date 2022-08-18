@@ -6,26 +6,28 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 )
 
-type _rule struct{}
+type _rule struct {
+	Logic
+}
 
 var Rule = &_rule{}
 
-func (*_rule) AdminRule(ruleId string) (rule *entity.AdminRule, err error) {
+func (l *_rule) AdminRule(ruleId string) (rule *entity.AdminRule, err error) {
 
 	rule, err = entity.Rule.GetRule(ruleId)
 	if rule.Id <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 
 	return
 }
 
-func (*_rule) AdminRuleList(page Page) (err error, result Result) {
+func (l *_rule) AdminRuleList(page Page) (result Result, err error) {
 
 	ruleData, ruleCount, err := entity.Rule.GetRules(page.getOffset(), page.Limit)
 	if len(ruleData) <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 
@@ -36,35 +38,38 @@ func (*_rule) AdminRuleList(page Page) (err error, result Result) {
 	return
 }
 
-func (*_rule) AdminRuleCreate(u entity.AdminRule) error {
+func (l *_rule) AdminRuleCreate(u entity.AdminRule) error {
 	rule, err := entity.Rule.InsertAdminRule(&u)
 	if rule.Id <= 0 || err != nil {
-		return errors.New("新增失败")
+		return errors.New("新增权限节点失败")
 	}
+	l.Log("新增权限节点", rule)
 	return err
 }
 
-func (*_rule) AdminRuleUpdate(u entity.AdminRule) error {
+func (l *_rule) AdminRuleUpdate(u entity.AdminRule) error {
 	rule, err := entity.Rule.UpdateAdminRule(&u)
 	if rule.Id <= 0 || err != nil {
-		return errors.New("更新失败")
+		return errors.New("更新权限节点失败")
 	}
+	l.Log("更新权限节点", rule)
 	return err
 }
 
-func (*_rule) AdminRuleDelete(ruleId string) error {
+func (l *_rule) AdminRuleDelete(ruleId string) error {
 	err := entity.Rule.DeleteAdminRule(ruleId)
 	if err != nil {
-		return errors.New("删除失败")
+		return errors.New("删除权限节点失败")
 	}
+	l.Log("删除权限节点", ruleId)
 	return err
 }
 
-func (*_rule) AdminRuleAll(id string) (err error, result Result) {
+func (l *_rule) AdminRuleAll(id string) (result Result, err error) {
 
 	ruleData, err := entity.Rule.GetRuleAllByPid(id)
 	if len(ruleData) <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 	ruleAll := []SelectInterface{}
@@ -79,7 +84,7 @@ func (*_rule) AdminRuleAll(id string) (err error, result Result) {
 	return
 }
 
-func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
+func (l *_rule) AdminRuleGroup(roles []string) (result any, err error) {
 	roleData, err := entity.Role.GetRolesByNames(roles)
 	if len(roleData) <= 0 || err != nil {
 		err = errors.New("无角色数据")
@@ -104,7 +109,7 @@ func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
 	}
 
 	if len(ruleData) <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 
@@ -113,11 +118,11 @@ func (*_rule) AdminRuleGroup(roles []string) (result any, err error) {
 	return
 }
 
-func (*_rule) AdminRuleGroupList() (result any, err error) {
+func (l *_rule) AdminRuleGroupList() (result any, err error) {
 	var ruleData []*entity.AdminRule
 	ruleData, err = entity.Rule.GetRuleAll()
 	if len(ruleData) <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 
@@ -162,13 +167,13 @@ func _ruleChildren(pid string, pdata map[string][]RuleTreeNode) (tree []RuleTree
 	return tree
 }
 
-func (*_rule) AdminRuleTree() (result any, err error) {
+func (l *_rule) AdminRuleTree() (result any, err error) {
 	var ruleData []*entity.AdminRule
 
 	ruleData, err = entity.Rule.GetRuleAll()
 
 	if len(ruleData) <= 0 || err != nil {
-		err = errors.New("无数据")
+		err = errors.New("权限节点无数据")
 		return
 	}
 

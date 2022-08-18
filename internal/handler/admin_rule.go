@@ -39,7 +39,7 @@ func (*ruleGrop) AdminRuleList(c *gin.Context) {
 		return
 	}
 
-	err, data := logic.Rule.AdminRuleList(page)
+	data, err := logic.Rule.AdminRuleList(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -57,6 +57,7 @@ func (*ruleGrop) AdminRuleCreate(c *gin.Context) {
 		return
 	}
 
+	logic.Rule.Context(c)
 	err = logic.Rule.AdminRuleCreate(user)
 
 	if err != nil {
@@ -74,6 +75,7 @@ func (*ruleGrop) AdminRuleUpdate(c *gin.Context) {
 		return
 	}
 
+	logic.Rule.Context(c)
 	err = logic.Rule.AdminRuleUpdate(rule)
 
 	if err != nil {
@@ -91,6 +93,7 @@ func (*ruleGrop) AdminRuleDelete(c *gin.Context) {
 		return
 	}
 
+	logic.Rule.Context(c)
 	err = logic.Rule.AdminRuleCreate(user)
 
 	if err != nil {
@@ -110,7 +113,7 @@ func (*ruleGrop) AdminRuleAll(c *gin.Context) {
 		return
 	}
 
-	err, ruleData := logic.Rule.AdminRuleAll(q.RuleId)
+	ruleData, err := logic.Rule.AdminRuleAll(q.RuleId)
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
 		return

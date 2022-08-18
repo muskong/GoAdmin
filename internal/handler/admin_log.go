@@ -6,19 +6,21 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-type authController struct{}
+type logController struct{}
 
-var Auth = &authController{}
+var Log = &logController{}
 
-func (*authController) Login(c *gin.Context) {
-	var userForm logic.LoginData
-	err := c.ShouldBind(&userForm)
+func (*logController) AdminLogList(c *gin.Context) {
+	var page logic.Page
+	err := c.ShouldBind(&page)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	data, err := logic.LoginVerify(userForm)
+	logic.Log.Context(c)
+
+	data, err := logic.Log.AdminLogList(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
