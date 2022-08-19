@@ -19,7 +19,6 @@ func (*logController) AdminLogList(c *gin.Context) {
 	}
 
 	logic.Log.Context(c)
-
 	data, err := logic.Log.AdminLogList(page)
 
 	if err != nil {

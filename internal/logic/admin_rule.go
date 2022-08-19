@@ -25,7 +25,7 @@ func (l *_rule) AdminRule(ruleId string) (rule *entity.AdminRule, err error) {
 
 func (l *_rule) AdminRuleList(page Page) (result Result, err error) {
 
-	ruleData, ruleCount, err := entity.Rule.GetRules(page.getOffset(), page.Limit)
+	ruleData, ruleCount, err := entity.Rule.GetRules(page.getOffset(), page.getLimit())
 	if len(ruleData) <= 0 || err != nil {
 		err = errors.New("权限节点无数据")
 		return

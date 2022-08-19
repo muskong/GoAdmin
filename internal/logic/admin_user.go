@@ -21,7 +21,7 @@ func (l *_user) AdminUser(userId int) (user *entity.AdminUser, err error) {
 }
 func (l *_user) AdminUserList(page Page) (result Result, err error) {
 
-	userData, userCount, err := entity.User.GetUsers(page.getOffset(), page.Limit)
+	userData, userCount, err := entity.User.GetUsers(page.getOffset(), page.getLimit())
 	if len(userData) <= 0 {
 		err = errors.New("无数据")
 		return

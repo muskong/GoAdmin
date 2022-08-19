@@ -12,7 +12,7 @@ import (
 func GinRouter() *gin.Engine {
 	tokenName := jwt.Jwt.GetTokenName()
 	notAuth := map[string]bool{
-		"/admin/user/login": true,
+		"/admin/admin/login": true,
 		// "/admin/sites":      true,
 	}
 
@@ -32,6 +32,7 @@ func GinRouter() *gin.Engine {
 
 	adm.GET("/sites", handler.Sites)
 	adm.GET("/dashboard", handler.Dashboard)
+	adm.GET("/logs", handler.Log.AdminLogList)
 
 	adminUser := adm.Group("/admin")
 	{

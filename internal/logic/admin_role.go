@@ -23,7 +23,7 @@ func (l *_role) AdminRole(roleId string) (role *entity.AdminRole, err error) {
 
 func (l *_role) AdminRoleList(page Page) (result Result, err error) {
 
-	userData, userCount, err := entity.Role.GetRoles(page.getOffset(), page.Limit)
+	userData, userCount, err := entity.Role.GetRoles(page.getOffset(), page.getLimit())
 	if len(userData) <= 0 || err != nil {
 		err = errors.New("无数据")
 		return

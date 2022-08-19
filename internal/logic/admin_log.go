@@ -14,7 +14,7 @@ var Log = &_log{}
 
 func (*_log) AdminLogList(page Page) (result Result, err error) {
 
-	logData, logCount, err := entity.AdminLog.GetAdminLogs(page.getOffset(), page.Limit)
+	logData, logCount, err := entity.AdminLogEntity.GetAdminLogs(page.getOffset(), page.getLimit())
 	if len(logData) <= 0 {
 		err = errors.New("无数据")
 		return

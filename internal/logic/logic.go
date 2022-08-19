@@ -5,6 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/muskong/GoAdmin/internal/entity"
+	"github.com/muskong/GoPkg/zaplog"
+	"github.com/spf13/cast"
 )
 
 type (
@@ -84,28 +86,36 @@ func (l *Logic) Context(ctx *gin.Context) {
 	l.Ctx = ctx
 }
 
-func (l *Logic) Log(remark string, data any) {
+func (l *Logic) Log(title string, data any) {
 	param, _ := json.Marshal(data)
-	userId, _ := l.Ctx.Get("userId")
-	userName, _ := l.Ctx.Get("userName")
-	entity.AdminLog.InsertAdminLog(&entity.AdminLogEntity{
-		AdminId:   userId.(string),
-		AdminName: userName.(string),
+	userId, ok := l.Ctx.Get("userId")
+	if !ok {
+		zaplog.Sugar.Error("adminlog userId")
+		userId = ""
+	}
+	entity.AdminLogEntity.InsertAdminLog(&entity.AdminLogs{
+		AdminId:   cast.ToString(userId),
 		Ip:        l.Ctx.ClientIP(),
 		Url:       l.Ctx.Request.RequestURI,
 		Method:    l.Ctx.Request.Method,
 		Type:      l.Ctx.Request.Header.Get("Content-Type"),
 		Useragent: l.Ctx.Request.Header.Get("User-Agent"),
 		Param:     string(param),
-		Remark:    remark,
+		Title:     title,
 	})
 }
 
+func (p *Page) getLimit() int {
+	if p.Limit <= 0 {
+		p.Limit = 10
+	}
+	return p.Limit
+}
 func (p *Page) getOffset() int {
 	if p.Page <= 0 {
 		p.Page = 1
 	}
-	return p.Limit * (p.Page - 1)
+	return p.getLimit() * (p.Page - 1)
 }
 
 func AntdTree(parentNanoid string, pdata map[string][]AntTreeNode) (tree []AntTreeSelect) {

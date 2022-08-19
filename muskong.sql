@@ -7,14 +7,13 @@ DROP TABLE IF EXISTS admin_logs;
 CREATE TABLE `admin_logs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `admin_id` int unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
-  `admin_name` varchar(255) NOT NULL DEFAULT '' COMMENT '管理员用户名',
   `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'ip地址',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '请求链接',
   `method` varchar(255) NOT NULL DEFAULT '' COMMENT '请求类型',
   `type` varchar(255) NOT NULL DEFAULT '' COMMENT '资源类型',
   `param` text NOT NULL COMMENT '请求参数',
   `useragent` text COMMENT 'User-Agent',
-  `remark` longtext COMMENT '日志',
+  `title` varchar(255) COMMENT '操作',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
