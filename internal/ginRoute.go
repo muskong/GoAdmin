@@ -75,5 +75,45 @@ func GinRouter() *gin.Engine {
 		adminRule.DELETE("/delete/:nanoid", handler.Rule.AdminRuleDelete)
 	}
 
+	productRule := adm.Group("/product")
+	{
+		productRule.GET("/all", handler.ProductHandler.ProductSelect)
+		productRule.GET("/list", handler.ProductHandler.Products)
+		productRule.POST("/create", handler.ProductHandler.ProductCreate)
+		productRule.POST("/update", handler.ProductHandler.ProductUpdate)
+		productRule.DELETE("/delete/:id", handler.ProductHandler.ProductDelete)
+	}
+	productAmountRule := adm.Group("/productAmount")
+	{
+		productAmountRule.GET("/list", handler.ProductAmountHandler.ProductAmounts)
+		productAmountRule.POST("/create", handler.ProductAmountHandler.ProductAmountCreate)
+		productAmountRule.POST("/update", handler.ProductAmountHandler.ProductAmountUpdate)
+		productAmountRule.DELETE("/delete/:id", handler.ProductAmountHandler.ProductAmountDelete)
+	}
+
+	productCardRule := adm.Group("/productCard")
+	{
+		productCardRule.GET("/list", handler.ProductCardHandler.ProductCards)
+		productCardRule.POST("/create", handler.ProductCardHandler.ProductCardCreate)
+		productCardRule.POST("/update", handler.ProductCardHandler.ProductCardUpdate)
+		productCardRule.DELETE("/delete/:id", handler.ProductCardHandler.ProductCardDelete)
+	}
+
+	productChannelRule := adm.Group("/productChannel")
+	{
+		productChannelRule.GET("/list", handler.ProductChannelHandler.ProductChannels)
+		productChannelRule.POST("/create", handler.ProductChannelHandler.ProductChannelCreate)
+		productChannelRule.POST("/update", handler.ProductChannelHandler.ProductChannelUpdate)
+		productChannelRule.DELETE("/delete/:id", handler.ProductChannelHandler.ProductChannelDelete)
+	}
+
+	productServiceRule := adm.Group("/productService")
+	{
+		productServiceRule.GET("/list", handler.ProductServiceHandler.ProductServices)
+		productServiceRule.POST("/create", handler.ProductServiceHandler.ProductServiceCreate)
+		productServiceRule.POST("/update", handler.ProductServiceHandler.ProductServiceUpdate)
+		productServiceRule.DELETE("/delete/:id", handler.ProductServiceHandler.ProductServiceDelete)
+	}
+
 	return router
 }

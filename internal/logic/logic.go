@@ -40,10 +40,8 @@ type (
 		ParentNanoid string `json:"ParentNanoid"`
 		Type         string `json:"Type"`
 		Title        string `json:"Title"`
-		Link         string `json:"Name"`
 		Path         string `json:"Path"`
 		Icon         string `json:"Icon"`
-		MenuType     string `json:"MenuType"`
 		Remark       string `json:"Remark"`
 		Active       string `json:"Active"`
 		Sequence     string `json:"Sequence"`

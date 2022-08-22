@@ -7,4 +7,8 @@ type (
 	UserRequest struct {
 		UserId int `json:"nanoid" uri:"nanoid" binding:"required"`
 	}
+	ProductRequest struct {
+		Id   int `json:"id" uri:"id" binding:"required"`
+		Uuid int `json:"uuid" uri:"uuid" binding:"required"`
+	}
 )

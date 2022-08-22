@@ -1,40 +1,55 @@
 -- Database export via SQLPro (https://www.sqlprostudio.com/allapps.html)
--- Exported by a at 16-08-2022 15:39.
+-- Exported by a at 22-08-2022 17:54.
 -- WARNING: This file may contain descructive statements such as DROPs.
 -- Please ensure that you are running the script at the proper location.
 
+
+-- BEGIN TABLE admin_logs
 DROP TABLE IF EXISTS admin_logs;
 CREATE TABLE `admin_logs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `admin_id` int unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
-  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'ip地址',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '请求链接',
-  `method` varchar(255) NOT NULL DEFAULT '' COMMENT '请求类型',
-  `type` varchar(255) NOT NULL DEFAULT '' COMMENT '资源类型',
-  `param` text NOT NULL COMMENT '请求参数',
-  `useragent` text COMMENT 'User-Agent',
-  `title` varchar(255) COMMENT '操作',
+  `ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'ip地址',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '请求链接',
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '请求类型',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '资源类型',
+  `param` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求参数',
+  `useragent` text COLLATE utf8mb4_unicode_ci COMMENT 'User-Agent',
+  `title` longtext COLLATE utf8mb4_unicode_ci COMMENT '日志',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
+
+-- Inserting 7 rows into admin_logs
+-- Insert batch #1
+INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, title, created_at) VALUES
+(1, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '登录', '2022-08-19 09:08:09'),
+(2, 1, '192.168.50.35', '/admin/role/delete/4861258191949588', 'DELETE', '', '"4861258191949588"', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '删除角色', '2022-08-19 09:11:02'),
+(3, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '登录', '2022-08-19 11:08:07'),
+(4, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '登录', '2022-08-22 15:12:07'),
+(5, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":78,"Nanoid":"7392685922348476","Type":"menu_dir","Link":"product","Path":"product/products","Icon":"\\u003cCreditCardTwoTone /\\u003e","MenuType":"sss","Remark":"产品管理","Active":"allow","Sequence":"1"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 15:19:01'),
+(6, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":79,"Nanoid":"5891449357514311","ParentNanoId":"7392685922348476","Type":"menu","Title":"产品管理","Link":"product/products","Path":"product/products","Icon":"\\u003cCreditCardTwoTone /\\u003e","MenuType":"tab","Remark":"产品管理","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 15:23:09'),
+(7, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":80,"Nanoid":"9611653648573624","ParentNanoId":"7392685922348476","Type":"menu","Title":"卡类管理","Path":"product/card","Icon":"\\u003cCreditCardTwoTone /\\u003e","Remark":"各种卡","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 16:24:00');
+
+-- END TABLE admin_logs
 
 -- BEGIN TABLE admin_roles
 DROP TABLE IF EXISTS admin_roles;
 CREATE TABLE `admin_roles` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
-  `name` varchar(255) NOT NULL DEFAULT '',
+  `nanoid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
+  `parent_nanoid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '父级ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `rules` json DEFAULT NULL,
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `state` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '启用allow, 禁用deny',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '启用allow, 禁用deny',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表';
 
 -- Inserting 15 rows into admin_roles
 -- Insert batch #1
@@ -52,8 +67,8 @@ INSERT INTO admin_roles (id, nanoid, parent_nanoid, name, rules, description, st
 (14, '6225617619347572', '', 'testwwww', '["1"]', 'asdf', 'allow', '2022-08-11 13:34:03', '2022-08-11 05:34:58', '2022-08-11 13:34:58'),
 (15, '8889411166723482', '3372526697693894', 'tewwewda', '["1", "4", "5", "6", "7", "9", "10", "11", "12", "14", "15", "16", "17", "18", "20"]', 'bfdsbsd', 'allow', '2022-08-11 13:35:17', '2022-08-11 13:35:17', NULL),
 (16, '2927997876379139', '', 'testsad', '["1"]', 'fsdfbfdsg', 'allow', '2022-08-11 13:36:09', '2022-08-11 13:36:09', NULL),
-(17, '6564342879574111', '', 'test2', NULL, '', '', '2022-08-15 09:42:01', '2022-08-15 09:42:01', NULL),
-(18, '4861258191949588', '', 'testew2', NULL, '', '', '2022-08-15 09:43:02', '2022-08-15 09:43:02', NULL);
+(17, '6564342879574111', '', 'test2', NULL, '', '', '2022-08-15 09:42:01', '2022-08-19 01:09:27', '2022-08-19 09:09:27'),
+(18, '4861258191949588', '', 'testew2', NULL, '', '', '2022-08-15 09:43:02', '2022-08-19 01:11:02', '2022-08-19 09:11:02');
 
 -- END TABLE admin_roles
 
@@ -61,103 +76,105 @@ INSERT INTO admin_roles (id, nanoid, parent_nanoid, name, rules, description, st
 DROP TABLE IF EXISTS admin_rules;
 CREATE TABLE `admin_rules` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
-  `type` varchar(255) NOT NULL DEFAULT 'menu' COMMENT '类型:menu_dir=菜单目录,menu=菜单项,button=页面按钮',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `link` varchar(255) NOT NULL DEFAULT '' COMMENT '规则名称',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路由路径',
-  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
-  `menu_type` varchar(255) DEFAULT NULL COMMENT '菜单类型:tab=选项卡,link=链接,iframe=Iframe',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `nanoid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
+  `parent_nanoid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '父级ID',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menu' COMMENT '类型:menu_dir=菜单目录,menu=菜单项,button=页面按钮',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '路由路径',
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图标',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   `sequence` int NOT NULL DEFAULT '0' COMMENT '权重(排序)',
-  `active` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
+  `active` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sequence` (`sequence`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
 
--- Inserting 76 rows into admin_rules
+-- Inserting 79 rows into admin_rules
 -- Insert batch #1
-INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, icon, menu_type, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
-(1, '869326', '', 'menu', '控制台', 'dashboard/dashboard', 'dashboard', 'fa fa-dashboard', 'tab', 'remark_text', 999, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(2, '469424', '', 'menu_dir', '权限管理', 'permission', 'permission', 'fa fa-group', NULL, '', 100, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(3, '995496', '469424', 'menu', '角色组管理', 'permission/role', 'permission/role', 'fa fa-group', 'tab', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(4, '382231', '995496', 'button', '列表', 'permission/role/list', '', '', NULL, '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(5, '187734', '995496', 'button', '创建', 'permission/role/create', '', '', NULL, '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(6, '383971', '995496', 'button', '更新', 'permission/role/update', '', '', NULL, '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(7, '762261', '995496', 'button', '删除', 'permission/role/delete', '', '', NULL, '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(8, '252513', '469424', 'menu', '管理员管理', 'permission/admin', 'permission/admin', 'el-icon-UserFilled', 'tab', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(9, '447785', '252513', 'button', '列表', 'permission/admin/list', '', '', NULL, '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(10, '833888', '252513', 'button', '创建', 'permission/admin/create', '', '', NULL, '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(11, '437416', '252513', 'button', '更新', 'permission/admin/update', '', '', NULL, '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(12, '135388', '252513', 'button', '删除', 'permission/admin/delete', '', '', NULL, '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(13, '864946', '469424', 'menu', '菜单规则管理', 'permission/rule', 'permission/rule', 'el-icon-Grid', 'tab', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(14, '272759', '864946', 'button', '列表', 'permission/rule/list', '', '', NULL, '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(15, '758594', '864946', 'button', '创建', 'permission/rule/create', '', '', NULL, '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(16, '942222', '864946', 'button', '更新', 'permission/rule/update', '', '', NULL, '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(17, '348275', '864946', 'button', '删除', 'permission/rule/delete', '', '', NULL, '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(18, '317685', '864946', 'button', '排序', 'permission/rule/sortable', '', '', NULL, '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(19, '663264', '469424', 'menu', '管理员日志管理', 'permission/adminLog', 'permission/adminLog', 'el-icon-List', 'tab', '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(20, '156269', '663264', 'button', '列表', 'permission/adminLog/list', '', '', NULL, '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(21, '796397', '', 'menu_dir', '会员管理', 'user', 'user', 'fa fa-drivers-license', NULL, '', 95, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(22, '215312', '796397', 'menu', '会员管理', 'user/user', 'user/user', 'fa fa-user', 'tab', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(23, '696251', '215312', 'button', '列表', 'user/user/list', '', '', NULL, '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(24, '947511', '215312', 'button', '创建', 'user/user/create', '', '', NULL, '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(25, '723213', '215312', 'button', '更新', 'user/user/update', '', '', NULL, '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(26, '342833', '215312', 'button', '删除', 'user/user/delete', '', '', NULL, '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(27, '387659', '796397', 'menu', '会员分组管理', 'user/group', 'user/group', 'fa fa-group', 'tab', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(28, '484281', '387659', 'button', '列表', 'user/group/list', '', '', NULL, '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(29, '244519', '387659', 'button', '创建', 'user/group/create', '', '', NULL, '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(30, '479185', '387659', 'button', '更新', 'user/group/update', '', '', NULL, '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(31, '143669', '387659', 'button', '删除', 'user/group/delete', '', '', NULL, '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(32, '639121', '796397', 'menu', '会员规则管理', 'user/rule', 'user/rule', 'fa fa-th-list', 'tab', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(33, '542498', '639121', 'button', '列表', 'user/rule/list', '', '', NULL, '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(34, '293761', '639121', 'button', '创建', 'user/rule/create', '', '', NULL, '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(35, '335887', '639121', 'button', '更新', 'user/rule/update', '', '', NULL, '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(36, '967895', '639121', 'button', '删除', 'user/rule/delete', '', '', NULL, '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(37, '985743', '639121', 'button', '快速排序', 'user/rule/sortable', '', '', NULL, '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(38, '942859', '796397', 'menu', '会员余额管理', 'user/moneyLog', 'user/moneyLog', 'el-icon-Money', 'tab', '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(39, '192636', '942859', 'button', '列表', 'user/moneyLog/list', '', '', NULL, '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(40, '463718', '942859', 'button', '创建', 'user/moneyLog/create', '', '', NULL, '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(41, '955577', '796397', 'menu', '会员积分管理', 'user/scoreLog', 'user/scoreLog', 'el-icon-Discount', 'tab', '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(42, '891947', '955577', 'button', '列表', 'user/scoreLog/list', '', '', NULL, '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(43, '258199', '955577', 'button', '创建', 'user/scoreLog/create', '', '', NULL, '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(44, '951275', '', 'menu_dir', '常规管理', 'routine', 'routine', 'fa fa-cogs', NULL, '', 89, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(45, '145924', '951275', 'menu', '系统配置', 'routine/config', 'routine/config', 'el-icon-Tools', 'tab', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(46, '615994', '145924', 'button', '列表', 'routine/config/list', '', '', NULL, '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(47, '624617', '145924', 'button', '更新', 'routine/config/update', '', '', NULL, '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(48, '217843', '951275', 'menu', '附件管理', 'routine/attachment', 'routine/attachment', 'fa fa-folder', 'tab', 'remark_text', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(49, '424991', '217843', 'button', '列表', 'routine/attachment/list', '', '', NULL, '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(50, '977679', '217843', 'button', '更新', 'routine/attachment/update', '', '', NULL, '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(51, '531283', '217843', 'button', '删除', 'routine/attachment/delete', '', '', NULL, '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(52, '818444', '951275', 'menu', '个人资料', 'routine/adminInfo', 'routine/adminInfo', 'fa fa-user', 'tab', '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(53, '552862', '818444', 'button', '列表', 'routine/adminInfo/list', '', '', NULL, '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(54, '895752', '818444', 'button', '更新', 'routine/adminInfo/update', '', '', NULL, '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(55, '252638', '', 'menu_dir', '数据安全管理', 'security', 'security', 'fa fa-shield', NULL, '', 85, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(56, '826733', '252638', 'menu', '数据回收站', 'security/dataRecycleLog', 'security/dataRecycleLog', 'fa fa-database', 'tab', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(57, '458777', '826733', 'button', '列表', 'security/dataRecycleLog/list', '', '', NULL, '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(58, '341377', '826733', 'button', '删除', 'security/dataRecycleLog/delete', '', '', NULL, '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(59, '522676', '826733', 'button', '还原', 'security/dataRecycleLog/restore', '', '', NULL, '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(60, '993484', '826733', 'button', '查看详情', 'security/dataRecycleLog/info', '', '', NULL, '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(61, '724847', '252638', 'menu', '敏感数据修改记录', 'security/sensitiveDataLog', 'security/sensitiveDataLog', 'fa fa-expeditedssl', 'tab', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(62, '519398', '724847', 'button', '列表', 'security/sensitiveDataLog/list', '', '', NULL, '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(63, '573616', '724847', 'button', '删除', 'security/sensitiveDataLog/delete', '', '', NULL, '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(64, '864146', '724847', 'button', '回滚', 'security/sensitiveDataLog/rollback', '', '', NULL, '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(65, '718486', '724847', 'button', '查看详情', 'security/sensitiveDataLog/info', '', '', NULL, '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(66, '745264', '252638', 'menu', '数据回收规则管理', 'security/dataRecycle', 'security/dataRecycle', 'fa fa-database', 'tab', '在此定义需要回收的数据，实现数据自动统一回收', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(67, '431318', '745264', 'button', '列表', 'security/dataRecycle/list', '', '', NULL, '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(68, '228327', '745264', 'button', '创建', 'security/dataRecycle/create', '', '', NULL, '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(69, '519558', '745264', 'button', '更新', 'security/dataRecycle/update', '', '', NULL, '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(70, '646418', '745264', 'button', '删除', 'security/dataRecycle/delete', '', '', NULL, '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(71, '242624', '252638', 'menu', '敏感字段规则管理', 'security/sensitiveData', 'security/sensitiveData', 'fa fa-expeditedssl', 'tab', '在此定义需要保护的敏感字段，随后系统将自动监听该字段的修改操作，并提供了敏感字段的修改回滚功能', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(72, '953257', '242624', 'button', '列表', 'security/sensitiveData/list', '', '', NULL, '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(73, '789782', '242624', 'button', '创建', 'security/sensitiveData/create', '', '', NULL, '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(74, '427915', '242624', 'button', '更新', 'security/sensitiveData/update', '', '', NULL, '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(75, '691168', '242624', 'button', '删除', 'security/sensitiveData/delete', '', '', NULL, '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
-(77, '738529', '145924', 'button', '创建', 'routine/config/create', '', '', NULL, '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL);
+INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, icon, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
+(1, '869326', '', 'menu', '控制台', 'dashboard/dashboard', 'dashboard', 'fa fa-dashboard', 'remark_text', 999, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
+(2, '469424', '', 'menu_dir', '权限管理', 'permission', 'permission', 'fa fa-group', '', 100, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
+(3, '995496', '469424', 'menu', '角色组管理', 'permission/role', 'permission/role', 'fa fa-group', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(4, '382231', '995496', 'button', '列表', 'permission/role/list', '', '', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(5, '187734', '995496', 'button', '创建', 'permission/role/create', '', '', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(6, '383971', '995496', 'button', '更新', 'permission/role/update', '', '', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(7, '762261', '995496', 'button', '删除', 'permission/role/delete', '', '', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(8, '252513', '469424', 'menu', '管理员管理', 'permission/admin', 'permission/admin', 'el-icon-UserFilled', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(9, '447785', '252513', 'button', '列表', 'permission/admin/list', '', '', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(10, '833888', '252513', 'button', '创建', 'permission/admin/create', '', '', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(11, '437416', '252513', 'button', '更新', 'permission/admin/update', '', '', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(12, '135388', '252513', 'button', '删除', 'permission/admin/delete', '', '', '', 98, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(13, '864946', '469424', 'menu', '菜单规则管理', 'permission/rule', 'permission/rule', 'el-icon-Grid', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(14, '272759', '864946', 'button', '列表', 'permission/rule/list', '', '', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(15, '758594', '864946', 'button', '创建', 'permission/rule/create', '', '', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(16, '942222', '864946', 'button', '更新', 'permission/rule/update', '', '', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(17, '348275', '864946', 'button', '删除', 'permission/rule/delete', '', '', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(18, '317685', '864946', 'button', '排序', 'permission/rule/sortable', '', '', '', 97, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(19, '663264', '469424', 'menu', '管理员日志管理', 'permission/adminLog', 'permission/log', 'el-icon-List', '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-19 01:39:50', NULL),
+(20, '156269', '663264', 'button', '列表', 'permission/adminLog/list', '', '', '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(21, '796397', '', 'menu_dir', '会员管理', 'user', 'user', 'fa fa-drivers-license', '', 95, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
+(22, '215312', '796397', 'menu', '会员管理', 'user/user', 'user/user', 'fa fa-user', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(23, '696251', '215312', 'button', '列表', 'user/user/list', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(24, '947511', '215312', 'button', '创建', 'user/user/create', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(25, '723213', '215312', 'button', '更新', 'user/user/update', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(26, '342833', '215312', 'button', '删除', 'user/user/delete', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(27, '387659', '796397', 'menu', '会员分组管理', 'user/group', 'user/group', 'fa fa-group', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(28, '484281', '387659', 'button', '列表', 'user/group/list', '', '', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(29, '244519', '387659', 'button', '创建', 'user/group/create', '', '', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(30, '479185', '387659', 'button', '更新', 'user/group/update', '', '', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(31, '143669', '387659', 'button', '删除', 'user/group/delete', '', '', '', 93, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(32, '639121', '796397', 'menu', '会员规则管理', 'user/rule', 'user/rule', 'fa fa-th-list', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(33, '542498', '639121', 'button', '列表', 'user/rule/list', '', '', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(34, '293761', '639121', 'button', '创建', 'user/rule/create', '', '', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(35, '335887', '639121', 'button', '更新', 'user/rule/update', '', '', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(36, '967895', '639121', 'button', '删除', 'user/rule/delete', '', '', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(37, '985743', '639121', 'button', '快速排序', 'user/rule/sortable', '', '', '', 92, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(38, '942859', '796397', 'menu', '会员余额管理', 'user/moneyLog', 'user/moneyLog', 'el-icon-Money', '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(39, '192636', '942859', 'button', '列表', 'user/moneyLog/list', '', '', '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(40, '463718', '942859', 'button', '创建', 'user/moneyLog/create', '', '', '', 91, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(41, '955577', '796397', 'menu', '会员积分管理', 'user/scoreLog', 'user/scoreLog', 'el-icon-Discount', '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(42, '891947', '955577', 'button', '列表', 'user/scoreLog/list', '', '', '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(43, '258199', '955577', 'button', '创建', 'user/scoreLog/create', '', '', '', 90, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(44, '951275', '', 'menu_dir', '常规管理', 'routine', 'routine', 'fa fa-cogs', '', 89, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
+(45, '145924', '951275', 'menu', '系统配置', 'routine/config', 'routine/config', 'el-icon-Tools', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(46, '615994', '145924', 'button', '列表', 'routine/config/list', '', '', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(47, '624617', '145924', 'button', '更新', 'routine/config/update', '', '', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(48, '217843', '951275', 'menu', '附件管理', 'routine/attachment', 'routine/attachment', 'fa fa-folder', 'remark_text', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(49, '424991', '217843', 'button', '列表', 'routine/attachment/list', '', '', '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(50, '977679', '217843', 'button', '更新', 'routine/attachment/update', '', '', '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(51, '531283', '217843', 'button', '删除', 'routine/attachment/delete', '', '', '', 87, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(52, '818444', '951275', 'menu', '个人资料', 'routine/adminInfo', 'routine/adminInfo', 'fa fa-user', '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(53, '552862', '818444', 'button', '列表', 'routine/adminInfo/list', '', '', '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(54, '895752', '818444', 'button', '更新', 'routine/adminInfo/update', '', '', '', 86, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(55, '252638', '', 'menu_dir', '数据安全管理', 'security', 'security', 'fa fa-shield', '', 85, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
+(56, '826733', '252638', 'menu', '数据回收站', 'security/dataRecycleLog', 'security/dataRecycleLog', 'fa fa-database', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(57, '458777', '826733', 'button', '列表', 'security/dataRecycleLog/list', '', '', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(58, '341377', '826733', 'button', '删除', 'security/dataRecycleLog/delete', '', '', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(59, '522676', '826733', 'button', '还原', 'security/dataRecycleLog/restore', '', '', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(60, '993484', '826733', 'button', '查看详情', 'security/dataRecycleLog/info', '', '', '', 84, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(61, '724847', '252638', 'menu', '敏感数据修改记录', 'security/sensitiveDataLog', 'security/sensitiveDataLog', 'fa fa-expeditedssl', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(62, '519398', '724847', 'button', '列表', 'security/sensitiveDataLog/list', '', '', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(63, '573616', '724847', 'button', '删除', 'security/sensitiveDataLog/delete', '', '', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(64, '864146', '724847', 'button', '回滚', 'security/sensitiveDataLog/rollback', '', '', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(65, '718486', '724847', 'button', '查看详情', 'security/sensitiveDataLog/info', '', '', '', 83, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(66, '745264', '252638', 'menu', '数据回收规则管理', 'security/dataRecycle', 'security/dataRecycle', 'fa fa-database', '在此定义需要回收的数据，实现数据自动统一回收', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(67, '431318', '745264', 'button', '列表', 'security/dataRecycle/list', '', '', '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(68, '228327', '745264', 'button', '创建', 'security/dataRecycle/create', '', '', '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(69, '519558', '745264', 'button', '更新', 'security/dataRecycle/update', '', '', '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(70, '646418', '745264', 'button', '删除', 'security/dataRecycle/delete', '', '', '', 82, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(71, '242624', '252638', 'menu', '敏感字段规则管理', 'security/sensitiveData', 'security/sensitiveData', 'fa fa-expeditedssl', '在此定义需要保护的敏感字段，随后系统将自动监听该字段的修改操作，并提供了敏感字段的修改回滚功能', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(72, '953257', '242624', 'button', '列表', 'security/sensitiveData/list', '', '', '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(73, '789782', '242624', 'button', '创建', 'security/sensitiveData/create', '', '', '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(74, '427915', '242624', 'button', '更新', 'security/sensitiveData/update', '', '', '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(75, '691168', '242624', 'button', '删除', 'security/sensitiveData/delete', '', '', '', 81, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(77, '738529', '145924', 'button', '创建', 'routine/config/create', '', '', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(78, '7392685922348476', '', 'menu_dir', '产品管理', 'product', 'product/products', '<CreditCardTwoTone />', '产品管理', 99, 'allow', '2022-08-22 15:19:01', '2022-08-22 08:10:45', NULL),
+(79, '5891449357514311', '7392685922348476', 'menu', '产品管理', 'product/products', 'product/products', '<CreditCardTwoTone />', '产品管理', 99, 'allow', '2022-08-22 15:23:09', '2022-08-22 15:23:09', NULL),
+(80, '9611653648573624', '7392685922348476', 'menu', '卡类管理', '', 'product/card', '<CreditCardTwoTone />', '各种卡', 99, 'allow', '2022-08-22 16:24:00', '2022-08-22 16:24:00', NULL);
 
 -- END TABLE admin_rules
 
@@ -165,14 +182,14 @@ INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, i
 DROP TABLE IF EXISTS admin_users;
 CREATE TABLE `admin_users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT '',
-  `roles` varchar(255) DEFAULT '',
-  `password` varchar(255) DEFAULT '',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员表';
 
 -- Inserting 2 rows into admin_users
 -- Insert batch #1
@@ -186,11 +203,11 @@ INSERT INTO admin_users (id, name, roles, password, created_at, updated_at, dele
 DROP TABLE IF EXISTS bank_prcptcds;
 CREATE TABLE `bank_prcptcds` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `bankname` varchar(255) NOT NULL,
-  `bank_code` varchar(255) NOT NULL COMMENT '银行编号',
-  `prcptcd` varchar(255) NOT NULL COMMENT '行号',
-  `city_code` varchar(255) DEFAULT NULL COMMENT '所属地区编号',
-  `province` varchar(255) DEFAULT NULL,
+  `bankname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行编号',
+  `prcptcd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '行号',
+  `city_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '所属地区编号',
+  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -208,12 +225,12 @@ CREATE TABLE `bank_prcptcds` (
 DROP TABLE IF EXISTS banks;
 CREATE TABLE `banks` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `abbr` varchar(255) DEFAULT NULL,
+  `abbr` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` int NOT NULL DEFAULT '1',
-  `bankname` varchar(255) DEFAULT NULL,
-  `logo` varchar(255) DEFAULT NULL,
-  `logo1` varchar(255) DEFAULT NULL,
-  `procode` varchar(255) DEFAULT NULL,
+  `bankname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `procode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='银行';
 
@@ -227,9 +244,9 @@ CREATE TABLE `banks` (
 DROP TABLE IF EXISTS card_orders;
 CREATE TABLE `card_orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `order_number` varchar(255) NOT NULL COMMENT '唯一ID',
-  `queue` varchar(255) NOT NULL DEFAULT 'queue' COMMENT '队列状态(queue等待执行, hang执行中, end执行结束)',
-  `state` varchar(255) NOT NULL DEFAULT '' COMMENT '订单状态(hang处理中, success处理成功, error发送错误)',
+  `order_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'queue' COMMENT '队列状态(queue等待执行, hang执行中, end执行结束)',
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单状态(hang处理中, success处理成功, error发送错误)',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -248,10 +265,10 @@ CREATE TABLE `card_orders` (
 DROP TABLE IF EXISTS configs;
 CREATE TABLE `configs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) DEFAULT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名称',
-  `value` text,
-  `title` varchar(255) DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类名称',
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -264,26 +281,6 @@ CREATE TABLE `configs` (
 
 
 -- END TABLE configs
-
--- BEGIN TABLE config_apis
-DROP TABLE IF EXISTS config_apis;
-CREATE TABLE `config_apis` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `token` varchar(255) NOT NULL DEFAULT '' COMMENT '访问密钥',
-  `status` varchar(255) NOT NULL DEFAULT '' COMMENT '状态(allow启用, deny禁用)',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='对外接口配置信息';
-
--- Table config_apis contains no data. No inserts have been genrated.
--- Inserting 0 rows into config_apis
-
-
--- END TABLE config_apis
 
 -- BEGIN TABLE notification_setting
 DROP TABLE IF EXISTS notification_setting;
@@ -332,7 +329,7 @@ CREATE TABLE `orders` (
   `story_attitude_id` int NOT NULL,
   `story_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `state` varchar(255) NOT NULL COMMENT '状态: 未支付unpaid, 已支付paid, 结束finish, 退款申请refund, 已退款refunded',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '状态: 未支付unpaid, 已支付paid, 结束finish, 退款申请refund, 已退款refunded',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -341,7 +338,7 @@ CREATE TABLE `orders` (
   KEY `index_user` (`user_id`),
   KEY `index_attitude` (`story_attitude_id`),
   KEY `index_story` (`story_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事订单表';
 
 -- Inserting 12 rows into orders
 -- Insert batch #1
@@ -361,14 +358,139 @@ INSERT INTO orders (id, story_attitude_id, story_id, user_id, state, created_at,
 
 -- END TABLE orders
 
+-- BEGIN TABLE product_amounts
+DROP TABLE IF EXISTS product_amounts;
+CREATE TABLE `product_amounts` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `amount_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品金额唯一ID',
+  `amount` decimal(10,4) NOT NULL,
+  `rate` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `rate_sys` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品金额';
+
+-- Table product_amounts contains no data. No inserts have been genrated.
+-- Inserting 0 rows into product_amounts
+
+
+-- END TABLE product_amounts
+
+-- BEGIN TABLE product_cards
+DROP TABLE IF EXISTS product_cards;
+CREATE TABLE `product_cards` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `card_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品唯一ID',
+  `channel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道',
+  `channel_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道代码',
+  `class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `icon_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片1',
+  `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
+  `single` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以单张提交卡密 allow是, deny否',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
+  `regularity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '验证规则',
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price_min` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `price_max` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `example` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '例子',
+  `sys_rate` decimal(5,4) NOT NULL DEFAULT '0.0000',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `channel` (`channel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
+
+-- Table product_cards contains no data. No inserts have been genrated.
+-- Inserting 0 rows into product_cards
+
+
+-- END TABLE product_cards
+
+-- BEGIN TABLE product_channels
+DROP TABLE IF EXISTS product_channels;
+CREATE TABLE `product_channels` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `channel_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品渠道唯一ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道名称',
+  `channel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道(web.pc, web.mobile, api)',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `channel_uuid` (`channel_uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
+
+-- Table product_channels contains no data. No inserts have been genrated.
+-- Inserting 0 rows into product_channels
+
+
+-- END TABLE product_channels
+
+-- BEGIN TABLE product_services
+DROP TABLE IF EXISTS product_services;
+CREATE TABLE `product_services` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `service_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品服务商唯一ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类名',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
+  `content` json DEFAULT NULL COMMENT '接口配置信息',
+  `fields` json DEFAULT NULL COMMENT '配置字段',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `qq` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `install` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'uninstall' COMMENT 'uninstall未安装 installed已安装 error已安装文件丢失',
+  `service_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api卡类接口, bank银行接口, recharge充值接口, tel话单接口',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `service_uuid` (`service_uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
+
+-- Table product_services contains no data. No inserts have been genrated.
+-- Inserting 0 rows into product_services
+
+
+-- END TABLE product_services
+
+-- BEGIN TABLE products
+DROP TABLE IF EXISTS products;
+CREATE TABLE `products` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `product_card_id` int unsigned NOT NULL DEFAULT '0' COMMENT '卡类ID',
+  `product_amount_id` int unsigned NOT NULL DEFAULT '0' COMMENT '金额ID',
+  `product_channel_id` int unsigned NOT NULL DEFAULT '0' COMMENT '渠道ID',
+  `product_service_id` int unsigned NOT NULL DEFAULT '0' COMMENT '第三方处理ID',
+  `weight` int unsigned NOT NULL DEFAULT '0' COMMENT '金额在销卡中服务商占比, 权重[满分100]',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `product_card_id` (`product_card_id`),
+  KEY `product_amount_id` (`product_amount_id`),
+  KEY `product_channel_id` (`product_channel_id`),
+  KEY `product_service_id` (`product_service_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
+
+-- Table products contains no data. No inserts have been genrated.
+-- Inserting 0 rows into products
+
+
+-- END TABLE products
+
 -- BEGIN TABLE stories
 DROP TABLE IF EXISTS stories;
 CREATE TABLE `stories` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `code` varchar(255) NOT NULL COMMENT '编号',
-  `content` text COMMENT '内容',
-  `state` varchar(255) NOT NULL DEFAULT 'one' COMMENT '状态: 第几集one..., 剧终:end',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编号',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '内容',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'one' COMMENT '状态: 第几集one..., 剧终:end',
   `rate` tinyint NOT NULL DEFAULT '0' COMMENT '赎回费',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '单价',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -376,7 +498,7 @@ CREATE TABLE `stories` (
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事表';
 
 -- Inserting 1 row into stories
 -- Insert batch #1
@@ -391,15 +513,15 @@ CREATE TABLE `story_attitudes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `pid` int NOT NULL,
   `story_id` int NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `state` varchar(255) NOT NULL COMMENT '状态: 允许allow, 禁止deny',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '状态: 允许allow, 禁止deny',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_pid` (`pid`),
   KEY `index_story_id` (`story_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事态度表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事态度表';
 
 -- Inserting 2 rows into story_attitudes
 -- Insert batch #1
@@ -414,8 +536,8 @@ DROP TABLE IF EXISTS story_progress;
 CREATE TABLE `story_progress` (
   `id` int NOT NULL AUTO_INCREMENT,
   `story_id` int NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text COMMENT '内容',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '内容',
   `date` datetime NOT NULL COMMENT '发生的时间',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -434,8 +556,8 @@ CREATE TABLE `story_progress` (
 DROP TABLE IF EXISTS tmp;
 CREATE TABLE `tmp` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `string` varchar(128) DEFAULT NULL,
-  `nanoid` varchar(128) DEFAULT NULL,
+  `string` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nanoid` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -552,8 +674,8 @@ CREATE TABLE `user_accounts` (
   `before` decimal(15,2) DEFAULT NULL COMMENT '变更前金额',
   `change` decimal(15,2) DEFAULT NULL COMMENT '变更金额',
   `after` decimal(15,2) DEFAULT NULL COMMENT '变更后金额',
-  `remark` varchar(255) DEFAULT NULL COMMENT '变更说明',
-  `table` varchar(255) DEFAULT NULL COMMENT '变更对应的表',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '变更说明',
+  `table` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '变更对应的表',
   `table_id` bigint DEFAULT NULL COMMENT '变更对应表的ID',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -571,17 +693,17 @@ DROP TABLE IF EXISTS user_auths;
 CREATE TABLE `user_auths` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `type` varchar(255) DEFAULT '' COMMENT 'personal, company',
-  `state` varchar(255) DEFAULT '' COMMENT 'pass, fail',
-  `method` varchar(255) DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
-  `identity_number` varchar(255) DEFAULT NULL COMMENT '身份证号',
-  `unified_social` varchar(255) DEFAULT NULL COMMENT '统一社会信用代码',
-  `front_photo` varchar(255) DEFAULT NULL COMMENT '正面照',
-  `back_photo` varchar(255) DEFAULT NULL COMMENT '背面照',
-  `hand_photo` text COMMENT '手持照片',
-  `unified_social_photo` varchar(255) DEFAULT NULL COMMENT '营业执照照片',
-  `company_name` varchar(255) DEFAULT NULL COMMENT '企业名称',
-  `remarks` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'personal, company',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'pass, fail',
+  `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
+  `identity_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '身份证号',
+  `unified_social` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '统一社会信用代码',
+  `front_photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '正面照',
+  `back_photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '背面照',
+  `hand_photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '手持照片',
+  `unified_social_photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '营业执照照片',
+  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '企业名称',
+  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -600,9 +722,9 @@ DROP TABLE IF EXISTS user_banks;
 CREATE TABLE `user_banks` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `accounts` varchar(255) NOT NULL,
-  `user` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accounts` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `bankid` int NOT NULL DEFAULT '0' COMMENT '-1支付宝 -2微信',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -621,17 +743,17 @@ CREATE TABLE `user_banks` (
 DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `wechat_openid` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `nick_name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `wechat_openid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `account_amount` decimal(15,2) DEFAULT NULL COMMENT '账户金额',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_USERNAME` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会员表';
 
 -- Inserting 2 rows into users
 -- Insert batch #1
@@ -640,3 +762,4 @@ INSERT INTO users (id, wechat_openid, name, avatar, nick_name, password, account
 (3, 'oE2tk1rxzf71mx3H2NX4rNbAAqZ4', '', '', '', '', 0, '2022-07-16 23:52:30', '2022-07-16 23:52:30');
 
 -- END TABLE users
+

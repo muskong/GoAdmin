@@ -16,10 +16,8 @@ type (
 		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
 		Type         string          `json:"Type,omitempty" db:"type"`
 		Title        string          `json:"Title,omitempty" db:"title"`
-		Link         string          `json:"Link,omitempty" db:"link"`
 		Path         string          `json:"Path,omitempty" db:"path"`
 		Icon         string          `json:"Icon,omitempty" db:"icon"`
-		MenuType     string          `json:"MenuType,omitempty" db:"menu_type"`
 		Remark       string          `json:"Remark,omitempty" db:"remark"`
 		Active       string          `json:"Active,omitempty" db:"active"`
 		Sequence     string          `json:"Sequence,omitempty" db:"sequence"`
