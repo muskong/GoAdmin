@@ -14,20 +14,14 @@ type (
 		Id       int    `json:"Id,omitempty" db:"id"`
 		CardUuid string `json:"CardUuid,omitempty" db:"card_uuid"`
 
-		Channel     string `json:"Channel,omitempty" db:"channel"`
-		ChannelType string `json:"ChannelType,omitempty" db:"channel_type"`
-		Class       string `json:"Class,omitempty" db:"class"`
-		Title       string `json:"Title,omitempty" db:"title"`
-		IconUrl     string `json:"IconUrl,omitempty" db:"icon_url"`
-		Batch       string `json:"Batch,omitempty" db:"batch"`
-		Single      string `json:"Single,omitempty" db:"single"`
-		Status      string `json:"Status,omitempty" db:"status"`
-		Regularity  string `json:"Regularity,omitempty" db:"regularity"`
-		Note        string `json:"Note,omitempty" db:"note"`
-		PriceMin    string `json:"PriceMin,omitempty" db:"price_min"`
-		PriceMax    string `json:"PriceMax,omitempty" db:"price_max"`
-		Example     string `json:"Example,omitempty" db:"example"`
-		SysRate     string `json:"SysRate,omitempty" db:"sys_rate"`
+		Title      string `json:"Title,omitempty" db:"title"`
+		IconUrl    string `json:"IconUrl,omitempty" db:"icon_url"`
+		Batch      string `json:"Batch,omitempty" db:"batch"`
+		Single     string `json:"Single,omitempty" db:"single"`
+		Status     string `json:"Status,omitempty" db:"status"`
+		Regularity string `json:"Regularity,omitempty" db:"regularity"`
+		Note       string `json:"Note,omitempty" db:"note"`
+		Example    string `json:"Example,omitempty" db:"example"`
 
 		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`

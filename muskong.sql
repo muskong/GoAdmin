@@ -383,20 +383,14 @@ DROP TABLE IF EXISTS product_cards;
 CREATE TABLE `product_cards` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `card_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品唯一ID',
-  `channel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道',
-  `channel_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道代码',
-  `class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
   `icon_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片1',
   `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
   `single` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以单张提交卡密 allow是, deny否',
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
   `regularity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '验证规则',
-  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price_min` decimal(10,4) NOT NULL DEFAULT '0.0000',
-  `price_max` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
   `example` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '例子',
-  `sys_rate` decimal(5,4) NOT NULL DEFAULT '0.0000',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -442,8 +436,8 @@ CREATE TABLE `product_services` (
   `fields` json DEFAULT NULL COMMENT '配置字段',
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `qq` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `install` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'uninstall' COMMENT 'uninstall未安装 installed已安装 error已安装文件丢失',
-  `service_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api卡类接口, bank银行接口, recharge充值接口, tel话单接口',
+  `install` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'uninstall' COMMENT 'uninstall未安装 installed 已安装 error已安装文件丢失',
+  `service_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -762,4 +756,3 @@ INSERT INTO users (id, wechat_openid, name, avatar, nick_name, password, account
 (3, 'oE2tk1rxzf71mx3H2NX4rNbAAqZ4', '', '', '', '', 0, '2022-07-16 23:52:30', '2022-07-16 23:52:30');
 
 -- END TABLE users
-

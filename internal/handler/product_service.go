@@ -5,6 +5,7 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
+	"github.com/muskong/GoPkg/zaplog"
 )
 
 type _productService struct{}
@@ -33,6 +34,7 @@ func (*_productService) ProductServiceCreate(c *gin.Context) {
 	var data entity.ProductService
 	err := c.ShouldBind(&data)
 	if err != nil {
+		zaplog.Sugar.Info(err)
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
