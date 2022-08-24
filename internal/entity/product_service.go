@@ -14,15 +14,10 @@ type (
 		Id          int    `json:"Id,omitempty" db:"id"`
 		ServiceUuid string `json:"ServiceUuid,omitempty" db:"service_uuid"`
 
-		Title       string       `json:"Title,omitempty" db:"title"`
-		Class       string       `json:"Class,omitempty" db:"class"`
-		Status      string       `json:"Status,omitempty" db:"status"`
-		Content     gorm.JsonMap `json:"Content,omitempty" db:"content"`
-		Fields      gorm.JsonMap `json:"Fields,omitempty" db:"fields"`
-		Url         string       `json:"Url,omitempty" db:"url"`
-		Qq          string       `json:"Qq,omitempty" db:"qq"`
-		Install     string       `json:"Install,omitempty" db:"install"`
-		ServiceType string       `json:"ServiceType,omitempty" db:"service_type"`
+		Title       string `json:"Title,omitempty" db:"title"`
+		Class       string `json:"Class,omitempty" db:"class"`
+		Status      string `json:"Status,omitempty" db:"status"`
+		ServiceType string `json:"ServiceType,omitempty" db:"service_type"`
 
 		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`

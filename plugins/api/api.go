@@ -1,4 +1,4 @@
-package external
+package main
 
 import (
 	"encoding/json"
@@ -11,31 +11,12 @@ import (
 )
 
 type (
-	ApiInterface interface {
-		Send() error   // 提交数据
-		Search()       // 查询数据
-		Notify()       // 回调处理
-		Config()       // 配置数据
-		Info() ApiInfo // 接口信息
-	}
-
 	Api struct {
 		ContentType string // json|form
 		Data        url.Values
 		Url         string // 接口域名或IP
-		SendPath    string // 提交数据的接口地址
-		SearchPath  string // 查询数据地址
 		ApiID       string // 商户号
 		ApiKey      string // 商户密钥
-	}
-
-	// 接口信息
-	ApiInfo struct {
-		Title     string              // 中文接口名称
-		Name      string              // struct 名称
-		Version   string              // 版本号
-		Url       string              // 提交数据的接口地址
-		Parameter []map[string]string // 接口参数
 	}
 )
 
@@ -68,7 +49,7 @@ func (a *Api) post(path string, result *map[string]any) (err error) {
 		return
 	}
 
-	err = json.Unmarshal(rspBody, &result)
+	err = json.Unmarshal(rspBody, *result)
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -84,3 +84,13 @@ func (*_productService) ProductServiceDelete(c *gin.Context) {
 	}
 	c.SecureJSON(respond.Data("ok"))
 }
+
+func (*_productService) ProductServiceInstall(c *gin.Context) {
+	data, err := logic.ProductService.Install()
+
+	if err != nil {
+		c.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+	c.SecureJSON(respond.Data(data))
+}

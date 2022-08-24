@@ -2,8 +2,12 @@ package logic
 
 import (
 	"errors"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/muskong/GoAdmin/internal/entity"
+	"github.com/muskong/GoCore/config"
 )
 
 type _productService struct {
@@ -56,4 +60,27 @@ func (l *_productService) Delete(productId int) error {
 	}
 	l.Log("删除产品服务商", productId)
 	return err
+}
+
+func (l *_productService) Install() ([]map[string]string, error) {
+	dir := config.App.GetString("plugins.path")
+
+	plugins := []map[string]string{}
+	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
+		if f == nil {
+			return nil
+		}
+		if f.IsDir() {
+			return nil
+		}
+		if !strings.HasSuffix(path, ".so") {
+			return nil
+		}
+		// log.Println(path)
+		info := Plugin(path).Info()
+
+		plugins = append(plugins, info)
+		return nil
+	})
+	return plugins, err
 }

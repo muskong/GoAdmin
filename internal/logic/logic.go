@@ -10,6 +10,13 @@ import (
 )
 
 type (
+	Api interface {
+		Info() map[string]string                                      // 安装
+		Send(request map[string]any, respond *map[string]any) error   // 提交数据
+		Search(request map[string]any, respond *map[string]any) error // 查询数据
+		Notify(request map[string]any, respond *map[string]any) error // 回调处理
+	}
+
 	Logic struct {
 		Ctx *gin.Context
 	}
