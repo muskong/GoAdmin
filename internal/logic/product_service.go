@@ -8,6 +8,7 @@ import (
 
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoCore/config"
+	"github.com/muskong/GoPkg/zaplog"
 )
 
 type _productService struct {
@@ -62,10 +63,11 @@ func (l *_productService) Delete(productId int) error {
 	return err
 }
 
-func (l *_productService) Install() ([]map[string]string, error) {
+func (l *_productService) Install() (map[string][]ApiInfo, error) {
+
 	dir := config.App.GetString("plugins.path")
 
-	plugins := []map[string]string{}
+	plugins := map[string][]ApiInfo{}
 	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
 		if f == nil {
 			return nil
@@ -76,11 +78,25 @@ func (l *_productService) Install() ([]map[string]string, error) {
 		if !strings.HasSuffix(path, ".so") {
 			return nil
 		}
-		// log.Println(path)
-		info := Plugin(path).Info()
-
-		plugins = append(plugins, info)
-		return nil
+		zaplog.Sugar.Info(path)
+		// PluginTest(path)
+		// PluginGaoBei(path)
+		api := Plugin(path)
+		if api == nil {
+			zaplog.Sugar.Info("err")
+			return nil
+		}
+		var info []any
+		err = api.Info(&info)
+		zaplog.Sugar.Infof("--%+v--", info)
+		zaplog.Sugar.Infof("--%#v--", info)
+		for _, v := range info {
+			zaplog.Sugar.Infof("--%+v--", v)
+			zaplog.Sugar.Infof("--%#v--", v)
+			plugins[f.Name()] = append(plugins[f.Name()], ApiInfo(v))
+		}
+		// plugins[f.Name()] = append(plugins[path], info...)
+		return err
 	})
 	return plugins, err
 }

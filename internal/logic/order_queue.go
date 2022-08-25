@@ -1,43 +1,38 @@
 package logic
 
-import (
-	"log"
-	"plugin"
-)
-
 type _orderQueue struct {
 	Logic
 }
 
-func QueueTestGaobei() {
-	plug, err := plugin.Open("./plugins/plugin_GaoBei.so")
-	if err != nil {
-		log.Println("queueTest", err)
-	}
-	gaoBei, err := plug.Lookup("GaoBei")
-	if err != nil {
-		log.Println("queueTest Lookup", err)
-	}
-	api, ok := gaoBei.(Api)
-	if !ok {
-		log.Println("queueTest ok fail")
-		return
-	}
+// func QueueTestGaobei() {
+// 	plug, err := plugin.Open("./plugins/plugin_GaoBei.so")
+// 	if err != nil {
+// 		log.Println("queueTest", err)
+// 	}
+// 	gaoBei, err := plug.Lookup("GaoBei")
+// 	if err != nil {
+// 		log.Println("queueTest Lookup", err)
+// 	}
+// 	api, ok := gaoBei.(Api)
+// 	if !ok {
+// 		log.Println("queueTest ok fail")
+// 		return
+// 	}
 
-	param := map[string]any{
-		"test": 1233,
-	}
-	var res map[string]any
+// 	param := map[string]any{
+// 		"test": 1233,
+// 	}
+// 	var res map[string]any
 
-	err = api.Send(param, &res)
-	if err != nil {
-		log.Println("queueTest Send fail", err)
-		return
-	}
+// 	err = api.Send(param, &res)
+// 	if err != nil {
+// 		log.Println("queueTest Send fail", err)
+// 		return
+// 	}
 
-	log.Println("queueTest Send success")
-	log.Println(res)
-}
+// 	log.Println("queueTest Send success")
+// 	log.Println(res)
+// }
 
 // func QueueTestShouKaYun() {
 // 	plug, err := plugin.Open("./plugins/shoukayun.so")

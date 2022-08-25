@@ -2,40 +2,57 @@ package main
 
 import (
 	"log"
+	"time"
+
+	"github.com/muskong/GoPkg/zaplog"
 )
 
 func init() {
 	log.Println("插件init GaoBei")
 }
 
-type _gaoBei struct{}
+type (
+	_gaoBei struct {
+		Today string
+	}
+	pluginInfo struct {
+		Key   string
+		Title string
+		Value string
+	}
+)
 
-func (_gaoBei) Info() map[string]string {
-	info := map[string]string{}
-	info["Title"] = "高贝"     // 中文接口名称
-	info["Class"] = "GaoBei" // 中文接口名称
-	info["payPid"] = ""      // 商户号
-	info["payKey"] = ""      // 商户密钥
-	info["payName"] = ""     // 支付宝收款姓名
-	info["payAccount"] = ""  // 支付宝收款账户
-	info["sendurl"] = ""     // 提交地址
-	info["searchurl"] = ""   // 查询地址
+func (a _gaoBei) Info(dest *[]any) error {
+	zaplog.Sugar.Info(a.Today)
 
-	return info
+	*dest = append(*dest, pluginInfo{Key: "Title", Title: "接口名称", Value: "高贝"})
+	*dest = append(*dest, pluginInfo{Key: "Class", Title: "包名称", Value: "GaoBei"})
+	*dest = append(*dest, pluginInfo{Key: "PayPid", Title: "商户号", Value: ""})
+	*dest = append(*dest, pluginInfo{Key: "PayKey", Title: "商户密钥", Value: ""})
+	*dest = append(*dest, pluginInfo{Key: "PayName", Title: "支付宝收款姓名", Value: ""})
+	*dest = append(*dest, pluginInfo{Key: "PayAccount", Title: "支付宝收款账户", Value: ""})
+	*dest = append(*dest, pluginInfo{Key: "SendUrl", Title: "提交地址", Value: ""})
+	*dest = append(*dest, pluginInfo{Key: "SearchUrl", Title: "查询地址", Value: ""})
+
+	return nil
 }
 
-func (_gaoBei) Send(request map[string]any, respond *map[string]any) error {
+func (a _gaoBei) Send(request map[string]any, respond *map[string]any) error {
 	*respond = request
 	log.Println("GaoBei Send test", request, respond)
 	return nil
 }
-func (_gaoBei) Search() error {
-	log.Println("GaoBei Search test")
+func (a _gaoBei) Search(request map[string]any, respond *map[string]any) error {
+	*respond = request
+	log.Println("GaoBei Search test", request, respond)
 	return nil
 }
-func (_gaoBei) Notify() error {
-	log.Println("GaoBei Notify test")
+func (a _gaoBei) Notify(request map[string]any, respond *map[string]any) error {
+	*respond = request
+	log.Println("GaoBei Notify test", request, respond)
 	return nil
 }
 
-var GaoBei = _gaoBei{}
+var GaoBei = _gaoBei{
+	Today: time.Now().Format("2006-01-02 15:04:05"),
+}

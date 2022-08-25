@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	Api struct {
+	PluginApi struct {
 		ContentType string // json|form
 		Data        url.Values
 		Url         string // 接口域名或IP
@@ -20,7 +20,7 @@ type (
 	}
 )
 
-func (a *Api) post(path string, result *map[string]any) (err error) {
+func (a PluginApi) post(path string, result *map[string]any) (err error) {
 	u, err := url.ParseRequestURI(a.Url)
 	u.Path = path
 
