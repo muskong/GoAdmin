@@ -16,23 +16,24 @@ type (
 		Today string
 	}
 	pluginInfo struct {
-		Key   string
-		Title string
-		Value string
+		Name     string
+		Label    string
+		Value    string
+		Disabled bool
 	}
 )
 
 func (a _gaoBei) Info(dest *[]any) error {
 	zaplog.Sugar.Info(a.Today)
 
-	*dest = append(*dest, pluginInfo{Key: "Title", Title: "接口名称", Value: "高贝"})
-	*dest = append(*dest, pluginInfo{Key: "Class", Title: "包名称", Value: "GaoBei"})
-	*dest = append(*dest, pluginInfo{Key: "PayPid", Title: "商户号", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayKey", Title: "商户密钥", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayName", Title: "支付宝收款姓名", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayAccount", Title: "支付宝收款账户", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "SendUrl", Title: "提交地址", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "SearchUrl", Title: "查询地址", Value: ""})
+	*dest = append(*dest, &pluginInfo{Name: "Title", Label: "接口名称", Value: "高贝", Disabled: true})
+	*dest = append(*dest, &pluginInfo{Name: "Class", Label: "包名称", Value: "GaoBei", Disabled: true})
+	*dest = append(*dest, &pluginInfo{Name: "PayPid", Label: "商户号", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayKey", Label: "商户密钥", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayName", Label: "支付宝收款姓名", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayAccount", Label: "支付宝收款账户", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "SendUrl", Label: "提交地址", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "SearchUrl", Label: "查询地址", Value: "", Disabled: false})
 
 	return nil
 }

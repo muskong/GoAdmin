@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"log"
 	"net/url"
 	"time"
@@ -23,23 +22,24 @@ type (
 		PayAccount string
 	}
 	pluginInfo struct {
-		Key   string
-		Title string
-		Value string
+		Name     string
+		Label    string
+		Value    string
+		Disabled bool
 	}
 )
 
 func (a shouKaYun) Info(dest *[]any) error {
 	zaplog.Sugar.Info(a.Today)
 
-	*dest = append(*dest, pluginInfo{Key: "Title", Title: "接口名称", Value: "收卡云"})
-	*dest = append(*dest, pluginInfo{Key: "Class", Title: "包名称", Value: "ShouKaYun"})
-	*dest = append(*dest, pluginInfo{Key: "PayPid", Title: "商户号", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayKey", Title: "商户密钥", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayName", Title: "支付宝收款姓名", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "PayAccount", Title: "支付宝收款账户", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "SendUrl", Title: "提交地址", Value: ""})
-	*dest = append(*dest, pluginInfo{Key: "SearchUrl", Title: "查询地址", Value: ""})
+	*dest = append(*dest, &pluginInfo{Name: "Title", Label: "接口名称", Value: "收卡云", Disabled: true})
+	*dest = append(*dest, &pluginInfo{Name: "Class", Label: "包名称", Value: "ShouKaYun", Disabled: true})
+	*dest = append(*dest, &pluginInfo{Name: "PayPid", Label: "商户号", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayKey", Label: "商户密钥", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayName", Label: "支付宝收款姓名", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "PayAccount", Label: "支付宝收款账户", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "SendUrl", Label: "提交地址", Value: "", Disabled: false})
+	*dest = append(*dest, &pluginInfo{Name: "SearchUrl", Label: "查询地址", Value: "", Disabled: false})
 
 	return nil
 }
@@ -51,16 +51,16 @@ func (a shouKaYun) sign() {
 	a.Data.Set("sign", "")
 }
 
-func (a shouKaYun) Send(request map[string]string, respond *map[string]any) error {
+func (a shouKaYun) Send(request map[string]any, respond *map[string]any) error {
 
-	a.Data.Add("account", a.PayPid)
-	a.Data.Add("order_no", request["order_number"])
-	a.Data.Add("product_no", request["product_no"])
-	a.Data.Add("card_no", a.encrypt(request["card_no"]))
-	a.Data.Add("card_password", a.encrypt(request["card_password"]))
-	a.Data.Add("notify_url", request["notify_url"])
+	// a.Data.Add("account", a.PayPid)
+	// a.Data.Add("order_no", request["order_number"])
+	// a.Data.Add("product_no", request["product_no"])
+	// a.Data.Add("card_no", a.encrypt(request["card_no"]))
+	// a.Data.Add("card_password", a.encrypt(request["card_password"]))
+	// a.Data.Add("notify_url", request["notify_url"])
 
-	a.sign()
+	// a.sign()
 
 	// err := post(a.SendPath, respond)
 
@@ -68,11 +68,13 @@ func (a shouKaYun) Send(request map[string]string, respond *map[string]any) erro
 }
 func (p shouKaYun) Search(request map[string]any, respond *map[string]any) error {
 	*respond = request
-	return errors.New("shouKaYun Search test")
+	log.Println("GaoBei Search test", request, respond)
+	return nil
 }
 func (p shouKaYun) Notify(request map[string]any, respond *map[string]any) error {
 	*respond = request
-	return errors.New("shouKaYun Notify test")
+	log.Println("GaoBei Notify test", request, respond)
+	return nil
 }
 
 var ShouKaYun = shouKaYun{

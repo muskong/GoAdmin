@@ -12,24 +12,24 @@ type _product struct {
 
 var Product = &_product{}
 
-func (l *_product) Selects() map[string]any {
-	var data map[string]any
+func (l *_product) Selects() any {
+	data := map[string]any{}
 
 	card, err := entity.ProductCardEntity.GetAll()
 	if err == nil {
-		data["cards"] = card
+		data["cards"] = &card
 	}
 	amount, err := entity.ProductAmountEntity.GetAll()
 	if err == nil {
-		data["amounts"] = amount
+		data["amounts"] = &amount
 	}
 	channel, err := entity.ProductChannelEntity.GetAll()
 	if err == nil {
-		data["channels"] = channel
+		data["channels"] = &channel
 	}
 	service, err := entity.ProductServiceEntity.GetAll()
 	if err == nil {
-		data["services"] = service
+		data["services"] = &service
 	}
 
 	return data

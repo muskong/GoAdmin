@@ -11,4 +11,7 @@ type (
 		Id   int `json:"id" uri:"id" binding:"required"`
 		Uuid int `json:"uuid" uri:"uuid" binding:"required"`
 	}
+	ProductServiceRequest struct {
+		FileName string `json:"fileName" uri:"fileName" binding:"required"`
+	}
 )

@@ -109,9 +109,10 @@ func GinRouter() *gin.Engine {
 
 	productServiceRule := adm.Group("/productService")
 	{
-		productServiceRule.GET("/install", handler.ProductServiceHandler.ProductServiceInstall)
+		productServiceRule.GET("/pluginList", handler.ProductServiceHandler.ProductServicePluginList)
+		productServiceRule.GET("/plugin/:fileName", handler.ProductServiceHandler.ProductServicePlugin)
+		productServiceRule.POST("/install", handler.ProductServiceHandler.ProductServiceInstall)
 		productServiceRule.GET("/list", handler.ProductServiceHandler.ProductServices)
-		productServiceRule.POST("/create", handler.ProductServiceHandler.ProductServiceCreate)
 		productServiceRule.POST("/update", handler.ProductServiceHandler.ProductServiceUpdate)
 		productServiceRule.DELETE("/delete/:id", handler.ProductServiceHandler.ProductServiceDelete)
 	}

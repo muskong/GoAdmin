@@ -32,9 +32,18 @@ func (l *_productService) List(page Page) (result Result, err error) {
 	return
 }
 
-func (l *_productService) Create(data entity.ProductService) error {
-	err := entity.ProductServiceEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+func (l *_productService) Create(data map[string]string) error {
+	entityData := new(entity.ProductService)
+	entityData.Class = data["Class"]
+	entityData.Title = data["Title"]
+	entityData.Status = entity.ProductServiceEntity.StatusDeny()
+	entityData.Type = entity.ProductServiceEntity.TypeApi()
+	delete(data, "Class")
+	delete(data, "Title")
+	entityData.Content = data
+
+	err := entity.ProductServiceEntity.Insert(entityData)
+	if entityData.Id <= 0 || err != nil {
 		return errors.New("新增产品服务商失败")
 	}
 
@@ -63,11 +72,11 @@ func (l *_productService) Delete(productId int) error {
 	return err
 }
 
-func (l *_productService) Install() (map[string][]ApiInfo, error) {
+func (l *_productService) PluginList() ([]map[string]any, error) {
 
 	dir := config.App.GetString("plugins.path")
 
-	plugins := map[string][]ApiInfo{}
+	plugins := []map[string]any{}
 	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
 		if f == nil {
 			return nil
@@ -78,25 +87,46 @@ func (l *_productService) Install() (map[string][]ApiInfo, error) {
 		if !strings.HasSuffix(path, ".so") {
 			return nil
 		}
-		zaplog.Sugar.Info(path)
+
+		plugins = append(plugins, map[string]any{
+			"FileName":    f.Name(),
+			"FileSize":    f.Size(),
+			"FileModTime": f.ModTime().Format("2006-01-02 15:04:05"),
+		})
+
 		// PluginTest(path)
 		// PluginGaoBei(path)
-		api := Plugin(path)
-		if api == nil {
-			zaplog.Sugar.Info("err")
-			return nil
-		}
-		var info []any
-		err = api.Info(&info)
-		zaplog.Sugar.Infof("--%+v--", info)
-		zaplog.Sugar.Infof("--%#v--", info)
-		for _, v := range info {
-			zaplog.Sugar.Infof("--%+v--", v)
-			zaplog.Sugar.Infof("--%#v--", v)
-			plugins[f.Name()] = append(plugins[f.Name()], ApiInfo(v))
-		}
+		// api := Plugin(path)
+		// if api == nil {
+		// 	zaplog.Sugar.Info("err")
+		// 	return nil
+		// }
+		// var info []any
+		// err = api.Info(&info)
+		// // ([]ApiInfo)(info)
+		// // zaplog.Sugar.Infof("--%+v--", info)
+		// // zaplog.Sugar.Infof("--%#v--", info)
+		// // for _, v := range info {
+		// // 	zaplog.Sugar.Infof("--%+v--", v)
+		// // 	zaplog.Sugar.Infof("--%#v--", v)
+		// // 	apiinfo := v.(*ApiInfo)
+		// // 	plugins[f.Name()] = append(plugins[f.Name()], *apiinfo)
+		// // }
 		// plugins[f.Name()] = append(plugins[path], info...)
 		return err
 	})
 	return plugins, err
+}
+
+func (l *_productService) Plugin(fileName string) ([]any, error) {
+	dir := config.App.GetString("plugins.path")
+	api := Plugin(dir + fileName)
+	if api == nil {
+		zaplog.Sugar.Info("err")
+		return nil, nil
+	}
+	var info []any
+	err := api.Info(&info)
+
+	return info, err
 }

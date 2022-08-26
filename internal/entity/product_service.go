@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
+	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -11,13 +12,14 @@ import (
 type (
 	ProductService struct {
 		gdb.Model
-		Id          int    `json:"Id,omitempty" db:"id"`
-		ServiceUuid string `json:"ServiceUuid,omitempty" db:"service_uuid"`
+		Id   int    `json:"Id,omitempty" db:"id"`
+		Uuid string `json:"Uuid,omitempty" db:"uuid"`
 
-		Title       string `json:"Title,omitempty" db:"title"`
-		Class       string `json:"Class,omitempty" db:"class"`
-		Status      string `json:"Status,omitempty" db:"status"`
-		ServiceType string `json:"ServiceType,omitempty" db:"service_type"`
+		Title   string             `json:"Title,omitempty" db:"title"`
+		Class   string             `json:"Class,omitempty" db:"class"`
+		Status  string             `json:"Status,omitempty" db:"status"`
+		Content gorm.JsonMapString `json:"Content,omitempty" db:"content"`
+		Type    string             `json:"Type,omitempty" db:"type"`
 
 		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
@@ -39,6 +41,20 @@ func (e *_productService) StatusDeny() string {
 	return "deny"
 }
 
+// api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口
+func (e *_productService) TypeApi() string {
+	return "api"
+}
+func (e *_productService) TypeBank() string {
+	return "bank"
+}
+func (e *_productService) TypeRecharge() string {
+	return "recharge"
+}
+func (e *_productService) TypeTel() string {
+	return "tel"
+}
+
 func (e *_productService) GetProductService(uuid string) (*ProductService, error) {
 	var data ProductService
 	err := e.db().Where("service_uuid = ?", uuid).First(&data).Error
@@ -58,6 +74,7 @@ func (e *_productService) GetProductServices(offset, limit int) (products []*Pro
 
 func (e *_productService) Insert(product *ProductService) (err error) {
 	db := gorm.NewModel(&ProductService{})
+	product.Uuid = idworker.StringNanoid(16)
 
 	err = db.Create(product).Error
 	if err != nil {

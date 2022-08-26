@@ -428,21 +428,17 @@ CREATE TABLE `product_channels` (
 DROP TABLE IF EXISTS product_services;
 CREATE TABLE `product_services` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `service_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品服务商唯一ID',
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品服务商唯一ID',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
   `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类名',
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
   `content` json DEFAULT NULL COMMENT '接口配置信息',
-  `fields` json DEFAULT NULL COMMENT '配置字段',
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `qq` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `install` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'uninstall' COMMENT 'uninstall未安装 installed 已安装 error已安装文件丢失',
-  `service_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `service_uuid` (`service_uuid`)
+  KEY `uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
 
 -- Table product_services contains no data. No inserts have been genrated.

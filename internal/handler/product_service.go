@@ -5,7 +5,6 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
-	"github.com/muskong/GoPkg/zaplog"
 )
 
 type _productService struct{}
@@ -28,25 +27,6 @@ func (*_productService) ProductServices(c *gin.Context) {
 	}
 
 	c.SecureJSON(respond.Data(data))
-}
-
-func (*_productService) ProductServiceCreate(c *gin.Context) {
-	var data entity.ProductService
-	err := c.ShouldBind(&data)
-	if err != nil {
-		zaplog.Sugar.Info(err)
-		c.SecureJSON(respond.Message("传入参数错误"))
-		return
-	}
-
-	logic.ProductService.Context(c)
-	err = logic.ProductService.Create(data)
-
-	if err != nil {
-		c.SecureJSON(respond.Message(err.Error()))
-		return
-	}
-	c.SecureJSON(respond.Data("ok"))
 }
 
 func (*_productService) ProductServiceUpdate(c *gin.Context) {
@@ -85,12 +65,47 @@ func (*_productService) ProductServiceDelete(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_productService) ProductServiceInstall(c *gin.Context) {
-	data, err := logic.ProductService.Install()
+func (*_productService) ProductServicePluginList(c *gin.Context) {
+	data, err := logic.ProductService.PluginList()
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
 		return
 	}
 	c.SecureJSON(respond.Data(data))
+}
+
+func (*_productService) ProductServicePlugin(c *gin.Context) {
+	var q ProductServiceRequest
+	err := c.ShouldBindUri(&q)
+	if err != nil {
+		c.SecureJSON(respond.Message("传入参数错误"))
+		return
+	}
+
+	data, err := logic.ProductService.Plugin(q.FileName)
+
+	if err != nil {
+		c.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+	c.SecureJSON(respond.Data(data))
+}
+
+func (*_productService) ProductServiceInstall(c *gin.Context) {
+	var q map[string]string
+	err := c.ShouldBind(&q)
+	if err != nil {
+		c.SecureJSON(respond.Message("传入参数错误"))
+		return
+	}
+
+	logic.ProductService.Context(c)
+	err = logic.ProductService.Create(q)
+
+	if err != nil {
+		c.SecureJSON(respond.Message(err.Error()))
+		return
+	}
+	c.SecureJSON(respond.Data("ok"))
 }
