@@ -67,7 +67,7 @@ func (*_productCard) ProductCardUpdate(c *gin.Context) {
 
 func (*_productCard) ProductCardDelete(c *gin.Context) {
 	var q ProductRequest
-	err := c.ShouldBind(&q)
+	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return

@@ -13,17 +13,17 @@ type (
 		gdb.Model
 		Id int `json:"Id,omitempty" db:"id"`
 
-		ProductCardId    string `json:"ProductCardId,omitempty" db:"product_card_id"`
-		ProductAmountId  string `json:"ProductAmountId,omitempty" db:"product_amount_id"`
-		ProductChannelId string `json:"ProductChannelId,omitempty" db:"product_channel_id"`
-		ProductServiceId string `json:"ProductServiceId,omitempty" db:"product_service_id"`
-		Weight           string `json:"Weight,omitempty" db:"weight"`
+		ProductCardId    int    `json:"ProductCardId,omitempty" db:"product_card_id"`
+		ProductAmountId  int    `json:"ProductAmountId,omitempty" db:"product_amount_id"`
+		ProductChannelId int    `json:"ProductChannelId,omitempty" db:"product_channel_id"`
+		ProductServiceId int    `json:"ProductServiceId,omitempty" db:"product_service_id"`
+		Weight           int    `json:"Weight,omitempty" db:"weight"`
 		Status           string `json:"Status,omitempty" db:"status"`
 
 		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 
-		Card    ProductCard    `gorm:"foreignkey:Id;references:ProductCardId"`
+		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
 		Amount  ProductAmount  `gorm:"foreignkey:Id;references:ProductAmountId"`
 		Channel ProductChannel `gorm:"foreignkey:Id;references:ProductChannelId"`
 		Service ProductService `gorm:"foreignkey:Id;references:ProductServiceId"`
@@ -64,7 +64,7 @@ func (e *_product) GetProducts(offset, limit int) (products []*Product, count in
 func (e *_product) Insert(product *Product) (err error) {
 	db := gorm.NewModel(&Product{})
 
-	err = db.Create(product).Error
+	err = db.Omit("UpdatedAt").Create(product).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

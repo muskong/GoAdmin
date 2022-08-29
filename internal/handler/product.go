@@ -5,6 +5,7 @@ import (
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
+	"github.com/muskong/GoPkg/zaplog"
 )
 
 type _product struct{}
@@ -39,6 +40,7 @@ func (*_product) ProductCreate(c *gin.Context) {
 	var data entity.Product
 	err := c.ShouldBind(&data)
 	if err != nil {
+		zaplog.Sugar.Error(err)
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
@@ -73,7 +75,7 @@ func (*_product) ProductUpdate(c *gin.Context) {
 
 func (*_product) ProductDelete(c *gin.Context) {
 	var q ProductRequest
-	err := c.ShouldBind(&q)
+	err := c.ShouldBindUri(&q)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
