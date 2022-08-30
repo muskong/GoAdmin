@@ -27,7 +27,7 @@ var Auth = &_auth{}
 
 func (l *_auth) LoginVerify(data LoginData) (jwtData JwtData, err error) {
 
-	userData, err := entity.User.GetAdminName(data.Username)
+	userData, err := entity.AdminUserEntity.GetAdminName(data.Username)
 	if userData.Id <= 0 || err != nil {
 		err = errors.New("用户或密码出错1")
 		return

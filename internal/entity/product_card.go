@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
+	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -74,20 +75,18 @@ func (e *_productCard) GetProductCards(offset, limit int) (products []*ProductCa
 	return
 }
 
-func (e *_productCard) Insert(product *ProductCard) (err error) {
-	db := gorm.NewModel(&ProductCard{})
-
-	err = db.Create(product).Error
+func (e *_productCard) Insert(card *ProductCard) (err error) {
+	card.CardUuid = idworker.StringNanoid(16)
+	err = e.db().Create(card).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return
 }
 
-func (e *_productCard) Delete(productId int) error {
-	db := gorm.NewModel(&ProductCard{}).Where("deleted_at IS NULL")
+func (e *_productCard) Delete(cardId int) error {
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id = ?", productId).Updates(ProductCard{DeletedAt: deletedAt}).Error
+	err := e.db().Where("id = ?", cardId).Updates(ProductCard{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

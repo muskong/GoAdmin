@@ -1,5 +1,5 @@
 -- Database export via SQLPro (https://www.sqlprostudio.com/allapps.html)
--- Exported by a at 22-08-2022 17:54.
+-- Exported by a at 30-08-2022 13:57.
 -- WARNING: This file may contain descructive statements such as DROPs.
 -- Please ensure that you are running the script at the proper location.
 
@@ -19,9 +19,9 @@ CREATE TABLE `admin_logs` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
 
--- Inserting 7 rows into admin_logs
+-- Inserting 29 rows into admin_logs
 -- Insert batch #1
 INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, title, created_at) VALUES
 (1, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '登录', '2022-08-19 09:08:09'),
@@ -30,7 +30,29 @@ INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, t
 (4, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '登录', '2022-08-22 15:12:07'),
 (5, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":78,"Nanoid":"7392685922348476","Type":"menu_dir","Link":"product","Path":"product/products","Icon":"\\u003cCreditCardTwoTone /\\u003e","MenuType":"sss","Remark":"产品管理","Active":"allow","Sequence":"1"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 15:19:01'),
 (6, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":79,"Nanoid":"5891449357514311","ParentNanoId":"7392685922348476","Type":"menu","Title":"产品管理","Link":"product/products","Path":"product/products","Icon":"\\u003cCreditCardTwoTone /\\u003e","MenuType":"tab","Remark":"产品管理","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 15:23:09'),
-(7, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":80,"Nanoid":"9611653648573624","ParentNanoId":"7392685922348476","Type":"menu","Title":"卡类管理","Path":"product/card","Icon":"\\u003cCreditCardTwoTone /\\u003e","Remark":"各种卡","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 16:24:00');
+(7, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":80,"Nanoid":"9611653648573624","ParentNanoId":"7392685922348476","Type":"menu","Title":"卡类管理","Path":"product/card","Icon":"\\u003cCreditCardTwoTone /\\u003e","Remark":"各种卡","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 16:24:00'),
+(8, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":81,"Nanoid":"7666542485486136","ParentNanoId":"7392685922348476","Type":"menu","Title":"金额管理","Path":"product/amount","Icon":"\\u003cMoneyCollectTwoTone /\\u003e","Remark":"金额管理","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 18:22:11'),
+(9, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":82,"Nanoid":"8221982471489842","ParentNanoId":"7392685922348476","Type":"menu","Title":"渠道管理","Path":"product/channel","Icon":"\\u003cGoldTwoTone /\\u003e","Remark":"渠道","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 18:23:30'),
+(10, 1, '192.168.50.35', '/admin/rule/create', 'POST', 'application/json', '{"Id":83,"Nanoid":"9678964433246326","ParentNanoId":"7392685922348476","Type":"menu","Title":"服务商管理","Path":"product/service","Icon":"\\u003cCustomerServiceTwoTone /\\u003e","Remark":"服务商","Active":"allow","Sequence":"99"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增权限节点', '2022-08-22 18:24:21'),
+(11, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":1,"Amount":"100","Rate":"0.94","RateSys":"0.98"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品金额', '2022-08-22 18:27:12'),
+(12, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":2,"Amount":"1000","Rate":"0.94","RateSys":"0.98"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品金额', '2022-08-22 18:27:25'),
+(13, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":3,"Amount":"200","Rate":"0.94","RateSys":"0.98"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品金额', '2022-08-22 18:27:36'),
+(14, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":4,"Amount":"300","Rate":"0.94","RateSys":"0.98"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品金额', '2022-08-22 18:28:36'),
+(15, 1, '192.168.50.35', '/admin/productChannel/create', 'POST', 'application/json', '{"ID":0,"Id":1,"Title":"手机","Channel":"web.mobile"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品渠道', '2022-08-22 18:31:12'),
+(16, 1, '192.168.50.35', '/admin/productChannel/create', 'POST', 'application/json', '{"ID":0,"Id":2,"Title":"电脑","Channel":"web.pc"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品渠道', '2022-08-22 18:31:26'),
+(17, 1, '192.168.50.35', '/admin/productChannel/create', 'POST', 'application/json', '{"ID":0,"Id":3,"Title":"接口","Channel":"api"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品渠道', '2022-08-22 18:31:40'),
+(18, 1, '192.168.50.35', '/admin/productCard/create', 'POST', 'application/json', '{"ID":0,"Id":1,"Title":"京东E卡","IconUrl":"url","Batch":"allow","Single":"allow","Status":"allow","Regularity":"rage","Note":"京东E卡","Example":"1234-1234-1234-1234"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 Edg/104.0.1293.54', '新增产品卡类', '2022-08-22 18:42:27'),
+(19, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-23 18:40:39'),
+(20, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-24 12:31:57'),
+(21, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-25 17:25:56'),
+(22, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":5}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '新增产品金额', '2022-08-26 13:45:53'),
+(23, 1, '192.168.50.35', '/admin/productAmount/create', 'POST', 'application/json', '{"ID":0,"Id":6}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '新增产品金额', '2022-08-26 14:49:19'),
+(24, 1, '192.168.50.35', '/admin/productService/install', 'POST', 'application/json', '{"PayAccount":"4","PayKey":"2","PayName":"3","PayPid":"1","SearchUrl":"6","SendUrl":"5"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '新增产品服务商', '2022-08-26 15:37:52'),
+(25, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-29 08:56:32'),
+(26, 1, '192.168.50.35', '/admin/productAmount/delete/6', 'DELETE', '', '6', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '删除产品金额', '2022-08-29 09:12:58'),
+(27, 1, '192.168.50.35', '/admin/productAmount/delete/5', 'DELETE', '', '5', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '删除产品金额', '2022-08-29 09:13:19'),
+(28, 1, '192.168.50.35', '/admin/product/create', 'POST', 'application/json', '{"ID":0,"UpdatedAt":"0001-01-01T00:00:00Z","Id":1,"ProductCardId":1,"ProductAmountId":4,"ProductChannelId":3,"ProductServiceId":1,"Weight":11,"Status":"allow","Card":{"ID":0},"Amount":{"ID":0},"Channel":{"ID":0},"Service":{"ID":0}}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '新增产品', '2022-08-29 09:25:59'),
+(29, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-30 09:27:36');
 
 -- END TABLE admin_logs
 
@@ -91,9 +113,9 @@ CREATE TABLE `admin_rules` (
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sequence` (`sequence`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
 
--- Inserting 79 rows into admin_rules
+-- Inserting 82 rows into admin_rules
 -- Insert batch #1
 INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, icon, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
 (1, '869326', '', 'menu', '控制台', 'dashboard/dashboard', 'dashboard', 'fa fa-dashboard', 'remark_text', 999, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
@@ -117,7 +139,7 @@ INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, i
 (19, '663264', '469424', 'menu', '管理员日志管理', 'permission/adminLog', 'permission/log', 'el-icon-List', '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-19 01:39:50', NULL),
 (20, '156269', '663264', 'button', '列表', 'permission/adminLog/list', '', '', '', 96, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
 (21, '796397', '', 'menu_dir', '会员管理', 'user', 'user', 'fa fa-drivers-license', '', 95, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
-(22, '215312', '796397', 'menu', '会员管理', 'user/user', 'user/user', 'fa fa-user', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
+(22, '215312', '796397', 'menu', '会员管理', 'user/user', 'user/user', 'fa fa-user', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-30 05:49:26', NULL),
 (23, '696251', '215312', 'button', '列表', 'user/user/list', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
 (24, '947511', '215312', 'button', '创建', 'user/user/create', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
 (25, '723213', '215312', 'button', '更新', 'user/user/update', '', '', '', 94, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
@@ -174,7 +196,10 @@ INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, i
 (77, '738529', '145924', 'button', '创建', 'routine/config/create', '', '', '', 88, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
 (78, '7392685922348476', '', 'menu_dir', '产品管理', 'product', 'product/products', '<CreditCardTwoTone />', '产品管理', 99, 'allow', '2022-08-22 15:19:01', '2022-08-22 08:10:45', NULL),
 (79, '5891449357514311', '7392685922348476', 'menu', '产品管理', 'product/products', 'product/products', '<CreditCardTwoTone />', '产品管理', 99, 'allow', '2022-08-22 15:23:09', '2022-08-22 15:23:09', NULL),
-(80, '9611653648573624', '7392685922348476', 'menu', '卡类管理', '', 'product/card', '<CreditCardTwoTone />', '各种卡', 99, 'allow', '2022-08-22 16:24:00', '2022-08-22 16:24:00', NULL);
+(80, '9611653648573624', '7392685922348476', 'menu', '卡类管理', '', 'product/card', '<CreditCardTwoTone />', '各种卡', 99, 'allow', '2022-08-22 16:24:00', '2022-08-22 16:24:00', NULL),
+(81, '7666542485486136', '7392685922348476', 'menu', '金额管理', '', 'product/amount', '<MoneyCollectTwoTone />', '金额管理', 99, 'allow', '2022-08-22 18:22:11', '2022-08-22 18:22:11', NULL),
+(82, '8221982471489842', '7392685922348476', 'menu', '渠道管理', '', 'product/channel', '<GoldTwoTone />', '渠道', 99, 'allow', '2022-08-22 18:23:30', '2022-08-22 18:23:30', NULL),
+(83, '9678964433246326', '7392685922348476', 'menu', '服务商管理', '', 'product/service', '<CustomerServiceTwoTone />', '服务商', 99, 'allow', '2022-08-22 18:24:21', '2022-08-22 18:24:21', NULL);
 
 -- END TABLE admin_rules
 
@@ -370,11 +395,17 @@ CREATE TABLE `product_amounts` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品金额';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品金额';
 
--- Table product_amounts contains no data. No inserts have been genrated.
--- Inserting 0 rows into product_amounts
-
+-- Inserting 6 rows into product_amounts
+-- Insert batch #1
+INSERT INTO product_amounts (id, amount_uuid, amount, rate, rate_sys, created_at, updated_at, deleted_at) VALUES
+(1, '', 100, 0.94, 0.98, '2022-08-22 18:27:12', '2022-08-22 18:27:12', NULL),
+(2, '', 1000, 0.94, 0.98, '2022-08-22 18:27:25', '2022-08-22 18:27:25', NULL),
+(3, '', 200, 0.94, 0.98, '2022-08-22 18:27:36', '2022-08-22 18:27:36', NULL),
+(4, '', 300, 0.94, 0.98, '2022-08-22 18:28:36', '2022-08-22 18:28:36', NULL),
+(5, '', 0, 0, 0, '2022-08-26 13:45:53', '2022-08-29 01:13:19', '2022-08-29 09:13:18'),
+(6, '', 0, 0, 0, '2022-08-26 14:49:19', '2022-08-29 01:12:58', '2022-08-29 09:12:58');
 
 -- END TABLE product_amounts
 
@@ -383,24 +414,31 @@ DROP TABLE IF EXISTS product_cards;
 CREATE TABLE `product_cards` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `card_uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品唯一ID',
+  `channel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道',
+  `channel_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '通道代码',
+  `class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
   `icon_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片1',
   `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
   `single` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以单张提交卡密 allow是, deny否',
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
   `regularity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '验证规则',
-  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price_min` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `price_max` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `example` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '例子',
+  `sys_rate` decimal(5,4) NOT NULL DEFAULT '0.0000',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `channel` (`channel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
 
--- Table product_cards contains no data. No inserts have been genrated.
--- Inserting 0 rows into product_cards
-
+-- Inserting 1 row into product_cards
+-- Insert batch #1
+INSERT INTO product_cards (id, card_uuid, channel, channel_type, class, title, icon_url, batch, single, status, regularity, note, price_min, price_max, example, sys_rate, created_at, updated_at, deleted_at) VALUES
+(1, '', NULL, NULL, NULL, '京东E卡', 'url', 'allow', 'allow', 'allow', 'rage', '京东E卡', 0, 0, '1234-1234-1234-1234', 0, '2022-08-22 18:42:27', '2022-08-22 18:42:27', NULL);
 
 -- END TABLE product_cards
 
@@ -416,11 +454,14 @@ CREATE TABLE `product_channels` (
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `channel_uuid` (`channel_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
 
--- Table product_channels contains no data. No inserts have been genrated.
--- Inserting 0 rows into product_channels
-
+-- Inserting 3 rows into product_channels
+-- Insert batch #1
+INSERT INTO product_channels (id, channel_uuid, title, channel, created_at, updated_at, deleted_at) VALUES
+(1, '', '手机', 'web.mobile', '2022-08-22 18:31:12', '2022-08-22 18:31:12', NULL),
+(2, '', '电脑', 'web.pc', '2022-08-22 18:31:26', '2022-08-22 18:31:26', NULL),
+(3, '', '接口', 'api', '2022-08-22 18:31:40', '2022-08-22 18:31:40', NULL);
 
 -- END TABLE product_channels
 
@@ -428,22 +469,24 @@ CREATE TABLE `product_channels` (
 DROP TABLE IF EXISTS product_services;
 CREATE TABLE `product_services` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品服务商唯一ID',
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类名',
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品服务商唯一ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类名',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
   `content` json DEFAULT NULL COMMENT '接口配置信息',
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `uuid` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
 
--- Table product_services contains no data. No inserts have been genrated.
--- Inserting 0 rows into product_services
-
+-- Inserting 2 rows into product_services
+-- Insert batch #1
+INSERT INTO product_services (id, uuid, title, class, status, content, type, created_at, updated_at, deleted_at) VALUES
+(1, 'GXVSemcZteNWbjpL', '收卡云', 'ShouKaYun', 'deny', '{"PayKey": "2", "PayPid": "1", "PayName": "3", "SendUrl": "5", "SearchUrl": "6", "PayAccount": "4"}', 'api', '2022-08-26 15:35:42', '2022-08-26 15:35:42', NULL),
+(2, 'petRTIcLDndFPHzX', '收卡云', 'ShouKaYun', 'deny', '{"PayKey": "2", "PayPid": "1", "PayName": "3", "SendUrl": "5", "SearchUrl": "6", "PayAccount": "4"}', 'api', '2022-08-26 15:37:52', '2022-08-26 08:53:05', '2022-08-26 16:53:05');
 
 -- END TABLE product_services
 
@@ -465,11 +508,12 @@ CREATE TABLE `products` (
   KEY `product_channel_id` (`product_channel_id`),
   KEY `product_service_id` (`product_service_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
 
--- Table products contains no data. No inserts have been genrated.
--- Inserting 0 rows into products
-
+-- Inserting 1 row into products
+-- Insert batch #1
+INSERT INTO products (id, product_card_id, product_amount_id, product_channel_id, product_service_id, weight, status, created_at, deleted_at) VALUES
+(1, 1, 4, 3, 1, 11, 'allow', '2022-08-29 09:25:59', NULL);
 
 -- END TABLE products
 
@@ -752,3 +796,4 @@ INSERT INTO users (id, wechat_openid, name, avatar, nick_name, password, account
 (3, 'oE2tk1rxzf71mx3H2NX4rNbAAqZ4', '', '', '', '', 0, '2022-07-16 23:52:30', '2022-07-16 23:52:30');
 
 -- END TABLE users
+

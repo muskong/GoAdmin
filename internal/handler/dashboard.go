@@ -20,7 +20,7 @@ func Sites(ctx *gin.Context) {
 		return
 	}
 
-	user, err := logic.User.AdminUser(cast.ToInt(userId))
+	user, err := logic.AdminUser.AdminUser(cast.ToInt(userId))
 	if err != nil {
 		ctx.SecureJSON(respond.Message(err.Error()))
 		return

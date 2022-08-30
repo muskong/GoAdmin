@@ -25,12 +25,12 @@ type (
 		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
 		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
-	user struct{}
+	_adminUser struct{}
 )
 
-var User = &user{}
+var AdminUserEntity = &_adminUser{}
 
-func (*user) GetAdminName(name string) (*AdminUser, error) {
+func (*_adminUser) GetAdminName(name string) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 
 	var user AdminUser
@@ -41,7 +41,7 @@ func (*user) GetAdminName(name string) (*AdminUser, error) {
 	return &user, err
 }
 
-func (*user) GetUser(adminId int) (*AdminUser, error) {
+func (*_adminUser) GetUser(adminId int) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	var user AdminUser
 	err := db.Where("id = ?", adminId).First(&user).Error
@@ -52,7 +52,7 @@ func (*user) GetUser(adminId int) (*AdminUser, error) {
 }
 
 // 按选项查询集合
-func (*user) GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
+func (*_adminUser) GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	err = db.Count(&count).Order("id desc").Limit(limit).Offset(page).Find(&users).Error
 	if err != nil {
@@ -61,7 +61,7 @@ func (*user) GetUsers(page, limit int) (users []*AdminUser, count int64, err err
 	return
 }
 
-func (*user) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
+func (*_adminUser) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	err := db.Create(user).Error
 	if err != nil {
@@ -70,7 +70,7 @@ func (*user) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
 	return user, err
 }
 
-func (*user) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
+func (*_adminUser) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
 	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
 	err := db.Updates(user).Error
 	if err != nil {
@@ -79,7 +79,7 @@ func (*user) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
 	return user, err
 }
 
-func (*user) DeleteAdminUser(userId int) error {
+func (*_adminUser) DeleteAdminUser(userId int) error {
 	db := gorm.ClientNew().Model(&AdminUser{}).Where("deleted_at IS NULL")
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
 	err := db.Where("id=?", userId).Updates(AdminUser{DeletedAt: deletedAt}).Error

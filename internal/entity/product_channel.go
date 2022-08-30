@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
+	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -59,10 +60,9 @@ func (e *_productChannel) GetProductChannels(offset, limit int) (products []*Pro
 	return
 }
 
-func (e *_productChannel) Insert(product *ProductChannel) (err error) {
-	db := gorm.NewModel(&ProductChannel{})
-
-	err = db.Create(product).Error
+func (e *_productChannel) Insert(channel *ProductChannel) (err error) {
+	channel.ChannelUuid = idworker.StringNanoid(16)
+	err = e.db().Create(channel).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -70,9 +70,8 @@ func (e *_productChannel) Insert(product *ProductChannel) (err error) {
 }
 
 func (e *_productChannel) Delete(productId int) error {
-	db := gorm.NewModel(&ProductChannel{}).Where("deleted_at IS NULL")
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id = ?", productId).Updates(ProductChannel{DeletedAt: deletedAt}).Error
+	err := e.db().Where("id = ?", productId).Updates(ProductChannel{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -117,5 +117,13 @@ func GinRouter() *gin.Engine {
 		productServiceRule.DELETE("/delete/:id", handler.ProductServiceHandler.ProductServiceDelete)
 	}
 
+	userRule := adm.Group("/user")
+	{
+		userRule.GET("/list", handler.UserHandler.Users)
+		userRule.POST("/create", handler.UserHandler.UserCreate)
+		userRule.POST("/update", handler.UserHandler.UserUpdate)
+		userRule.DELETE("/delete/:id", handler.UserHandler.UserDelete)
+	}
+
 	return router
 }

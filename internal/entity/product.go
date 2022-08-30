@@ -62,9 +62,8 @@ func (e *_product) GetProducts(offset, limit int) (products []*Product, count in
 }
 
 func (e *_product) Insert(product *Product) (err error) {
-	db := gorm.NewModel(&Product{})
 
-	err = db.Omit("UpdatedAt").Create(product).Error
+	err = e.db().Omit("UpdatedAt").Create(product).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -72,9 +71,8 @@ func (e *_product) Insert(product *Product) (err error) {
 }
 
 func (e *_product) Delete(productId int) error {
-	db := gorm.NewModel(&Product{}).Where("deleted_at IS NULL")
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id = ?", productId).Updates(Product{DeletedAt: deletedAt}).Error
+	err := e.db().Where("id = ?", productId).Updates(Product{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

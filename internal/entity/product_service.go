@@ -72,11 +72,10 @@ func (e *_productService) GetProductServices(offset, limit int) (products []*Pro
 	return
 }
 
-func (e *_productService) Insert(product *ProductService) (err error) {
-	db := gorm.NewModel(&ProductService{})
-	product.Uuid = idworker.StringNanoid(16)
+func (e *_productService) Insert(service *ProductService) (err error) {
+	service.Uuid = idworker.StringNanoid(16)
 
-	err = db.Create(product).Error
+	err = e.db().Create(service).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -84,9 +83,8 @@ func (e *_productService) Insert(product *ProductService) (err error) {
 }
 
 func (e *_productService) Delete(productId int) error {
-	db := gorm.NewModel(&ProductService{}).Where("deleted_at IS NULL")
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id = ?", productId).Updates(ProductService{DeletedAt: deletedAt}).Error
+	err := e.db().Where("id = ?", productId).Updates(ProductService{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

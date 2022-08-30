@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
+	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -49,9 +50,8 @@ func (e *_productAmount) GetProductAmounts(offset, limit int) (products []*Produ
 }
 
 func (e *_productAmount) Insert(product *ProductAmount) (err error) {
-	db := gorm.NewModel(&ProductAmount{})
-
-	err = db.Create(product).Error
+	product.AmountUuid = idworker.StringNanoid(16)
+	err = e.db().Create(product).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -59,9 +59,8 @@ func (e *_productAmount) Insert(product *ProductAmount) (err error) {
 }
 
 func (e *_productAmount) Delete(productId int) error {
-	db := gorm.NewModel(&ProductAmount{}).Where("deleted_at IS NULL")
 	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id = ?", productId).Updates(ProductAmount{DeletedAt: deletedAt}).Error
+	err := e.db().Where("id = ?", productId).Updates(ProductAmount{DeletedAt: deletedAt}).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
