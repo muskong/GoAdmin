@@ -29,7 +29,7 @@ func (l *_productCard) List(page Page) (result Result, err error) {
 
 func (l *_productCard) Create(data entity.ProductCard) error {
 	err := entity.ProductCardEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("新增产品卡类失败")
 	}
 
@@ -37,12 +37,12 @@ func (l *_productCard) Create(data entity.ProductCard) error {
 	return err
 }
 func (l *_productCard) Update(data entity.ProductCard) (err error) {
-	err = entity.ProductCardEntity.Delete(data.Id)
+	err = entity.ProductCardEntity.Delete(data.ID)
 	if err != nil {
 		return errors.New("更新产品卡类失败")
 	}
 	err = entity.ProductCardEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("更新产品卡类失败")
 	}
 

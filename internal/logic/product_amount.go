@@ -29,7 +29,7 @@ func (l *_productAmount) List(page Page) (result Result, err error) {
 
 func (l *_productAmount) Create(data entity.ProductAmount) error {
 	err := entity.ProductAmountEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("新增产品金额失败")
 	}
 
@@ -37,12 +37,12 @@ func (l *_productAmount) Create(data entity.ProductAmount) error {
 	return err
 }
 func (l *_productAmount) Update(data entity.ProductAmount) (err error) {
-	err = entity.ProductAmountEntity.Delete(data.Id)
+	err = entity.ProductAmountEntity.Delete(data.ID)
 	if err != nil {
 		return errors.New("更新产品金额失败")
 	}
 	err = entity.ProductAmountEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("更新产品金额失败")
 	}
 

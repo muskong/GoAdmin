@@ -12,7 +12,7 @@ import (
 type (
 	ProductService struct {
 		gdb.Model
-		Id   int    `json:"Id,omitempty" db:"id"`
+		ID   int    `json:"ID,omitempty" db:"id"`
 		Uuid string `json:"Uuid,omitempty" db:"uuid"`
 
 		Title   string             `json:"Title,omitempty" db:"title"`

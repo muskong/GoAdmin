@@ -11,7 +11,7 @@ import (
 type (
 	ProductChannel struct {
 		gdb.Model
-		Id          int    `json:"Id,omitempty" db:"id"`
+		ID          int    `json:"ID,omitempty" db:"id"`
 		ChannelUuid string `json:"ChannelUuid,omitempty" db:"channel_uuid"`
 
 		Title   string `json:"Title,omitempty" db:"title"`

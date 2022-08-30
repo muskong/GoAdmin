@@ -52,7 +52,7 @@ func (l *_product) List(page Page) (result Result, err error) {
 
 func (l *_product) Create(data entity.Product) error {
 	err := entity.ProductEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("新增产品失败")
 	}
 
@@ -60,12 +60,12 @@ func (l *_product) Create(data entity.Product) error {
 	return err
 }
 func (l *_product) Update(data entity.Product) (err error) {
-	err = entity.ProductEntity.Delete(data.Id)
+	err = entity.ProductEntity.Delete(data.ID)
 	if err != nil {
 		return errors.New("更新产品失败")
 	}
 	err = entity.ProductEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("更新产品失败")
 	}
 	l.Log("更新产品", data)

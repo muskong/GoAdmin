@@ -11,7 +11,7 @@ import (
 type (
 	ProductAmount struct {
 		gdb.Model
-		Id         int    `json:"Id,omitempty" db:"id"`
+		ID         int    `json:"ID,omitempty" db:"id"`
 		AmountUuid string `json:"AmountUuid,omitempty" db:"amount_uuid"`
 
 		Amount  string `json:"Amount,omitempty" db:"amount"`

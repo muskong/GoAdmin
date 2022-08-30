@@ -43,7 +43,7 @@ func (l *_productService) Create(data map[string]string) error {
 	entityData.Content = data
 
 	err := entity.ProductServiceEntity.Insert(entityData)
-	if entityData.Id <= 0 || err != nil {
+	if entityData.ID <= 0 || err != nil {
 		return errors.New("新增产品服务商失败")
 	}
 
@@ -51,12 +51,12 @@ func (l *_productService) Create(data map[string]string) error {
 	return err
 }
 func (l *_productService) Update(data entity.ProductService) (err error) {
-	err = entity.ProductServiceEntity.Delete(data.Id)
+	err = entity.ProductServiceEntity.Delete(data.ID)
 	if err != nil {
 		return errors.New("更新产品服务商失败")
 	}
 	err = entity.ProductServiceEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("更新产品服务商失败")
 	}
 

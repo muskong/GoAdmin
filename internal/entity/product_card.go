@@ -11,7 +11,7 @@ import (
 type (
 	ProductCard struct {
 		gdb.Model
-		Id       int    `json:"Id,omitempty" db:"id"`
+		ID       int    `json:"ID,omitempty" db:"id"`
 		CardUuid string `json:"CardUuid,omitempty" db:"card_uuid"`
 
 		Title      string `json:"Title,omitempty" db:"title"`

@@ -11,7 +11,7 @@ import (
 type (
 	Product struct {
 		gdb.Model
-		Id int `json:"Id,omitempty" db:"id"`
+		ID int `json:"ID,omitempty" db:"id"`
 
 		ProductCardId    int    `json:"ProductCardId,omitempty" db:"product_card_id"`
 		ProductAmountId  int    `json:"ProductAmountId,omitempty" db:"product_amount_id"`
@@ -24,9 +24,9 @@ type (
 		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 
 		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
-		Amount  ProductAmount  `gorm:"foreignkey:Id;references:ProductAmountId"`
-		Channel ProductChannel `gorm:"foreignkey:Id;references:ProductChannelId"`
-		Service ProductService `gorm:"foreignkey:Id;references:ProductServiceId"`
+		Amount  ProductAmount  `gorm:"foreignkey:ID;references:ProductAmountId"`
+		Channel ProductChannel `gorm:"foreignkey:ID;references:ProductChannelId"`
+		Service ProductService `gorm:"foreignkey:ID;references:ProductServiceId"`
 	}
 	_product struct{}
 )
@@ -34,7 +34,7 @@ type (
 var ProductEntity = new(_product)
 
 func (*_product) db() *gdb.DB {
-	return gorm.NewModel(&Product{}).Preload("Card", "Amount", "Channel", "Service").Where("deleted_at IS NULL")
+	return gorm.NewModel(&Product{}).Preload("Card").Preload("Amount").Preload("Channel").Preload("Service").Where("deleted_at IS NULL")
 }
 
 func (e *_product) StatusAllow() string {

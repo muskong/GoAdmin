@@ -29,7 +29,7 @@ func (l *_productChannel) List(page Page) (result Result, err error) {
 
 func (l *_productChannel) Create(data entity.ProductChannel) error {
 	err := entity.ProductChannelEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("新增产品渠道失败")
 	}
 
@@ -37,12 +37,12 @@ func (l *_productChannel) Create(data entity.ProductChannel) error {
 	return err
 }
 func (l *_productChannel) Update(data entity.ProductChannel) (err error) {
-	err = entity.ProductChannelEntity.Delete(data.Id)
+	err = entity.ProductChannelEntity.Delete(data.ID)
 	if err != nil {
 		return errors.New("更新产品渠道失败")
 	}
 	err = entity.ProductChannelEntity.Insert(&data)
-	if data.Id <= 0 || err != nil {
+	if data.ID <= 0 || err != nil {
 		return errors.New("更新产品渠道失败")
 	}
 
