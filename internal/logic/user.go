@@ -49,11 +49,11 @@ func (l *_user) Update(data entity.User) (err error) {
 	l.Log("更新用户", data)
 	return err
 }
-func (l *_user) Delete(productId int) error {
-	err := entity.UserEntity.Delete(productId)
+func (l *_user) Delete(userId int) error {
+	err := entity.UserEntity.Delete(userId)
 	if err != nil {
 		return errors.New("删除用户失败")
 	}
-	l.Log("删除用户", productId)
+	l.Log("删除用户", userId)
 	return err
 }

@@ -19,9 +19,14 @@ type (
 		Password      string          `json:"Password,omitempty" db:"password"`
 		PayPassword   string          `json:"PayPassword,omitempty" db:"pay_password"`
 		AccountAmount string          `json:"AccountAmount,omitempty" db:"account_amount"`
+		Groups        gorm.JsonString `json:"Groups,omitempty" db:"groups"`
 		CreatedAt     gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
 		UpdatedAt     gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
 		DeletedAt     gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+
+		Verified UserVerified `gorm:"foreignkey:UserUuid;references:Uuid"`
+		Account  UserAccount  `gorm:"foreignkey:UserUuid;references:Uuid"`
+		Bank     UserBank     `gorm:"foreignkey:UserUuid;references:Uuid"`
 	}
 	_user struct{}
 )
@@ -29,7 +34,7 @@ type (
 var UserEntity = new(_user)
 
 func (*_user) db() *gdb.DB {
-	return gorm.NewModel(&User{})
+	return gorm.NewModel(&User{}).Preload("Verified").Preload("Account").Preload("Bank")
 }
 
 func (e *_user) GetUser(uuid string) (*User, error) {

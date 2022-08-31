@@ -6,3 +6,4 @@ go.mod
 *.sum
 *.log
 *.toml
+*.zip

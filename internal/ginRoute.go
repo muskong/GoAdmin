@@ -124,6 +124,32 @@ func GinRouter() *gin.Engine {
 		userRule.POST("/update", handler.UserHandler.UserUpdate)
 		userRule.DELETE("/delete/:id", handler.UserHandler.UserDelete)
 	}
+	userAccountRule := adm.Group("/userAccount")
+	{
+		userAccountRule.GET("/list", handler.UserAccountHandler.UserAccounts)
+		userAccountRule.POST("/create", handler.UserAccountHandler.UserAccountCreate)
+	}
+	userBankRule := adm.Group("/userBank")
+	{
+		userBankRule.GET("/list", handler.UserBankHandler.UserBanks)
+		userBankRule.POST("/create", handler.UserBankHandler.UserBankCreate)
+		userBankRule.POST("/update", handler.UserBankHandler.UserBankUpdate)
+		userBankRule.DELETE("/delete/:id", handler.UserBankHandler.UserBankDelete)
+	}
+	userGroupRule := adm.Group("/userGroup")
+	{
+		userGroupRule.GET("/list", handler.UserGroupHandler.UserGroups)
+		userGroupRule.POST("/create", handler.UserGroupHandler.UserGroupCreate)
+		userGroupRule.POST("/update", handler.UserGroupHandler.UserGroupUpdate)
+		userGroupRule.DELETE("/delete/:id", handler.UserGroupHandler.UserGroupDelete)
+	}
+	userVerifiedRule := adm.Group("/userVerified")
+	{
+		userVerifiedRule.GET("/list", handler.UserVerifiedHandler.UserVerifieds)
+		userVerifiedRule.POST("/create", handler.UserVerifiedHandler.UserVerifiedCreate)
+		userVerifiedRule.POST("/update", handler.UserVerifiedHandler.UserVerifiedUpdate)
+		userVerifiedRule.DELETE("/delete/:id", handler.UserVerifiedHandler.UserVerifiedDelete)
+	}
 
 	return router
 }

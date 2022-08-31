@@ -23,7 +23,7 @@ func main() {
 		AppName:    config.App.GetString("app.name"),
 		AppSubName: config.App.GetString("app.sub.name"),
 		Level:      config.Log.GetString("level"),
-		Logfile:    config.Log.GetString("file"),
+		Logfile:    config.Log.GetString("path"),
 		MaxSize:    config.Log.GetInt("max_size"),
 		MaxBackups: config.Log.GetInt("max_backups"),
 		MaxAge:     config.Log.GetInt("max_age"),
