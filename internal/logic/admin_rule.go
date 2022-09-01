@@ -2,6 +2,7 @@ package logic
 
 import (
 	"errors"
+	"sort"
 
 	"github.com/muskong/GoAdmin/internal/entity"
 )
@@ -132,6 +133,10 @@ func (l *_rule) AdminRuleGroupList() (result any, err error) {
 }
 
 func _tree(ruleData []*entity.AdminRule, pid int) []RuleTree {
+
+	sort.Slice(ruleData, func(i, j int) bool {
+		return ruleData[i].Sequence > ruleData[j].Sequence
+	}) //使用
 
 	pdata := map[string][]RuleTreeNode{}
 	for _, rule := range ruleData {
