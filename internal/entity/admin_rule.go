@@ -6,6 +6,7 @@ import (
 	"github.com/muskong/GoPkg/gorm"
 	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
+	gdb "gorm.io/gorm"
 )
 
 type (
@@ -29,6 +30,10 @@ type (
 
 var Rule = &rule{}
 
+func (*rule) db() *gdb.DB {
+	return gorm.NewModel(&AdminRule{}).Where("deleted_at IS NULL")
+}
+
 func (m *rule) KeepaliveAllow() string {
 	return "allow"
 }
@@ -44,9 +49,9 @@ func (m *rule) ActiveDeny() string {
 }
 
 func (u *rule) GetRule(nanoid string) (*AdminRule, error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
+
 	var rule AdminRule
-	err := db.Where("nanoid = ?", nanoid).First(&rule).Error
+	err := u.db().Where("nanoid = ?", nanoid).First(&rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -54,8 +59,8 @@ func (u *rule) GetRule(nanoid string) (*AdminRule, error) {
 }
 
 func (u *rule) GetRuleAllByPid(parentNanoid string) (rules []*AdminRule, err error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
-	err = db.Where("parent_nanoid = ?", parentNanoid).Find(&rules).Error
+
+	err = u.db().Where("parent_nanoid = ?", parentNanoid).Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -63,8 +68,7 @@ func (u *rule) GetRuleAllByPid(parentNanoid string) (rules []*AdminRule, err err
 }
 
 func (u *rule) GetRuleAll() (rules []*AdminRule, err error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
-	err = db.Where("active=?", u.ActiveAllow()).Find(&rules).Order("pid ASC").Error
+	err = u.db().Where("active=?", u.ActiveAllow()).Find(&rules).Order("sequence DESC").Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -72,8 +76,7 @@ func (u *rule) GetRuleAll() (rules []*AdminRule, err error) {
 }
 
 func (u *rule) GetRulesByIds(ids []string) (rules []*AdminRule, err error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
-	err = db.Where("active=?", u.ActiveAllow()).Where("nanoid IN (?)", ids).Order("pid ASC").Find(&rules).Error
+	err = u.db().Where("active=?", u.ActiveAllow()).Where("nanoid IN (?)", ids).Order("sequence DESC").Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -82,35 +85,32 @@ func (u *rule) GetRulesByIds(ids []string) (rules []*AdminRule, err error) {
 
 // 按选项查询集合
 func (u *rule) GetRules(offset, limit int) (rules []*AdminRule, count int64, err error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
-	err = db.Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&rules).Error
+	err = u.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return
 }
 func (u *rule) InsertAdminRule(rule *AdminRule) (*AdminRule, error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
 	rule.Nanoid = idworker.NumberNanoid(16)
 
-	err := db.Create(rule).Error
+	err := u.db().Create(rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return rule, err
 }
 func (u *rule) UpdateAdminRule(rule *AdminRule) (*AdminRule, error) {
-	db := gorm.ClientNew().Model(AdminRule{}).Where("deleted_at IS NULL")
-	err := db.Updates(rule).Error
+	err := u.db().Updates(rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return rule, err
 }
 func (u *rule) DeleteAdminRule(ruleId string) error {
-	db := gorm.ClientNew().Model(&AdminRule{}).Where("deleted_at IS NULL")
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("nanoid = ?", ruleId).Updates(AdminRule{DeletedAt: deletedAt}).Error
+	ar := AdminRule{}
+	ar.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := u.db().Where("nanoid = ?", ruleId).Updates(ar).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

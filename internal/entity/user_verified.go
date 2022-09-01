@@ -10,18 +10,17 @@ import (
 type (
 	UserVerified struct {
 		gorm.Model
-		UserUuid           string `json:"UserUuid,omitempty" db:"user_uuid"`
-		Type               string `json:"Type,omitempty" db:"type"`
-		State              string `json:"State,omitempty" db:"state"`
-		Method             string `json:"Method,omitempty" db:"method"`
-		IdentityNumber     string `json:"IdentityNumber,omitempty" db:"identity_number"`
-		UnifiedSocial      string `json:"UnifiedSocial,omitempty" db:"unified_social"`
-		FrontPhoto         string `json:"FrontPhoto,omitempty" db:"front_photo"`
-		BackPhoto          string `json:"BackPhoto,omitempty" db:"back_photo"`
-		HandPhoto          string `json:"HandPhoto,omitempty" db:"hand_photo"`
-		UnifiedSocialPhoto string `json:"UnifiedSocialPhoto,omitempty" db:"unified_social_photo"`
-		CompanyName        string `json:"CompanyName,omitempty" db:"company_name"`
-		Remarks            string `json:"Remarks,omitempty" db:"remarks"`
+		UserUuid   string `json:"UserUuid" db:"user_uuid"`
+		Type       string `json:"Type" db:"type"`
+		State      string `json:"State" db:"state"`
+		Method     string `json:"Method" db:"method"`
+		Name       string `json:"Name" db:"name"`
+		Number     string `json:"IdentityNumber" db:"number"`
+		FrontPhoto string `json:"FrontPhoto" db:"front_photo"`
+		BackPhoto  string `json:"BackPhoto" db:"back_photo"`
+		HandPhoto  string `json:"HandPhoto" db:"hand_photo"`
+		Address    string `json:"Address" db:"address"`
+		Remarks    string `json:"Remarks" db:"remarks"`
 	}
 	_userVerified struct{}
 )

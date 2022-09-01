@@ -10,18 +10,17 @@ import (
 type (
 	User struct {
 		gorm.Model
-		Uuid          string          `json:"Uuid,omitempty" db:"uuid"`
-		WechatOpenid  string          `json:"WechatOpenid,omitempty" db:"wechat_openid"`
-		Name          string          `json:"Name,omitempty" db:"name"`
-		Avatar        string          `json:"Avatar,omitempty" db:"avatar"`
-		NickName      string          `json:"NickName,omitempty" db:"nick_name"`
-		Password      string          `json:"Password,omitempty" db:"password"`
-		PayPassword   string          `json:"PayPassword,omitempty" db:"pay_password"`
-		AccountAmount string          `json:"AccountAmount,omitempty" db:"account_amount"`
-		Groups        gorm.JsonString `json:"Groups,omitempty" db:"groups"`
+		Uuid          string          `json:"Uuid" db:"uuid"`
+		WechatOpenid  string          `json:"WechatOpenid" db:"wechat_openid"`
+		Name          string          `json:"Name" db:"name"`
+		Avatar        string          `json:"Avatar" db:"avatar"`
+		NickName      string          `json:"NickName" db:"nick_name"`
+		Password      string          `json:"Password" db:"password"`
+		PayPassword   string          `json:"PayPassword" db:"pay_password"`
+		AccountAmount string          `json:"AccountAmount" db:"account_amount"`
+		Groups        gorm.JsonString `json:"Groups" db:"groups"`
 
 		Verified UserVerified `gorm:"foreignkey:UserUuid;references:Uuid"`
-		Account  UserAccount  `gorm:"foreignkey:UserUuid;references:Uuid"`
 		Bank     UserBank     `gorm:"foreignkey:UserUuid;references:Uuid"`
 	}
 	_user struct{}
@@ -30,7 +29,7 @@ type (
 var UserEntity = new(_user)
 
 func (*_user) db() *gdb.DB {
-	return gorm.NewModel(&User{}).Preload("Verified").Preload("Account").Preload("Bank")
+	return gorm.NewModel(&User{}).Preload("Verified").Preload("Bank")
 }
 
 func (e *_user) GetUser(uuid string) (*User, error) {

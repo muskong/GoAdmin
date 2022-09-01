@@ -5,6 +5,7 @@ import (
 
 	"github.com/muskong/GoPkg/gorm"
 	"github.com/muskong/GoPkg/zaplog"
+	gdb "gorm.io/gorm"
 )
 
 type (
@@ -30,21 +31,23 @@ type (
 
 var AdminUserEntity = &_adminUser{}
 
-func (*_adminUser) GetAdminName(name string) (*AdminUser, error) {
-	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
+func (e *_adminUser) db() *gdb.DB {
+	return gorm.NewModel(&AdminUser{}).Where("deleted_at IS NULL")
+}
+
+func (e *_adminUser) GetAdminName(name string) (*AdminUser, error) {
 
 	var user AdminUser
-	err := db.Where("name = ?", name).First(&user).Error
+	err := e.db().Where("name = ?", name).First(&user).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return &user, err
 }
 
-func (*_adminUser) GetUser(adminId int) (*AdminUser, error) {
-	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
+func (e *_adminUser) GetUser(adminId int) (*AdminUser, error) {
 	var user AdminUser
-	err := db.Where("id = ?", adminId).First(&user).Error
+	err := e.db().Where("id = ?", adminId).First(&user).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -52,37 +55,34 @@ func (*_adminUser) GetUser(adminId int) (*AdminUser, error) {
 }
 
 // 按选项查询集合
-func (*_adminUser) GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
-	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
-	err = db.Count(&count).Order("id desc").Limit(limit).Offset(page).Find(&users).Error
+func (e *_adminUser) GetUsers(page, limit int) (users []*AdminUser, count int64, err error) {
+	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(page).Find(&users).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return
 }
 
-func (*_adminUser) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
-	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
-	err := db.Create(user).Error
+func (e *_adminUser) InsertAdminUser(user *AdminUser) (*AdminUser, error) {
+	err := e.db().Create(user).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return user, err
 }
 
-func (*_adminUser) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
-	db := gorm.ClientNew().Model(AdminUser{}).Where("deleted_at IS NULL")
-	err := db.Updates(user).Error
+func (e *_adminUser) UpdateAdminUser(user *AdminUser) (*AdminUser, error) {
+	err := e.db().Updates(user).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return user, err
 }
 
-func (*_adminUser) DeleteAdminUser(userId int) error {
-	db := gorm.ClientNew().Model(&AdminUser{}).Where("deleted_at IS NULL")
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := db.Where("id=?", userId).Updates(AdminUser{DeletedAt: deletedAt}).Error
+func (e *_adminUser) DeleteAdminUser(userId int) error {
+	au := AdminUser{}
+	au.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := e.db().Where("id=?", userId).Updates(au).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -265,26 +265,36 @@ CREATE TABLE `banks` (
 
 -- END TABLE banks
 
--- BEGIN TABLE card_orders
-DROP TABLE IF EXISTS card_orders;
-CREATE TABLE `card_orders` (
+-- BEGIN TABLE orders
+DROP TABLE IF EXISTS orders;
+CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_number` varchar(255) NOT NULL COMMENT '唯一ID',
+  `product_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
+  `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
+  `external_id` int unsigned NOT NULL DEFAULT '0' COMMENT '外部ID',
+  `channel` varchar(255) NOT NULL DEFAULT '' COMMENT '渠道(web.pc, web.mobile, api)',
   `queue` varchar(255) NOT NULL DEFAULT 'queue' COMMENT '队列状态(queue等待执行, hang执行中, end执行结束)',
   `state` varchar(255) NOT NULL DEFAULT '' COMMENT '订单状态(hang处理中, success处理成功, error发送错误)',
+  `card_number` varchar(255) NOT NULL DEFAULT '' COMMENT '卡号',
+  `card_password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
+  `card_cvv` varchar(255) NOT NULL DEFAULT '' COMMENT 'cvv',
+  `result` json COMMENT '返回数据',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `order_number` (`order_number`),
+  KEY `product_id` (`product_id`),
   KEY `queue` (`queue`),
   KEY `state` (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='卡订单表';
 
--- Table card_orders contains no data. No inserts have been genrated.
--- Inserting 0 rows into card_orders
+-- Table orders contains no data. No inserts have been genrated.
+-- Inserting 0 rows into orders
 
 
--- END TABLE card_orders
+-- END TABLE orders
 
 -- BEGIN TABLE configs
 DROP TABLE IF EXISTS configs;
@@ -329,9 +339,9 @@ CREATE TABLE `externals` (
 
 -- END TABLE externals
 
--- BEGIN TABLE notification_setting
-DROP TABLE IF EXISTS notification_setting;
-CREATE TABLE `notification_setting` (
+-- BEGIN TABLE notify_setting
+DROP TABLE IF EXISTS notify_setting;
+CREATE TABLE `notify_setting` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '节点名称',
   `title` varchar(255) NOT NULL COMMENT '显示名称',
@@ -363,47 +373,11 @@ CREATE TABLE `notification_setting` (
   UNIQUE KEY `name` (`name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='通知模板设置';
 
--- Table notification_setting contains no data. No inserts have been genrated.
--- Inserting 0 rows into notification_setting
+-- Table notify_setting contains no data. No inserts have been genrated.
+-- Inserting 0 rows into notify_setting
 
 
--- END TABLE notification_setting
-
--- BEGIN TABLE orders
-DROP TABLE IF EXISTS orders;
-CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `story_attitude_id` int NOT NULL,
-  `story_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `state` varchar(255) NOT NULL COMMENT '状态: 未支付unpaid, 已支付paid, 结束finish, 退款申请refund, 已退款refunded',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_state` (`state`),
-  KEY `index_user` (`user_id`),
-  KEY `index_attitude` (`story_attitude_id`),
-  KEY `index_story` (`story_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='故事订单表';
-
--- Inserting 12 rows into orders
--- Insert batch #1
-INSERT INTO orders (id, story_attitude_id, story_id, user_id, state, created_at, updated_at, deleted_at) VALUES
-(1, 1, 0, 0, 'unpaid', '2022-07-17 00:52:00', '2022-07-17 00:52:00', NULL),
-(2, 2, 1, 0, 'unpaid', '2022-07-17 00:54:32', '2022-07-17 00:54:32', NULL),
-(3, 2, 1, 0, 'unpaid', '2022-07-17 01:00:03', '2022-07-17 01:00:03', NULL),
-(4, 1, 1, 0, 'unpaid', '2022-07-17 01:02:37', '2022-07-17 01:02:37', NULL),
-(5, 2, 1, 0, 'unpaid', '2022-07-17 01:07:15', '2022-07-17 01:07:15', NULL),
-(6, 1, 1, 0, 'unpaid', '2022-07-17 01:09:19', '2022-07-17 01:09:19', NULL),
-(7, 1, 1, 0, 'unpaid', '2022-07-17 01:10:47', '2022-07-17 01:10:47', NULL),
-(8, 2, 1, 0, 'unpaid', '2022-07-17 01:12:58', '2022-07-17 01:12:58', NULL),
-(9, 2, 1, 0, 'unpaid', '2022-07-17 01:17:26', '2022-07-17 01:17:26', NULL),
-(10, 1, 1, 3, 'unpaid', '2022-07-17 01:19:19', '2022-07-22 08:29:31', NULL),
-(11, 2, 1, 0, 'unpaid', '2022-07-17 01:20:21', '2022-07-17 01:20:21', NULL),
-(12, 2, 1, 3, 'unpaid', '2022-07-17 01:22:48', '2022-07-17 01:22:48', NULL);
-
--- END TABLE orders
+-- END TABLE notify_setting
 
 -- BEGIN TABLE product_amounts
 DROP TABLE IF EXISTS product_amounts;
@@ -679,13 +653,12 @@ CREATE TABLE `user_verifieds` (
   `type` varchar(255) NOT NULL DEFAULT '' COMMENT 'personal, company',
   `state` varchar(255) NOT NULL DEFAULT '' COMMENT 'pass, fail',
   `method` varchar(255) NOT NULL DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
-  `identity_number` varchar(255) NOT NULL DEFAULT '' COMMENT '身份证号',
-  `unified_social` varchar(255) NOT NULL DEFAULT '' COMMENT '统一社会信用代码',
-  `front_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '正面照',
+  `number` varchar(255) NOT NULL DEFAULT '' COMMENT '证件号',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `front_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '正面照, 营业执照照片',
   `back_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '背面照',
-  `hand_photo` text NOT NULL COMMENT '手持照片',
-  `unified_social_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '营业执照照片',
-  `company_name` varchar(255) NOT NULL DEFAULT '' COMMENT '企业名称',
+  `hand_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '手持照片',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
   `remarks` varchar(255) NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -696,7 +669,7 @@ CREATE TABLE `user_verifieds` (
 
 -- Table user_verifieds contains no data. No inserts have been genrated.
 -- Inserting 0 rows into user_verifieds
-
+INSERT INTO user_verifieds (user_uuid, name) VALUES ('TlauENMYypybGMstEfdGNPLwcDwPGg', 'test');
 
 -- END TABLE user_verifieds
 

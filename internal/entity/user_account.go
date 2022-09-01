@@ -10,16 +10,19 @@ import (
 type (
 	UserAccount struct {
 		// gdb.Model
-		ID       int     `json:"ID,omitempty" db:"id"`
-		UserUuid string  `json:"UserUuid,omitempty" db:"user_uuid"`
-		Before   float64 `json:"Before,omitempty" db:"before"`
-		Change   float64 `json:"Change,omitempty" db:"change"`
-		After    float64 `json:"After,omitempty" db:"after"`
-		Remark   string  `json:"Remark,omitempty" db:"remark"`
-		Table    string  `json:"Table,omitempty" db:"table"`
-		TableId  string  `json:"TableId,omitempty" db:"table_id"`
+		ID       int     `json:"ID" db:"id"`
+		UserUuid string  `json:"UserUuid" db:"user_uuid"`
+		Before   float64 `json:"Before" db:"before"`
+		Change   float64 `json:"Change" db:"change"`
+		After    float64 `json:"After" db:"after"`
+		Remark   string  `json:"Remark" db:"remark"`
+		Table    string  `json:"Table" db:"table"`
+		TableId  string  `json:"TableId" db:"table_id"`
 
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
+		CreatedAt gorm.TimeString `json:"CreatedAt" db:"created_at"`
+
+		Verified UserVerified `gorm:"foreignkey:UserUuid;references:UserUuid"`
+		User     User         `gorm:"foreignkey:Uuid;references:UserUuid"`
 	}
 	_userAccount struct{}
 )
@@ -27,7 +30,7 @@ type (
 var UserAccountEntity = new(_userAccount)
 
 func (*_userAccount) db() *gdb.DB {
-	return gorm.NewModel(&UserAccount{}).Omit("UpdatedAt", "DeletedAt")
+	return gorm.NewModel(&UserAccount{}).Omit("UpdatedAt", "DeletedAt").Preload("User").Preload("Verified")
 }
 
 func (e *_userAccount) GetUserAccount(uuid string) (*UserAccount, error) {
