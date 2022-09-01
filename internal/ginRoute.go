@@ -153,6 +153,13 @@ func GinRouter() *gin.Engine {
 			userVerifiedRule.DELETE("/delete/:id", admin.UserVerifiedHandler.UserVerifiedDelete)
 		}
 
+		orderRule := adm.Group("/order")
+		{
+			orderRule.GET("/list", admin.OrderHandler.Orders)
+			orderRule.POST("/create", admin.OrderHandler.OrderCreate)
+			orderRule.POST("/update", admin.OrderHandler.OrderUpdate)
+			orderRule.DELETE("/delete/:id", admin.OrderHandler.OrderDelete)
+		}
 	}
 	usr := router.Group("/user")
 	{
