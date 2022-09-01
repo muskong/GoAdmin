@@ -9,7 +9,7 @@ import (
 
 type (
 	UserAccount struct {
-		gdb.Model
+		// gdb.Model
 		ID       int     `json:"ID,omitempty" db:"id"`
 		UserUuid string  `json:"UserUuid,omitempty" db:"user_uuid"`
 		Before   float64 `json:"Before,omitempty" db:"before"`

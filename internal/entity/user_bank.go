@@ -9,8 +9,7 @@ import (
 
 type (
 	UserBank struct {
-		gdb.Model
-		ID           int             `json:"ID,omitempty" db:"id"`
+		gorm.Model
 		UserUuid     string          `json:"UserUuid,omitempty" db:"user_uuid"`
 		Mobile       string          `json:"Mobile,omitempty" db:"mobile"`
 		Province     string          `json:"Province,omitempty" db:"province"`
@@ -26,9 +25,6 @@ type (
 		Logo         string          `json:"Logo,omitempty" db:"logo"`
 		IsLuhn       string          `json:"IsLuhn,omitempty" db:"is_luhn"`
 		Images       gorm.JsonString `json:"Images,omitempty" db:"images"`
-		CreatedAt    gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt    gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt    gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 	_userBank struct{}
 )

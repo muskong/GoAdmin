@@ -307,6 +307,28 @@ CREATE TABLE `configs` (
 
 -- END TABLE configs
 
+-- BEGIN TABLE externals
+DROP TABLE IF EXISTS externals;
+CREATE TABLE `externals` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `app_key` varchar(255) NOT NULL DEFAULT '' COMMENT '访问key',
+  `app_secret` varchar(255) NOT NULL DEFAULT '' COMMENT '访问密钥',
+  `status` varchar(255) NOT NULL DEFAULT '' COMMENT '状态(allow启用, deny禁用)',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='对外开放接口';
+
+-- Table externals contains no data. No inserts have been genrated.
+-- Inserting 0 rows into externals
+
+
+-- END TABLE externals
+
 -- BEGIN TABLE notification_setting
 DROP TABLE IF EXISTS notification_setting;
 CREATE TABLE `notification_setting` (
@@ -639,7 +661,7 @@ CREATE TABLE `user_accounts` (
   `table_id` bigint NOT NULL DEFAULT '0' COMMENT '变更对应表的ID',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_uuid` (`user_uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户余额变动表';
 
 -- Table user_accounts contains no data. No inserts have been genrated.
@@ -669,7 +691,7 @@ CREATE TABLE `user_verifieds` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_uuid` (`user_uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户实名认证表';
 
 -- Table user_verifieds contains no data. No inserts have been genrated.
@@ -720,7 +742,7 @@ CREATE TABLE `user_groups` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_USERNAME` (`name`)
+  UNIQUE KEY `title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户组表';
 
 -- BEGIN TABLE users

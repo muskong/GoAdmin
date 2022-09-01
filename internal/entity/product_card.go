@@ -11,10 +11,8 @@ import (
 
 type (
 	ProductCard struct {
-		gdb.Model
-		ID       int    `json:"ID,omitempty" db:"id"`
-		CardUuid string `json:"CardUuid,omitempty" db:"card_uuid"`
-
+		gorm.Model
+		CardUuid   string `json:"CardUuid,omitempty" db:"card_uuid"`
 		Title      string `json:"Title,omitempty" db:"title"`
 		IconUrl    string `json:"IconUrl,omitempty" db:"icon_url"`
 		Batch      string `json:"Batch,omitempty" db:"batch"`
@@ -23,10 +21,6 @@ type (
 		Regularity string `json:"Regularity,omitempty" db:"regularity"`
 		Note       string `json:"Note,omitempty" db:"note"`
 		Example    string `json:"Example,omitempty" db:"example"`
-
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 	}
 	_productCard struct{}
 )
@@ -85,8 +79,9 @@ func (e *_productCard) Insert(card *ProductCard) (err error) {
 }
 
 func (e *_productCard) Delete(cardId int) error {
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := e.db().Where("id = ?", cardId).Updates(ProductCard{DeletedAt: deletedAt}).Error
+	pc := ProductCard{}
+	pc.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := e.db().Where("id = ?", cardId).Updates(pc).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -11,16 +11,10 @@ import (
 
 type (
 	ProductChannel struct {
-		gdb.Model
-		ID          int    `json:"ID,omitempty" db:"id"`
+		gorm.Model
 		ChannelUuid string `json:"ChannelUuid,omitempty" db:"channel_uuid"`
-
-		Title   string `json:"Title,omitempty" db:"title"`
-		Channel string `json:"Channel,omitempty" db:"channel"`
-
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		Title       string `json:"Title,omitempty" db:"title"`
+		Channel     string `json:"Channel,omitempty" db:"channel"`
 	}
 	_productChannel struct{}
 )
@@ -70,8 +64,9 @@ func (e *_productChannel) Insert(channel *ProductChannel) (err error) {
 }
 
 func (e *_productChannel) Delete(productId int) error {
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := e.db().Where("id = ?", productId).Updates(ProductChannel{DeletedAt: deletedAt}).Error
+	pc := ProductChannel{}
+	pc.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := e.db().Where("id = ?", productId).Updates(pc).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

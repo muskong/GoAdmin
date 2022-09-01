@@ -9,23 +9,19 @@ import (
 
 type (
 	UserVerified struct {
-		gdb.Model
-		ID                 int             `json:"ID,omitempty" db:"id"`
-		UserUuid           string          `json:"UserUuid,omitempty" db:"user_uuid"`
-		Type               string          `json:"Type,omitempty" db:"type"`
-		State              string          `json:"State,omitempty" db:"state"`
-		Method             string          `json:"Method,omitempty" db:"method"`
-		IdentityNumber     string          `json:"IdentityNumber,omitempty" db:"identity_number"`
-		UnifiedSocial      string          `json:"UnifiedSocial,omitempty" db:"unified_social"`
-		FrontPhoto         string          `json:"FrontPhoto,omitempty" db:"front_photo"`
-		BackPhoto          string          `json:"BackPhoto,omitempty" db:"back_photo"`
-		HandPhoto          string          `json:"HandPhoto,omitempty" db:"hand_photo"`
-		UnifiedSocialPhoto string          `json:"UnifiedSocialPhoto,omitempty" db:"unified_social_photo"`
-		CompanyName        string          `json:"CompanyName,omitempty" db:"company_name"`
-		Remarks            string          `json:"Remarks,omitempty" db:"remarks"`
-		CreatedAt          gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt          gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt          gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		gorm.Model
+		UserUuid           string `json:"UserUuid,omitempty" db:"user_uuid"`
+		Type               string `json:"Type,omitempty" db:"type"`
+		State              string `json:"State,omitempty" db:"state"`
+		Method             string `json:"Method,omitempty" db:"method"`
+		IdentityNumber     string `json:"IdentityNumber,omitempty" db:"identity_number"`
+		UnifiedSocial      string `json:"UnifiedSocial,omitempty" db:"unified_social"`
+		FrontPhoto         string `json:"FrontPhoto,omitempty" db:"front_photo"`
+		BackPhoto          string `json:"BackPhoto,omitempty" db:"back_photo"`
+		HandPhoto          string `json:"HandPhoto,omitempty" db:"hand_photo"`
+		UnifiedSocialPhoto string `json:"UnifiedSocialPhoto,omitempty" db:"unified_social_photo"`
+		CompanyName        string `json:"CompanyName,omitempty" db:"company_name"`
+		Remarks            string `json:"Remarks,omitempty" db:"remarks"`
 	}
 	_userVerified struct{}
 )

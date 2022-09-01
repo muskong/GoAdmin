@@ -9,8 +9,7 @@ import (
 
 type (
 	User struct {
-		gdb.Model
-		ID            int             `json:"ID,omitempty" db:"id"`
+		gorm.Model
 		Uuid          string          `json:"Uuid,omitempty" db:"uuid"`
 		WechatOpenid  string          `json:"WechatOpenid,omitempty" db:"wechat_openid"`
 		Name          string          `json:"Name,omitempty" db:"name"`
@@ -20,9 +19,6 @@ type (
 		PayPassword   string          `json:"PayPassword,omitempty" db:"pay_password"`
 		AccountAmount string          `json:"AccountAmount,omitempty" db:"account_amount"`
 		Groups        gorm.JsonString `json:"Groups,omitempty" db:"groups"`
-		CreatedAt     gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt     gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt     gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 
 		Verified UserVerified `gorm:"foreignkey:UserUuid;references:Uuid"`
 		Account  UserAccount  `gorm:"foreignkey:UserUuid;references:Uuid"`

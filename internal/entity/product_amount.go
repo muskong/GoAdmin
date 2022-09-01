@@ -11,17 +11,11 @@ import (
 
 type (
 	ProductAmount struct {
-		gdb.Model
-		ID         int    `json:"ID,omitempty" db:"id"`
+		gorm.Model
 		AmountUuid string `json:"AmountUuid,omitempty" db:"amount_uuid"`
-
-		Amount  string `json:"Amount,omitempty" db:"amount"`
-		Rate    string `json:"Rate,omitempty" db:"rate"`
-		RateSys string `json:"RateSys,omitempty" db:"rate_sys"`
-
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		Amount     string `json:"Amount,omitempty" db:"amount"`
+		Rate       string `json:"Rate,omitempty" db:"rate"`
+		RateSys    string `json:"RateSys,omitempty" db:"rate_sys"`
 	}
 	_productAmount struct{}
 )
@@ -59,8 +53,9 @@ func (e *_productAmount) Insert(product *ProductAmount) (err error) {
 }
 
 func (e *_productAmount) Delete(productId int) error {
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := e.db().Where("id = ?", productId).Updates(ProductAmount{DeletedAt: deletedAt}).Error
+	pa := ProductAmount{}
+	pa.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := e.db().Where("id = ?", productId).Updates(pa).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

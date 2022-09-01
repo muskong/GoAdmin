@@ -9,14 +9,10 @@ import (
 
 type (
 	UserGroup struct {
-		gdb.Model
-		ID        int             `json:"ID,omitempty" db:"id"`
-		GroupUuid string          `json:"GroupUuid,omitempty" db:"group_uuid"`
-		Title     string          `json:"Title,omitempty" db:"title"`
-		Content   string          `json:"Content,omitempty" db:"content"`
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		gorm.Model
+		GroupUuid string `json:"GroupUuid,omitempty" db:"group_uuid"`
+		Title     string `json:"Title,omitempty" db:"title"`
+		Content   string `json:"Content,omitempty" db:"content"`
 	}
 	_userGroup struct{}
 )

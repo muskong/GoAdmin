@@ -10,8 +10,7 @@ import (
 
 type (
 	Product struct {
-		gdb.Model
-		ID int `json:"ID,omitempty" db:"id"`
+		gorm.Model
 
 		ProductCardId    int    `json:"ProductCardId,omitempty" db:"product_card_id"`
 		ProductAmountId  int    `json:"ProductAmountId,omitempty" db:"product_amount_id"`
@@ -19,9 +18,6 @@ type (
 		ProductServiceId int    `json:"ProductServiceId,omitempty" db:"product_service_id"`
 		Weight           int    `json:"Weight,omitempty" db:"weight"`
 		Status           string `json:"Status,omitempty" db:"status"`
-
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
 
 		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
 		Amount  ProductAmount  `gorm:"foreignkey:ID;references:ProductAmountId"`
@@ -71,8 +67,9 @@ func (e *_product) Insert(product *Product) (err error) {
 }
 
 func (e *_product) Delete(productId int) error {
-	deletedAt := gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := e.db().Where("id = ?", productId).Updates(Product{DeletedAt: deletedAt}).Error
+	p := Product{}
+	p.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
+	err := e.db().Where("id = ?", productId).Updates(p).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
