@@ -1,4 +1,4 @@
-package handler
+package admin
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,11 +7,11 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-type _productChannel struct{}
+type _productCard struct{}
 
-var ProductChannelHandler = &_productChannel{}
+var ProductCardHandler = &_productCard{}
 
-func (*_productChannel) ProductChannels(c *gin.Context) {
+func (*_productCard) ProductCards(c *gin.Context) {
 	var page logic.Page
 	err := c.ShouldBind(&page)
 	if err != nil {
@@ -19,7 +19,7 @@ func (*_productChannel) ProductChannels(c *gin.Context) {
 		return
 	}
 
-	data, err := logic.ProductChannel.List(page)
+	data, err := logic.ProductCard.List(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -29,16 +29,16 @@ func (*_productChannel) ProductChannels(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func (*_productChannel) ProductChannelCreate(c *gin.Context) {
-	var data entity.ProductChannel
+func (*_productCard) ProductCardCreate(c *gin.Context) {
+	var data entity.ProductCard
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.ProductChannel.Context(c)
-	err = logic.ProductChannel.Create(data)
+	logic.ProductCard.Context(c)
+	err = logic.ProductCard.Create(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -47,16 +47,16 @@ func (*_productChannel) ProductChannelCreate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_productChannel) ProductChannelUpdate(c *gin.Context) {
-	var data entity.ProductChannel
+func (*_productCard) ProductCardUpdate(c *gin.Context) {
+	var data entity.ProductCard
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.ProductChannel.Context(c)
-	err = logic.ProductChannel.Update(data)
+	logic.ProductCard.Context(c)
+	err = logic.ProductCard.Update(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -65,7 +65,7 @@ func (*_productChannel) ProductChannelUpdate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_productChannel) ProductChannelDelete(c *gin.Context) {
+func (*_productCard) ProductCardDelete(c *gin.Context) {
 	var q ProductRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
@@ -73,8 +73,8 @@ func (*_productChannel) ProductChannelDelete(c *gin.Context) {
 		return
 	}
 
-	logic.ProductChannel.Context(c)
-	err = logic.ProductChannel.Delete(q.Id)
+	logic.ProductCard.Context(c)
+	err = logic.ProductCard.Delete(q.Id)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))

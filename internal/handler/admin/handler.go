@@ -1,4 +1,4 @@
-package handler
+package admin
 
 type (
 	Id struct {

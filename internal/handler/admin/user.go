@@ -1,24 +1,17 @@
-package handler
+package admin
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoAdmin/internal/logic"
 	"github.com/muskong/GoCore/respond"
-	"github.com/muskong/GoPkg/zaplog"
 )
 
-type _product struct{}
+type _user struct{}
 
-var ProductHandler = &_product{}
+var UserHandler = &_user{}
 
-func (*_product) ProductSelect(c *gin.Context) {
-	data := logic.Product.Selects()
-
-	c.SecureJSON(respond.Data(data))
-}
-
-func (*_product) Products(c *gin.Context) {
+func (*_user) Users(c *gin.Context) {
 	var page logic.Page
 	err := c.ShouldBind(&page)
 	if err != nil {
@@ -26,7 +19,7 @@ func (*_product) Products(c *gin.Context) {
 		return
 	}
 
-	data, err := logic.Product.List(page)
+	data, err := logic.User.List(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -36,17 +29,16 @@ func (*_product) Products(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func (*_product) ProductCreate(c *gin.Context) {
-	var data entity.Product
+func (*_user) UserCreate(c *gin.Context) {
+	var data entity.User
 	err := c.ShouldBind(&data)
 	if err != nil {
-		zaplog.Sugar.Error(err)
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.Product.Context(c)
-	err = logic.Product.Create(data)
+	logic.User.Context(c)
+	err = logic.User.Create(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -55,16 +47,16 @@ func (*_product) ProductCreate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_product) ProductUpdate(c *gin.Context) {
-	var data entity.Product
+func (*_user) UserUpdate(c *gin.Context) {
+	var data entity.User
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.Product.Context(c)
-	err = logic.Product.Update(data)
+	logic.User.Context(c)
+	err = logic.User.Update(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -73,7 +65,7 @@ func (*_product) ProductUpdate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_product) ProductDelete(c *gin.Context) {
+func (*_user) UserDelete(c *gin.Context) {
 	var q ProductRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
@@ -81,8 +73,8 @@ func (*_product) ProductDelete(c *gin.Context) {
 		return
 	}
 
-	logic.Product.Context(c)
-	err = logic.Product.Delete(q.Id)
+	logic.User.Context(c)
+	err = logic.User.Delete(q.Id)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))

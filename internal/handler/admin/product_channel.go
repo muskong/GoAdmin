@@ -1,4 +1,4 @@
-package handler
+package admin
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,11 +7,11 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-type _userBank struct{}
+type _productChannel struct{}
 
-var UserBankHandler = &_userBank{}
+var ProductChannelHandler = &_productChannel{}
 
-func (*_userBank) UserBanks(c *gin.Context) {
+func (*_productChannel) ProductChannels(c *gin.Context) {
 	var page logic.Page
 	err := c.ShouldBind(&page)
 	if err != nil {
@@ -19,7 +19,7 @@ func (*_userBank) UserBanks(c *gin.Context) {
 		return
 	}
 
-	data, err := logic.UserBank.List(page)
+	data, err := logic.ProductChannel.List(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -29,16 +29,16 @@ func (*_userBank) UserBanks(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func (*_userBank) UserBankCreate(c *gin.Context) {
-	var data entity.UserBank
+func (*_productChannel) ProductChannelCreate(c *gin.Context) {
+	var data entity.ProductChannel
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.UserBank.Context(c)
-	err = logic.UserBank.Create(data)
+	logic.ProductChannel.Context(c)
+	err = logic.ProductChannel.Create(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -47,16 +47,16 @@ func (*_userBank) UserBankCreate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_userBank) UserBankUpdate(c *gin.Context) {
-	var data entity.UserBank
+func (*_productChannel) ProductChannelUpdate(c *gin.Context) {
+	var data entity.ProductChannel
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.UserBank.Context(c)
-	err = logic.UserBank.Update(data)
+	logic.ProductChannel.Context(c)
+	err = logic.ProductChannel.Update(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -65,7 +65,7 @@ func (*_userBank) UserBankUpdate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_userBank) UserBankDelete(c *gin.Context) {
+func (*_productChannel) ProductChannelDelete(c *gin.Context) {
 	var q ProductRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
@@ -73,8 +73,8 @@ func (*_userBank) UserBankDelete(c *gin.Context) {
 		return
 	}
 
-	logic.UserBank.Context(c)
-	err = logic.UserBank.Delete(q.Id)
+	logic.ProductChannel.Context(c)
+	err = logic.ProductChannel.Delete(q.Id)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))

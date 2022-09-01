@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/muskong/GoAdmin/internal/handler"
+	"github.com/muskong/GoAdmin/internal/handler/admin"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -25,130 +25,142 @@ func GinRouter() *gin.Engine {
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	router.Use(cors.New(config))
 	// router.Use(cors.Default())
-	router.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
+	// router.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
 
-	router.GET("/", handler.Index)
+	router.GET("/", admin.Index)
 	adm := router.Group("/admin")
-
-	adm.GET("/sites", handler.Sites)
-	adm.GET("/dashboard", handler.Dashboard)
-	adm.GET("/logs", handler.Log.AdminLogList)
-
-	adminUser := adm.Group("/admin")
 	{
-		adminUser.POST("/login", handler.Auth.Login)
+		adm.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
 
-		adminUser.GET(":nanoid", handler.User.AdminUser)
-		adminUser.GET("/list", handler.User.AdminUserList)
-		adminUser.POST("/create", handler.User.AdminUserCreate)
-		adminUser.POST("/update", handler.User.AdminUserUpdate)
-		adminUser.DELETE("/delete/:nanoid", handler.User.AdminUserDelete)
+		adm.GET("/sites", admin.Sites)
+		adm.GET("/dashboard", admin.Dashboard)
+		adm.GET("/logs", admin.Log.AdminLogList)
+
+		adminUser := adm.Group("/admin")
+		{
+			adminUser.POST("/login", admin.Auth.Login)
+
+			adminUser.GET(":nanoid", admin.User.AdminUser)
+			adminUser.GET("/list", admin.User.AdminUserList)
+			adminUser.POST("/create", admin.User.AdminUserCreate)
+			adminUser.POST("/update", admin.User.AdminUserUpdate)
+			adminUser.DELETE("/delete/:nanoid", admin.User.AdminUserDelete)
+		}
+
+		adminRole := adm.Group("/role")
+		{
+			// admin/auth.group/index
+			adminRole.GET("/group", admin.Role.AdminRoleGroup)
+			adminRole.GET("/tree", admin.Role.AdminRoleTree)
+
+			adminRole.GET("/rules", admin.Role.AdminRoleRuleList)
+			adminRole.GET("/all", admin.Role.AdminRoleAll)
+			adminRole.POST("/saveRule", admin.Role.AdminRoleSaveRule)
+
+			adminRole.GET(":nanoid", admin.Role.AdminRole)
+			adminRole.GET("/list", admin.Role.AdminRoleList)
+			adminRole.POST("/create", admin.Role.AdminRoleCreate)
+			adminRole.POST("/update", admin.Role.AdminRoleUpdate)
+			adminRole.DELETE("/delete/:nanoid", admin.Role.AdminRoleDelete)
+		}
+
+		adminRule := adm.Group("/rule")
+		{
+			adminRule.GET("/group", admin.Rule.AdminRuleGroup)
+			adminRule.GET("/tree", admin.Rule.AdminRuleTree)
+			adminRule.GET("/all", admin.Rule.AdminRuleAll)
+
+			adminRule.GET(":nanoid", admin.Rule.AdminRule)
+			adminRule.GET("/list", admin.Rule.AdminRuleList)
+			adminRule.POST("/create", admin.Rule.AdminRuleCreate)
+			adminRule.POST("/update", admin.Rule.AdminRuleUpdate)
+			adminRule.DELETE("/delete/:nanoid", admin.Rule.AdminRuleDelete)
+		}
+
+		productRule := adm.Group("/product")
+		{
+			productRule.GET("/all", admin.ProductHandler.ProductSelect)
+			productRule.GET("/list", admin.ProductHandler.Products)
+			productRule.POST("/create", admin.ProductHandler.ProductCreate)
+			productRule.POST("/update", admin.ProductHandler.ProductUpdate)
+			productRule.DELETE("/delete/:id", admin.ProductHandler.ProductDelete)
+		}
+		productAmountRule := adm.Group("/productAmount")
+		{
+			productAmountRule.GET("/list", admin.ProductAmountHandler.ProductAmounts)
+			productAmountRule.POST("/create", admin.ProductAmountHandler.ProductAmountCreate)
+			productAmountRule.POST("/update", admin.ProductAmountHandler.ProductAmountUpdate)
+			productAmountRule.DELETE("/delete/:id", admin.ProductAmountHandler.ProductAmountDelete)
+		}
+
+		productCardRule := adm.Group("/productCard")
+		{
+			productCardRule.GET("/list", admin.ProductCardHandler.ProductCards)
+			productCardRule.POST("/create", admin.ProductCardHandler.ProductCardCreate)
+			productCardRule.POST("/update", admin.ProductCardHandler.ProductCardUpdate)
+			productCardRule.DELETE("/delete/:id", admin.ProductCardHandler.ProductCardDelete)
+		}
+
+		productChannelRule := adm.Group("/productChannel")
+		{
+			productChannelRule.GET("/list", admin.ProductChannelHandler.ProductChannels)
+			productChannelRule.POST("/create", admin.ProductChannelHandler.ProductChannelCreate)
+			productChannelRule.POST("/update", admin.ProductChannelHandler.ProductChannelUpdate)
+			productChannelRule.DELETE("/delete/:id", admin.ProductChannelHandler.ProductChannelDelete)
+		}
+
+		productServiceRule := adm.Group("/productService")
+		{
+			productServiceRule.GET("/pluginList", admin.ProductServiceHandler.ProductServicePluginList)
+			productServiceRule.GET("/plugin/:fileName", admin.ProductServiceHandler.ProductServicePlugin)
+			productServiceRule.POST("/install", admin.ProductServiceHandler.ProductServiceInstall)
+			productServiceRule.GET("/list", admin.ProductServiceHandler.ProductServices)
+			productServiceRule.POST("/update", admin.ProductServiceHandler.ProductServiceUpdate)
+			productServiceRule.DELETE("/delete/:id", admin.ProductServiceHandler.ProductServiceDelete)
+		}
+
+		userRule := adm.Group("/user")
+		{
+			userRule.GET("/list", admin.UserHandler.Users)
+			userRule.POST("/create", admin.UserHandler.UserCreate)
+			userRule.POST("/update", admin.UserHandler.UserUpdate)
+			userRule.DELETE("/delete/:id", admin.UserHandler.UserDelete)
+		}
+		userAccountRule := adm.Group("/userAccount")
+		{
+			userAccountRule.GET("/list", admin.UserAccountHandler.UserAccounts)
+			userAccountRule.POST("/create", admin.UserAccountHandler.UserAccountCreate)
+		}
+		userBankRule := adm.Group("/userBank")
+		{
+			userBankRule.GET("/list", admin.UserBankHandler.UserBanks)
+			userBankRule.POST("/create", admin.UserBankHandler.UserBankCreate)
+			userBankRule.POST("/update", admin.UserBankHandler.UserBankUpdate)
+			userBankRule.DELETE("/delete/:id", admin.UserBankHandler.UserBankDelete)
+		}
+		userGroupRule := adm.Group("/userGroup")
+		{
+			userGroupRule.GET("/list", admin.UserGroupHandler.UserGroups)
+			userGroupRule.POST("/create", admin.UserGroupHandler.UserGroupCreate)
+			userGroupRule.POST("/update", admin.UserGroupHandler.UserGroupUpdate)
+			userGroupRule.DELETE("/delete/:id", admin.UserGroupHandler.UserGroupDelete)
+		}
+		userVerifiedRule := adm.Group("/userVerified")
+		{
+			userVerifiedRule.GET("/list", admin.UserVerifiedHandler.UserVerifieds)
+			userVerifiedRule.POST("/create", admin.UserVerifiedHandler.UserVerifiedCreate)
+			userVerifiedRule.POST("/update", admin.UserVerifiedHandler.UserVerifiedUpdate)
+			userVerifiedRule.DELETE("/delete/:id", admin.UserVerifiedHandler.UserVerifiedDelete)
+		}
+
 	}
-
-	adminRole := adm.Group("/role")
+	usr := router.Group("/user")
 	{
-		// admin/auth.group/index
-		adminRole.GET("/group", handler.Role.AdminRoleGroup)
-		adminRole.GET("/tree", handler.Role.AdminRoleTree)
-
-		adminRole.GET("/rules", handler.Role.AdminRoleRuleList)
-		adminRole.GET("/all", handler.Role.AdminRoleAll)
-		adminRole.POST("/saveRule", handler.Role.AdminRoleSaveRule)
-
-		adminRole.GET(":nanoid", handler.Role.AdminRole)
-		adminRole.GET("/list", handler.Role.AdminRoleList)
-		adminRole.POST("/create", handler.Role.AdminRoleCreate)
-		adminRole.POST("/update", handler.Role.AdminRoleUpdate)
-		adminRole.DELETE("/delete/:nanoid", handler.Role.AdminRoleDelete)
+		usr.GET("/", admin.Index)
 	}
-
-	adminRule := adm.Group("/rule")
+	pub := router.Group("/public")
 	{
-		adminRule.GET("/group", handler.Rule.AdminRuleGroup)
-		adminRule.GET("/tree", handler.Rule.AdminRuleTree)
-		adminRule.GET("/all", handler.Rule.AdminRuleAll)
-
-		adminRule.GET(":nanoid", handler.Rule.AdminRule)
-		adminRule.GET("/list", handler.Rule.AdminRuleList)
-		adminRule.POST("/create", handler.Rule.AdminRuleCreate)
-		adminRule.POST("/update", handler.Rule.AdminRuleUpdate)
-		adminRule.DELETE("/delete/:nanoid", handler.Rule.AdminRuleDelete)
-	}
-
-	productRule := adm.Group("/product")
-	{
-		productRule.GET("/all", handler.ProductHandler.ProductSelect)
-		productRule.GET("/list", handler.ProductHandler.Products)
-		productRule.POST("/create", handler.ProductHandler.ProductCreate)
-		productRule.POST("/update", handler.ProductHandler.ProductUpdate)
-		productRule.DELETE("/delete/:id", handler.ProductHandler.ProductDelete)
-	}
-	productAmountRule := adm.Group("/productAmount")
-	{
-		productAmountRule.GET("/list", handler.ProductAmountHandler.ProductAmounts)
-		productAmountRule.POST("/create", handler.ProductAmountHandler.ProductAmountCreate)
-		productAmountRule.POST("/update", handler.ProductAmountHandler.ProductAmountUpdate)
-		productAmountRule.DELETE("/delete/:id", handler.ProductAmountHandler.ProductAmountDelete)
-	}
-
-	productCardRule := adm.Group("/productCard")
-	{
-		productCardRule.GET("/list", handler.ProductCardHandler.ProductCards)
-		productCardRule.POST("/create", handler.ProductCardHandler.ProductCardCreate)
-		productCardRule.POST("/update", handler.ProductCardHandler.ProductCardUpdate)
-		productCardRule.DELETE("/delete/:id", handler.ProductCardHandler.ProductCardDelete)
-	}
-
-	productChannelRule := adm.Group("/productChannel")
-	{
-		productChannelRule.GET("/list", handler.ProductChannelHandler.ProductChannels)
-		productChannelRule.POST("/create", handler.ProductChannelHandler.ProductChannelCreate)
-		productChannelRule.POST("/update", handler.ProductChannelHandler.ProductChannelUpdate)
-		productChannelRule.DELETE("/delete/:id", handler.ProductChannelHandler.ProductChannelDelete)
-	}
-
-	productServiceRule := adm.Group("/productService")
-	{
-		productServiceRule.GET("/pluginList", handler.ProductServiceHandler.ProductServicePluginList)
-		productServiceRule.GET("/plugin/:fileName", handler.ProductServiceHandler.ProductServicePlugin)
-		productServiceRule.POST("/install", handler.ProductServiceHandler.ProductServiceInstall)
-		productServiceRule.GET("/list", handler.ProductServiceHandler.ProductServices)
-		productServiceRule.POST("/update", handler.ProductServiceHandler.ProductServiceUpdate)
-		productServiceRule.DELETE("/delete/:id", handler.ProductServiceHandler.ProductServiceDelete)
-	}
-
-	userRule := adm.Group("/user")
-	{
-		userRule.GET("/list", handler.UserHandler.Users)
-		userRule.POST("/create", handler.UserHandler.UserCreate)
-		userRule.POST("/update", handler.UserHandler.UserUpdate)
-		userRule.DELETE("/delete/:id", handler.UserHandler.UserDelete)
-	}
-	userAccountRule := adm.Group("/userAccount")
-	{
-		userAccountRule.GET("/list", handler.UserAccountHandler.UserAccounts)
-		userAccountRule.POST("/create", handler.UserAccountHandler.UserAccountCreate)
-	}
-	userBankRule := adm.Group("/userBank")
-	{
-		userBankRule.GET("/list", handler.UserBankHandler.UserBanks)
-		userBankRule.POST("/create", handler.UserBankHandler.UserBankCreate)
-		userBankRule.POST("/update", handler.UserBankHandler.UserBankUpdate)
-		userBankRule.DELETE("/delete/:id", handler.UserBankHandler.UserBankDelete)
-	}
-	userGroupRule := adm.Group("/userGroup")
-	{
-		userGroupRule.GET("/list", handler.UserGroupHandler.UserGroups)
-		userGroupRule.POST("/create", handler.UserGroupHandler.UserGroupCreate)
-		userGroupRule.POST("/update", handler.UserGroupHandler.UserGroupUpdate)
-		userGroupRule.DELETE("/delete/:id", handler.UserGroupHandler.UserGroupDelete)
-	}
-	userVerifiedRule := adm.Group("/userVerified")
-	{
-		userVerifiedRule.GET("/list", handler.UserVerifiedHandler.UserVerifieds)
-		userVerifiedRule.POST("/create", handler.UserVerifiedHandler.UserVerifiedCreate)
-		userVerifiedRule.POST("/update", handler.UserVerifiedHandler.UserVerifiedUpdate)
-		userVerifiedRule.DELETE("/delete/:id", handler.UserVerifiedHandler.UserVerifiedDelete)
+		pub.GET("/", admin.Index)
 	}
 
 	return router

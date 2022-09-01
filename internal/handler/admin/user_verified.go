@@ -1,4 +1,4 @@
-package handler
+package admin
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,11 +7,11 @@ import (
 	"github.com/muskong/GoCore/respond"
 )
 
-type _productCard struct{}
+type _userVerified struct{}
 
-var ProductCardHandler = &_productCard{}
+var UserVerifiedHandler = &_userVerified{}
 
-func (*_productCard) ProductCards(c *gin.Context) {
+func (*_userVerified) UserVerifieds(c *gin.Context) {
 	var page logic.Page
 	err := c.ShouldBind(&page)
 	if err != nil {
@@ -19,7 +19,7 @@ func (*_productCard) ProductCards(c *gin.Context) {
 		return
 	}
 
-	data, err := logic.ProductCard.List(page)
+	data, err := logic.UserVerified.List(page)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -29,16 +29,16 @@ func (*_productCard) ProductCards(c *gin.Context) {
 	c.SecureJSON(respond.Data(data))
 }
 
-func (*_productCard) ProductCardCreate(c *gin.Context) {
-	var data entity.ProductCard
+func (*_userVerified) UserVerifiedCreate(c *gin.Context) {
+	var data entity.UserVerified
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.ProductCard.Context(c)
-	err = logic.ProductCard.Create(data)
+	logic.UserVerified.Context(c)
+	err = logic.UserVerified.Create(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -47,16 +47,16 @@ func (*_productCard) ProductCardCreate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_productCard) ProductCardUpdate(c *gin.Context) {
-	var data entity.ProductCard
+func (*_userVerified) UserVerifiedUpdate(c *gin.Context) {
+	var data entity.UserVerified
 	err := c.ShouldBind(&data)
 	if err != nil {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
 
-	logic.ProductCard.Context(c)
-	err = logic.ProductCard.Update(data)
+	logic.UserVerified.Context(c)
+	err = logic.UserVerified.Update(data)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
@@ -65,7 +65,7 @@ func (*_productCard) ProductCardUpdate(c *gin.Context) {
 	c.SecureJSON(respond.Data("ok"))
 }
 
-func (*_productCard) ProductCardDelete(c *gin.Context) {
+func (*_userVerified) UserVerifiedDelete(c *gin.Context) {
 	var q ProductRequest
 	err := c.ShouldBindUri(&q)
 	if err != nil {
@@ -73,8 +73,8 @@ func (*_productCard) ProductCardDelete(c *gin.Context) {
 		return
 	}
 
-	logic.ProductCard.Context(c)
-	err = logic.ProductCard.Delete(q.Id)
+	logic.UserVerified.Context(c)
+	err = logic.UserVerified.Delete(q.Id)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))
