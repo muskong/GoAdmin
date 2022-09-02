@@ -57,8 +57,8 @@ func (e *_order) Insert(order *Order) (err error) {
 	}
 	return
 }
-func (e *_order) Delete(verifiedId int) error {
-	err := e.db().Delete(&Order{}, verifiedId).Error
+func (e *_order) Delete(orderId int) error {
+	err := e.db().Delete(&Order{}, orderId).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

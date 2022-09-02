@@ -1,5 +1,5 @@
 -- Database export via SQLPro (https://www.sqlprostudio.com/allapps.html)
--- Exported by a at 22-08-2022 17:54.
+-- Exported by a at 01-09-2022 19:19.
 -- WARNING: This file may contain descructive statements such as DROPs.
 -- Please ensure that you are running the script at the proper location.
 
@@ -9,19 +9,19 @@ DROP TABLE IF EXISTS admin_logs;
 CREATE TABLE `admin_logs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `admin_id` int unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
-  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'ip地址',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '请求链接',
-  `method` varchar(255) NOT NULL DEFAULT '' COMMENT '请求类型',
-  `type` varchar(255) NOT NULL DEFAULT '' COMMENT '资源类型',
-  `param` text NOT NULL COMMENT '请求参数',
-  `useragent` text COMMENT 'User-Agent',
-  `title` longtext COMMENT '日志',
+  `ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'ip地址',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '请求链接',
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '请求类型',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '资源类型',
+  `param` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求参数',
+  `useragent` text COLLATE utf8mb4_unicode_ci COMMENT 'User-Agent',
+  `title` longtext COLLATE utf8mb4_unicode_ci COMMENT '日志',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
 
--- Inserting 29 rows into admin_logs
+-- Inserting 32 rows into admin_logs
 -- Insert batch #1
 INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, title, created_at) VALUES
 (1, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '登录', '2022-08-19 09:08:09'),
@@ -63,12 +63,12 @@ INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, t
 DROP TABLE IF EXISTS admin_roles;
 CREATE TABLE `admin_roles` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `rules` json,
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `state` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '启用allow, 禁用deny',
+  `nanoid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
+  `parent_nanoid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '父级ID',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `rules` json DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '启用allow, 禁用deny',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -101,24 +101,24 @@ INSERT INTO admin_roles (id, nanoid, parent_nanoid, name, rules, description, st
 DROP TABLE IF EXISTS admin_rules;
 CREATE TABLE `admin_rules` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
-  `type` varchar(255) NOT NULL DEFAULT 'menu' COMMENT '类型:menu_dir=菜单目录,menu=菜单项,button=页面按钮',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `link` varchar(255) NOT NULL DEFAULT '' COMMENT '规则名称',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '路由路径',
-  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `nanoid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
+  `parent_nanoid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '父级ID',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menu' COMMENT '类型:menu_dir=菜单目录,menu=菜单项,button=页面按钮',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '路由路径',
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图标',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   `sequence` int NOT NULL DEFAULT '0' COMMENT '权重(排序)',
-  `active` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
+  `active` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sequence` (`sequence`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单和权限规则表';
 
--- Inserting 79 rows into admin_rules
+-- Inserting 82 rows into admin_rules
 -- Insert batch #1
 INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, icon, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
 (1, '869326', '', 'menu', '控制台', 'dashboard/dashboard', 'dashboard', 'fa fa-dashboard', 'remark_text', 999, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
@@ -210,9 +210,9 @@ INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, i
 DROP TABLE IF EXISTS admin_users;
 CREATE TABLE `admin_users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `roles` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `roles` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -231,11 +231,11 @@ INSERT INTO admin_users (id, name, roles, password, created_at, updated_at, dele
 DROP TABLE IF EXISTS bank_prcptcds;
 CREATE TABLE `bank_prcptcds` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `bankname` varchar(255) NOT NULL NOT NULL,
-  `bank_code` varchar(255) NOT NULL COMMENT '银行编号',
-  `prcptcd` varchar(255) NOT NULL COMMENT '行号',
-  `city_code` varchar(255) NOT NULL DEFAULT '' COMMENT '所属地区编号',
-  `province` varchar(255) NOT NULL DEFAULT '',
+  `bankname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行编号',
+  `prcptcd` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '行号',
+  `city_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '所属地区编号',
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -253,12 +253,12 @@ CREATE TABLE `bank_prcptcds` (
 DROP TABLE IF EXISTS banks;
 CREATE TABLE `banks` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `abbr` varchar(255) NOT NULL DEFAULT '',
+  `abbr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `state` int NOT NULL DEFAULT '1',
-  `bankname` varchar(255) NOT NULL DEFAULT '',
-  `logo` varchar(255) NOT NULL DEFAULT '',
-  `logo1` varchar(255) NOT NULL DEFAULT '',
-  `procode` varchar(255) NOT NULL DEFAULT '',
+  `bankname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `logo1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `procode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='银行';
 
@@ -272,10 +272,10 @@ CREATE TABLE `banks` (
 DROP TABLE IF EXISTS configs;
 CREATE TABLE `configs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名称',
-  `value` text CHARACTER SET utf8mb4,
-  `title` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类名称',
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -289,32 +289,9 @@ CREATE TABLE `configs` (
 
 -- END TABLE configs
 
--- BEGIN TABLE externals
-DROP TABLE IF EXISTS externals;
-CREATE TABLE `externals` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `app_key` varchar(255) NOT NULL DEFAULT '' COMMENT '访问key',
-  `app_secret` varchar(255) NOT NULL DEFAULT '' COMMENT '访问密钥',
-  `status` varchar(255) NOT NULL DEFAULT '' COMMENT '状态(allow启用, deny禁用)',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='对外开放接口';
-
--- Table externals contains no data. No inserts have been genrated.
--- Inserting 0 rows into externals
-
-
--- END TABLE externals
-
--- BEGIN TABLE notify_setting
+-- BEGIN TABLE notification_setting
 DROP TABLE IF EXISTS notification_setting;
-DROP TABLE IF EXISTS notify_setting;
-CREATE TABLE `notify_setting` (
+CREATE TABLE `notification_setting` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '节点名称',
   `title` varchar(255) NOT NULL COMMENT '显示名称',
@@ -346,27 +323,27 @@ CREATE TABLE `notify_setting` (
   UNIQUE KEY `name` (`name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='通知模板设置';
 
--- Table notify_setting contains no data. No inserts have been genrated.
--- Inserting 0 rows into notify_setting
+-- Table notification_setting contains no data. No inserts have been genrated.
+-- Inserting 0 rows into notification_setting
 
 
--- END TABLE notify_setting
+-- END TABLE notification_setting
 
 -- BEGIN TABLE orders
 DROP TABLE IF EXISTS orders;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `order_number` varchar(255) NOT NULL COMMENT '唯一ID',
+  `order_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一ID',
   `product_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
   `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
   `external_id` int unsigned NOT NULL DEFAULT '0' COMMENT '外部ID',
-  `channel` varchar(255) NOT NULL DEFAULT '' COMMENT '渠道(web.pc, web.mobile, api)',
-  `queue` varchar(255) NOT NULL DEFAULT 'queue' COMMENT '队列状态(queue等待执行, hang执行中, end执行结束)',
-  `state` varchar(255) NOT NULL DEFAULT '' COMMENT '订单状态(hang处理中, success处理成功, error发送错误)',
-  `card_number` varchar(255) NOT NULL DEFAULT '' COMMENT '卡号',
-  `card_password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
-  `card_cvv` varchar(255) NOT NULL DEFAULT '' COMMENT 'cvv',
-  `result` json COMMENT '返回数据',
+  `channel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道(web.pc, web.mobile, api)',
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'queue' COMMENT '队列状态(queue等待执行, hang执行中, end执行结束)',
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订单状态(hang处理中, success处理成功, error发送错误)',
+  `card_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '卡号',
+  `card_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
+  `card_cvv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'cvv',
+  `result` json DEFAULT NULL COMMENT '返回数据',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -387,7 +364,7 @@ CREATE TABLE `orders` (
 DROP TABLE IF EXISTS product_amounts;
 CREATE TABLE `product_amounts` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `amount_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品金额唯一ID',
+  `amount_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品金额唯一ID',
   `amount` decimal(10,4) NOT NULL,
   `rate` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `rate_sys` decimal(10,4) NOT NULL DEFAULT '0.0000',
@@ -395,10 +372,10 @@ CREATE TABLE `product_amounts` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品金额';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品金额';
 
--- Table product_amounts contains no data. No inserts have been genrated.
--- Inserting 0 rows into product_amounts
+-- Inserting 6 rows into product_amounts
+-- Insert batch #1
 INSERT INTO product_amounts (id, amount_uuid, amount, rate, rate_sys, created_at, updated_at, deleted_at) VALUES
 (1, '', 100, 0.94, 0.98, '2022-08-22 18:27:12', '2022-08-22 18:27:12', NULL),
 (2, '', 1000, 0.94, 0.98, '2022-08-22 18:27:25', '2022-08-22 18:27:25', NULL),
@@ -407,28 +384,27 @@ INSERT INTO product_amounts (id, amount_uuid, amount, rate, rate_sys, created_at
 (5, '', 0, 0, 0, '2022-08-26 13:45:53', '2022-08-29 01:13:19', '2022-08-29 09:13:18'),
 (6, '', 0, 0, 0, '2022-08-26 14:49:19', '2022-08-29 01:12:58', '2022-08-29 09:12:58');
 
-
 -- END TABLE product_amounts
 
 -- BEGIN TABLE product_cards
 DROP TABLE IF EXISTS product_cards;
 CREATE TABLE `product_cards` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `card_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品唯一ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `icon_url` varchar(255) NOT NULL DEFAULT '' COMMENT '图片1',
-  `batch` varchar(255) NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
-  `single` varchar(255) NOT NULL DEFAULT 'deny' COMMENT '是否可以单张提交卡密 allow是, deny否',
-  `status` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
-  `regularity` varchar(255) NOT NULL DEFAULT '' COMMENT '验证规则',
-  `note` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
-  `example` varchar(255) NOT NULL DEFAULT '' COMMENT '例子',
+  `card_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品唯一ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `icon_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图片1',
+  `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
+  `single` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'deny' COMMENT '是否可以单张提交卡密 allow是, deny否',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
+  `regularity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '验证规则',
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `example` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '例子',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `card_uuid` (`card_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
 
 -- Inserting 1 row into product_cards
 -- Insert batch #1
@@ -441,15 +417,15 @@ INSERT INTO product_cards (id, card_uuid, title, icon_url, batch, single, status
 DROP TABLE IF EXISTS product_channels;
 CREATE TABLE `product_channels` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `channel_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品渠道唯一ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '通道名称',
-  `channel` varchar(255) NOT NULL DEFAULT '' COMMENT '通道(web.pc, web.mobile, api)',
+  `channel_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品渠道唯一ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '通道名称',
+  `channel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '通道(web.pc, web.mobile, api)',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `channel_uuid` (`channel_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
 
 -- Inserting 3 rows into product_channels
 -- Insert batch #1
@@ -464,23 +440,23 @@ INSERT INTO product_channels (id, channel_uuid, title, channel, created_at, upda
 DROP TABLE IF EXISTS product_services;
 CREATE TABLE `product_services` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品服务商唯一ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `class` varchar(255) NOT NULL DEFAULT '' COMMENT '类名',
-  `status` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
-  `content` json COMMENT '接口配置信息',
-  `type` varchar(255) NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品服务商唯一ID',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '类名',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态 allow是, deny否',
+  `content` json DEFAULT NULL COMMENT '接口配置信息',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api' COMMENT 'api 卡类接口, bank 银行接口, recharge 充值接口, tel 话单接口',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `uuid` (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品第三方处理';
 
 -- Inserting 2 rows into product_services
 -- Insert batch #1
 INSERT INTO product_services (id, uuid, title, class, status, content, type, created_at, updated_at, deleted_at) VALUES
-(1, 'GXVSemcZteNWbjpL', '收卡云', 'ShouKaYun', 'deny', '{"PayKey": "2", "PayPid": "1", "PayName": "3", "SendUrl": "5", "SearchUrl": "6", "PayAccount": "4"}', 'api', '2022-08-26 15:35:42', '2022-08-26 15:35:42', NULL),
+(1, 'GXVSemcZteNWbjpL', '收卡云', 'ShouKaYun', 'deny', '{"PayKey": "2", "PayPid": "1", "PayName": "3", "SendUrl": "5", "SearchUrl": "6", "PayAccount": "4"}', 'api', '2022-08-26 15:35:42', '2022-08-31 10:47:26', '2022-08-31 18:47:26'),
 (2, 'petRTIcLDndFPHzX', '收卡云', 'ShouKaYun', 'deny', '{"PayKey": "2", "PayPid": "1", "PayName": "3", "SendUrl": "5", "SearchUrl": "6", "PayAccount": "4"}', 'api', '2022-08-26 15:37:52', '2022-08-26 08:53:05', '2022-08-26 16:53:05');
 
 -- END TABLE product_services
@@ -494,7 +470,7 @@ CREATE TABLE `products` (
   `product_channel_id` int unsigned NOT NULL DEFAULT '0' COMMENT '渠道ID',
   `product_service_id` int unsigned NOT NULL DEFAULT '0' COMMENT '第三方处理ID',
   `weight` int unsigned NOT NULL DEFAULT '0' COMMENT '金额在销卡中服务商占比, 权重[满分100]',
-  `status` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -503,7 +479,7 @@ CREATE TABLE `products` (
   KEY `product_channel_id` (`product_channel_id`),
   KEY `product_service_id` (`product_service_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
 
 -- Inserting 1 row into products
 -- Insert batch #1
@@ -516,8 +492,8 @@ INSERT INTO products (id, product_card_id, product_amount_id, product_channel_id
 DROP TABLE IF EXISTS tmp;
 CREATE TABLE `tmp` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `string` varchar(128) DEFAULT '',
-  `nanoid` varchar(128) NOT NULL DEFAULT '',
+  `string` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `nanoid` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -630,17 +606,17 @@ INSERT INTO tmp (id, string, nanoid) VALUES
 DROP TABLE IF EXISTS user_accounts;
 CREATE TABLE `user_accounts` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '' ,
-  `before` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更前金额',
-  `change` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更金额',
-  `after` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更后金额',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '变更说明',
-  `table` varchar(255) NOT NULL DEFAULT '' COMMENT '变更对应的表',
+  `user_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `before` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '变更前金额',
+  `change` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '变更金额',
+  `after` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '变更后金额',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '变更说明',
+  `table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '变更对应的表',
   `table_id` bigint NOT NULL DEFAULT '0' COMMENT '变更对应表的ID',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_uuid` (`user_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户余额变动表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户余额变动表';
 
 -- Inserting 1 row into user_accounts
 -- Insert batch #1
@@ -653,27 +629,27 @@ INSERT INTO user_accounts (id, user_uuid, `before`, `change`, `after`, remark, `
 DROP TABLE IF EXISTS user_banks;
 CREATE TABLE `user_banks` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '',
-  `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡手机号',
-  `province` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡开户省',
-  `city` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡开户市',
-  `type` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡类型',
-  `abbreviation` varchar(255) NOT NULL DEFAULT '' COMMENT '银联支付网关简码',
-  `bank` varchar(255) NOT NULL DEFAULT '' COMMENT '银行名称',
-  `bin_digits` int(11) NOT NULL DEFAULT '0' COMMENT '银行卡bin码长度',
-  `card_number` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡号',
-  `card_name` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡名称',
-  `card_bin` int(11) NOT NULL DEFAULT '0' COMMENT '银行卡bin码',
-  `card_digits` int(11) NOT NULL DEFAULT '0' COMMENT '银行卡号长度',
-  `logo` varchar(255) NOT NULL DEFAULT '' COMMENT '银行logo',
-  `is_luhn` varchar(255) NOT NULL DEFAULT '' COMMENT '是否支持luhn校验 true-校验成功 false-校验失败',
+  `user_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡手机号',
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡开户省',
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡开户市',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡类型',
+  `abbreviation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银联支付网关简码',
+  `bank` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行名称',
+  `bin_digits` int NOT NULL DEFAULT '0' COMMENT '银行卡bin码长度',
+  `card_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡号',
+  `card_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行卡名称',
+  `card_bin` int NOT NULL DEFAULT '0' COMMENT '银行卡bin码',
+  `card_digits` int NOT NULL DEFAULT '0' COMMENT '银行卡号长度',
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '银行logo',
+  `is_luhn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '是否支持luhn校验 true-校验成功 false-校验失败',
   `images` json DEFAULT NULL COMMENT '证件图片',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `user_uuid` (`user_uuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='用户银行账户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户银行账户表';
 
 -- Inserting 1 row into user_banks
 -- Insert batch #1
@@ -682,18 +658,19 @@ INSERT INTO user_banks (id, user_uuid, mobile, province, city, type, abbreviatio
 
 -- END TABLE user_banks
 
+-- BEGIN TABLE user_groups
 DROP TABLE IF EXISTS user_groups;
 CREATE TABLE `user_groups` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `group_uuid` varchar(255) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '',
+  `group_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户组表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户组表';
 
 -- Inserting 1 row into user_groups
 -- Insert batch #1
@@ -703,52 +680,53 @@ INSERT INTO user_groups (id, group_uuid, title, content, created_at, updated_at,
 -- END TABLE user_groups
 
 -- BEGIN TABLE user_verifieds
-DROP TABLE IF EXISTS user_auths;
 DROP TABLE IF EXISTS user_verifieds;
 CREATE TABLE `user_verifieds` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '' ,
-  `type` varchar(255) NOT NULL DEFAULT '' COMMENT 'personal, company',
-  `state` varchar(255) NOT NULL DEFAULT '' COMMENT 'pass, fail',
-  `method` varchar(255) NOT NULL DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
-  `number` varchar(255) NOT NULL DEFAULT '' COMMENT '证件号',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `front_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '正面照, 营业执照照片',
-  `back_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '背面照',
-  `hand_photo` varchar(255) NOT NULL DEFAULT '' COMMENT '手持照片',
-  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
-  `remarks` varchar(255) NOT NULL DEFAULT '',
+  `user_uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'personal, company',
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'pass, fail',
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
+  `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '证件号',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
+  `front_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '正面照, 营业执照照片',
+  `back_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '背面照',
+  `hand_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手持照片',
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址',
+  `remarks` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_uuid` (`user_uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户实名认证表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户实名认证表';
 
--- Table user_verifieds contains no data. No inserts have been genrated.
--- Inserting 0 rows into user_verifieds
-INSERT INTO user_verifieds (user_uuid, name) VALUES ('TlauENMYypybGMstEfdGNPLwcDwPGg', 'test');
+-- Inserting 1 row into user_verifieds
+-- Insert batch #1
+INSERT INTO user_verifieds (id, user_uuid, type, state, method, number, name, front_photo, back_photo, hand_photo, address, remarks, created_at, updated_at, deleted_at) VALUES
+(1, 'TlauENMYypybGMstEfdGNPLwcDwPGg', '', '', '', '', 'test', '', '', '', '', '', '2022-09-01 08:27:15', NULL, NULL);
 
 -- END TABLE user_verifieds
+
 -- BEGIN TABLE users
 DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL DEFAULT '',
-  `wechat_openid` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `avatar` varchar(255) NOT NULL DEFAULT '',
-  `nick_name` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
-  `pay_password` varchar(255) NOT NULL DEFAULT '',
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `wechat_openid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `nick_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `pay_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `account_amount` decimal(15,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '账户金额',
-  `groups` json COMMENT '用户分类',
+  `groups` json DEFAULT NULL COMMENT '用户分类',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_USERNAME` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 
 -- Inserting 2 rows into users
 -- Insert batch #1
@@ -757,3 +735,4 @@ INSERT INTO users (id, uuid, wechat_openid, name, avatar, nick_name, password, p
 (3, 'TlauENMYypybGMstEfdGNPLwcDwPGg', 'oE2tk1rxzf71mx3H2NX4rNbAAqZ4', '', '', '', '', '', 0, NULL, '2022-07-16 23:52:30', '2022-09-01 01:43:08', NULL);
 
 -- END TABLE users
+
