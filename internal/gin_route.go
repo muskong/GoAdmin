@@ -161,8 +161,14 @@ func GinRouter() *gin.Engine {
 			orderRule.DELETE("/delete/:id", admin.OrderHandler.OrderDelete)
 		}
 	}
+	api := router.Group("/api")
+	{
+		api.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
+		api.GET("/", admin.Index)
+	}
 	usr := router.Group("/user")
 	{
+		usr.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
 		usr.GET("/", admin.Index)
 	}
 	pub := router.Group("/public")
