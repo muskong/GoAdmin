@@ -2,7 +2,6 @@ package entity
 
 import (
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -10,7 +9,6 @@ import (
 type (
 	UserBank struct {
 		gorm.Model
-		UserUuid     string          `json:"UserUuid,omitempty" db:"user_uuid"`
 		Mobile       string          `json:"Mobile,omitempty" db:"mobile"`
 		Province     string          `json:"Province,omitempty" db:"province"`
 		City         string          `json:"City,omitempty" db:"city"`
@@ -53,8 +51,6 @@ func (e *_userBank) GetUserBanks(offset, limit int) (userBanks []*UserBank, coun
 }
 
 func (e *_userBank) Insert(userBank *UserBank) (err error) {
-	userBank.UserUuid = idworker.StringNanoid(30)
-
 	err = e.db().Create(userBank).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

@@ -1,5 +1,5 @@
 -- Database export via SQLPro (https://www.sqlprostudio.com/allapps.html)
--- Exported by a at 01-09-2022 19:19.
+-- Exported by a at 08-09-2022 18:18.
 -- WARNING: This file may contain descructive statements such as DROPs.
 -- Please ensure that you are running the script at the proper location.
 
@@ -19,9 +19,9 @@ CREATE TABLE `admin_logs` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
 
--- Inserting 32 rows into admin_logs
+-- Inserting 40 rows into admin_logs
 -- Insert batch #1
 INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, title, created_at) VALUES
 (1, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0', '登录', '2022-08-19 09:08:09'),
@@ -55,7 +55,15 @@ INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, t
 (29, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-30 09:27:36'),
 (30, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-08-31 18:46:47'),
 (31, 1, '192.168.50.35', '/admin/userGroup/create', 'POST', 'application/json', '{"ID":1,"GroupUuid":"twaAwNRZAxnHCVHrIhCuTbyeljquHJ","Title":"test","Content":"342"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '新增用户组', '2022-09-01 17:33:36'),
-(32, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-01 18:58:05');
+(32, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-01 18:58:05'),
+(33, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-02 18:00:06'),
+(34, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:05:06'),
+(35, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:05:29'),
+(36, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:11:04'),
+(37, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:11:31'),
+(38, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:11:44'),
+(39, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:39:54'),
+(40, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:40:17');
 
 -- END TABLE admin_logs
 
@@ -601,6 +609,22 @@ INSERT INTO tmp (id, string, nanoid) VALUES
 (99, 'jpQzzw', '838516');
 
 -- END TABLE tmp
+
+-- BEGIN TABLE tmp_uuid
+DROP TABLE IF EXISTS tmp_uuid;
+CREATE TABLE `tmp_uuid` (
+  `id` binary(16) NOT NULL,
+  `string` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `nanoid` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Inserting 1 row into tmp_uuid
+-- Insert batch #1
+INSERT INTO tmp_uuid (id, string, nanoid) VALUES
+(0x8548492e2f1911edaaf30242ac130004, '1', '2');
+
+-- END TABLE tmp_uuid
 
 -- BEGIN TABLE user_accounts
 DROP TABLE IF EXISTS user_accounts;

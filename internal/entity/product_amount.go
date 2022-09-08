@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -12,10 +11,9 @@ import (
 type (
 	ProductAmount struct {
 		gorm.Model
-		AmountUuid string `json:"AmountUuid,omitempty" db:"amount_uuid"`
-		Amount     string `json:"Amount,omitempty" db:"amount"`
-		Rate       string `json:"Rate,omitempty" db:"rate"`
-		RateSys    string `json:"RateSys,omitempty" db:"rate_sys"`
+		Amount  string `json:"Amount,omitempty" db:"amount"`
+		Rate    string `json:"Rate,omitempty" db:"rate"`
+		RateSys string `json:"RateSys,omitempty" db:"rate_sys"`
 	}
 	_productAmount struct{}
 )
@@ -28,7 +26,7 @@ func (*_productAmount) db() *gdb.DB {
 
 func (e *_productAmount) GetProductAmount(uuid string) (*ProductAmount, error) {
 	var data ProductAmount
-	err := e.db().Where("amount_uuid = ?", uuid).First(&data).Error
+	err := e.db().Where("uuid = ?", uuid).First(&data).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -44,7 +42,6 @@ func (e *_productAmount) GetProductAmounts(offset, limit int) (products []*Produ
 }
 
 func (e *_productAmount) Insert(product *ProductAmount) (err error) {
-	product.AmountUuid = idworker.StringNanoid(16)
 	err = e.db().Create(product).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

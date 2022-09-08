@@ -47,18 +47,18 @@ type (
 		RuleIds []string `json:"RuleIds"`
 	}
 	RuleTreeNode struct {
-		Id           int    `json:"Id"`
-		Nanoid       string `json:"Nanoid"`
-		ParentNanoid string `json:"ParentNanoid"`
-		Type         string `json:"Type"`
-		Title        string `json:"Title"`
-		Path         string `json:"Path"`
-		Icon         string `json:"Icon"`
-		Remark       string `json:"Remark"`
-		Active       string `json:"Active"`
-		Sequence     string `json:"Sequence"`
-		CreatedAt    string `json:"CreatedAt"`
-		UpdatedAt    string `json:"UpdatedAt"`
+		Id         int    `json:"Id"`
+		Uuid       string `json:"Uuid"`
+		ParentUuid string `json:"ParentUuid"`
+		Type       string `json:"Type"`
+		Title      string `json:"Title"`
+		Path       string `json:"Path"`
+		Icon       string `json:"Icon"`
+		Remark     string `json:"Remark"`
+		Active     string `json:"Active"`
+		Sequence   string `json:"Sequence"`
+		CreatedAt  string `json:"CreatedAt"`
+		UpdatedAt  string `json:"UpdatedAt"`
 	}
 
 	RuleTree struct {
@@ -67,14 +67,14 @@ type (
 	}
 
 	RoleTreeNode struct {
-		Id           int    `json:"Id"`
-		Nanoid       string `json:"Nanoid"`
-		ParentNanoid string `json:"ParentNanoid"`
-		Name         string `json:"Name"`
-		Description  string `json:"Description"`
-		State        string `json:"State"`
-		CreatedAt    string `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt    string `json:"UpdatedAt,omitempty" db:"updated_at"`
+		Id          int    `json:"Id"`
+		Uuid        string `json:"Uuid"`
+		ParentUuid  string `json:"ParentUuid"`
+		Name        string `json:"Name"`
+		Description string `json:"Description"`
+		State       string `json:"State"`
+		CreatedAt   string `json:"CreatedAt,omitempty" db:"created_at"`
+		UpdatedAt   string `json:"UpdatedAt,omitempty" db:"updated_at"`
 	}
 
 	RoleTree struct {
@@ -128,8 +128,8 @@ func (p *Page) getOffset() int {
 	return p.getLimit() * (p.Page - 1)
 }
 
-func AntdTree(parentNanoid string, pdata map[string][]AntTreeNode) (tree []AntTreeSelect) {
-	for _, role := range pdata[parentNanoid] {
+func AntdTree(parentUuid string, pdata map[string][]AntTreeNode) (tree []AntTreeSelect) {
+	for _, role := range pdata[parentUuid] {
 		var _tree AntTreeSelect
 		_tree.AntTreeNode = role
 		_tree.Children = AntdTree(role.Value, pdata)

@@ -2,7 +2,6 @@ package entity
 
 import (
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -10,7 +9,6 @@ import (
 type (
 	UserVerified struct {
 		gorm.Model
-		UserUuid   string `json:"UserUuid" db:"user_uuid"`
 		Type       string `json:"Type" db:"type"`
 		State      string `json:"State" db:"state"`
 		Method     string `json:"Method" db:"method"`
@@ -49,8 +47,6 @@ func (e *_userVerified) GetUserVerifieds(offset, limit int) (userVerifieds []*Us
 }
 
 func (e *_userVerified) Insert(userVerified *UserVerified) (err error) {
-	userVerified.UserUuid = idworker.StringNanoid(30)
-
 	err = e.db().Create(userVerified).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

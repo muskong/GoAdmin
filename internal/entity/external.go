@@ -24,27 +24,25 @@ func (*_external) db() *gdb.DB {
 	return gorm.NewModel(&External{}).Where("deleted_at IS NULL")
 }
 
-func (o *_external) GetExternal(orderId string) (*External, error) {
-	var order External
-	err := o.db().Where("nanoid = ?", orderId).First(&order).Error
+func (o *_external) GetExternal(uuid string) (*External, error) {
+	var external External
+	err := o.db().Where("uuid = ?", uuid).First(&external).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
-	return &order, err
+	return &external, err
 }
 
-func (e *_external) GetExternals(offset, limit int) (orders []*External, count int64, err error) {
-	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&orders).Error
+func (e *_external) GetExternals(offset, limit int) (externals []*External, count int64, err error) {
+	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&externals).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return
 }
 
-func (e *_external) Insert(order *External) (err error) {
-	// order.ExternalNumber = idworker.IdWorker("C")
-
-	err = e.db().Create(order).Error
+func (e *_external) Insert(external *External) (err error) {
+	err = e.db().Create(external).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -58,8 +56,8 @@ func (e *_external) Delete(verifiedId int) error {
 	return err
 }
 
-func (e *_external) GetAll() (orders []*External, err error) {
-	err = e.db().Order("id desc").Find(&orders).Error
+func (e *_external) GetAll() (externals []*External, err error) {
+	err = e.db().Order("id desc").Find(&externals).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

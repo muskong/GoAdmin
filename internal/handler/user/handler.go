@@ -1,4 +1,4 @@
-package admin
+package user
 
 type (
 	Id struct {
@@ -6,9 +6,6 @@ type (
 	}
 	UserRequest struct {
 		UserId int `json:"uuid" uri:"uuid" binding:"required"`
-	}
-	RoleRequest struct {
-		RoleId string `json:"roleId" uri:"roleId" binding:"required"`
 	}
 	ProductRequest struct {
 		Id int `json:"id" uri:"id" binding:"required"`

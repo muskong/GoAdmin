@@ -2,7 +2,6 @@ package entity
 
 import (
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -10,9 +9,8 @@ import (
 type (
 	UserGroup struct {
 		gorm.Model
-		GroupUuid string `json:"GroupUuid,omitempty" db:"group_uuid"`
-		Title     string `json:"Title,omitempty" db:"title"`
-		Content   string `json:"Content,omitempty" db:"content"`
+		Title   string `json:"Title,omitempty" db:"title"`
+		Content string `json:"Content,omitempty" db:"content"`
 	}
 	_userGroup struct{}
 )
@@ -41,8 +39,6 @@ func (e *_userGroup) GetUserGroups(offset, limit int) (userGroups []*UserGroup, 
 }
 
 func (e *_userGroup) Insert(userGroup *UserGroup) (err error) {
-	userGroup.GroupUuid = idworker.StringNanoid(30)
-
 	err = e.db().Create(userGroup).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

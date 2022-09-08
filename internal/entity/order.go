@@ -94,7 +94,7 @@ func (*_order) StateError() string {
 
 func (o *_order) GetOrder(orderId string) (*Order, error) {
 	var order Order
-	err := o.db().Where("nanoid = ?", orderId).First(&order).Error
+	err := o.db().Where("uuid = ?", orderId).First(&order).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

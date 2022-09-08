@@ -10,7 +10,6 @@ import (
 type (
 	User struct {
 		gorm.Model
-		Uuid          string          `json:"Uuid" db:"uuid"`
 		WechatOpenid  string          `json:"WechatOpenid" db:"wechat_openid"`
 		Name          string          `json:"Name" db:"name"`
 		Avatar        string          `json:"Avatar" db:"avatar"`

@@ -2,24 +2,19 @@ package entity
 
 import (
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
 
 type (
 	UserAccount struct {
-		// gdb.Model
-		ID       int     `json:"ID" db:"id"`
-		UserUuid string  `json:"UserUuid" db:"user_uuid"`
-		Before   float64 `json:"Before" db:"before"`
-		Change   float64 `json:"Change" db:"change"`
-		After    float64 `json:"After" db:"after"`
-		Remark   string  `json:"Remark" db:"remark"`
-		Table    string  `json:"Table" db:"table"`
-		TableId  string  `json:"TableId" db:"table_id"`
-
-		CreatedAt gorm.TimeString `json:"CreatedAt" db:"created_at"`
+		gdb.Model
+		Before  float64 `json:"Before" db:"before"`
+		Change  float64 `json:"Change" db:"change"`
+		After   float64 `json:"After" db:"after"`
+		Remark  string  `json:"Remark" db:"remark"`
+		Table   string  `json:"Table" db:"table"`
+		TableId string  `json:"TableId" db:"table_id"`
 
 		Verified UserVerified `gorm:"foreignkey:UserUuid;references:UserUuid"`
 		User     User         `gorm:"foreignkey:Uuid;references:UserUuid"`
@@ -51,8 +46,6 @@ func (e *_userAccount) GetUserAccounts(offset, limit int) (userAccounts []*UserA
 }
 
 func (e *_userAccount) Insert(userAccount *UserAccount) (err error) {
-	userAccount.UserUuid = idworker.StringNanoid(30)
-
 	err = e.db().Create(userAccount).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

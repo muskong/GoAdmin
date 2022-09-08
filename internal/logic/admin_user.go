@@ -14,7 +14,7 @@ var AdminUser = &_adminUser{}
 
 func (l *_adminUser) AdminUser(userId int) (user *entity.AdminUser, err error) {
 	user, err = entity.AdminUserEntity.GetUser(userId)
-	if user.Id <= 0 || err != nil {
+	if user.ID <= 0 || err != nil {
 		err = errors.New("查询用户失败")
 	}
 	return
@@ -36,7 +36,7 @@ func (l *_adminUser) AdminUserList(page Page) (result Result, err error) {
 
 func (l *_adminUser) AdminUserCreate(u entity.AdminUser) error {
 	user, err := entity.AdminUserEntity.InsertAdminUser(&u)
-	if user.Id <= 0 || err != nil {
+	if user.ID <= 0 || err != nil {
 		return errors.New("新增用户失败")
 	}
 	l.Log("新增用户", user)
@@ -45,7 +45,7 @@ func (l *_adminUser) AdminUserCreate(u entity.AdminUser) error {
 
 func (l *_adminUser) AdminUserUpdate(u entity.AdminUser) error {
 	user, err := entity.AdminUserEntity.UpdateAdminUser(&u)
-	if user.Id <= 0 || err != nil {
+	if user.ID <= 0 || err != nil {
 		return errors.New("更新用户失败")
 	}
 	l.Log("更新用户", user)

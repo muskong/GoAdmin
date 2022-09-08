@@ -10,21 +10,10 @@ import (
 
 type (
 	AdminUser struct {
-		/** ID **/
-		Id     int    `json:"Id,omitempty" db:"id"`
-		Nanoid string `json:"Nanoid,omitempty" db:"nanoid"`
-		/** 用户名 **/
-		Name string `json:"Name,omitempty" db:"name"`
-		/** 密码 **/
-		Password string `json:"Password,omitempty" db:"password"`
-		/** 角色 **/
-		Roles gorm.JsonString `json:"Roles,omitempty" db:"roles"`
-
-		/** 发布时间 **/
-		CreatedAt gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		/** 更新时间 **/
-		UpdatedAt gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		gorm.Model
+		Name     string          `json:"Name,omitempty" db:"name"`
+		Password string          `json:"Password,omitempty" db:"password"`
+		Roles    gorm.JsonString `json:"Roles,omitempty" db:"roles"`
 	}
 	_adminUser struct{}
 )

@@ -4,23 +4,18 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
 
 type (
 	AdminRole struct {
-		Id           int             `json:"Id,omitempty" db:"id"`
-		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
-		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
-		Name         string          `json:"Name,omitempty" db:"name"`
-		Rules        gorm.JsonString `json:"Rules,omitempty" db:"rules"`
-		Description  string          `json:"Description,omitempty" db:"description"`
-		State        string          `json:"State,omitempty" db:"state"`
-		CreatedAt    gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt    gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt    gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		gorm.Model
+		ParentUuid  string          `json:"ParentUuid,omitempty" db:"parent_uuid"`
+		Name        string          `json:"Name,omitempty" db:"name"`
+		Rules       gorm.JsonString `json:"Rules,omitempty" db:"rules"`
+		Description string          `json:"Description,omitempty" db:"description"`
+		State       string          `json:"State,omitempty" db:"state"`
 	}
 	role struct{}
 )
@@ -33,7 +28,7 @@ func (e *role) db() *gdb.DB {
 
 func (e *role) GetRole(roleId string) (*AdminRole, error) {
 	var role AdminRole
-	err := e.db().Where("nanoid = ?", roleId).First(&role).Error
+	err := e.db().Where("uuid = ?", roleId).First(&role).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -67,8 +62,6 @@ func (e *role) GetRoles(offset, limit int) (roles []*AdminRole, count int64, err
 	return
 }
 func (e *role) InsertAdminRole(role *AdminRole) (err error) {
-	role.Nanoid = idworker.NumberNanoid(16)
-
 	err = e.db().Create(role).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -85,7 +78,7 @@ func (e *role) UpdateAdminRole(role *AdminRole) (err error) {
 func (e *role) DeleteAdminRole(roleId string) error {
 	ar := AdminRole{}
 	ar.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := e.db().Where("nanoid = ?", roleId).Updates(ar).Error
+	err := e.db().Where("uuid = ?", roleId).Updates(ar).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -93,7 +86,7 @@ func (e *role) DeleteAdminRole(roleId string) error {
 }
 
 func (e *role) UpdateAdminRoleRules(roleId string, ruleIds []string) error {
-	err := e.db().Where("nanoid = ?", roleId).Update("rules", ruleIds).Error
+	err := e.db().Where("uuid = ?", roleId).Update("rules", ruleIds).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

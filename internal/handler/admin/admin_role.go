@@ -14,11 +14,9 @@ type roleGrop struct{}
 var Role = &roleGrop{}
 
 func (*roleGrop) AdminRole(c *gin.Context) {
-	var q struct {
-		RoleId string `json:"roleId"`
-	}
+	var q RoleRequest
 	err := c.ShouldBindQuery(&q)
-	if q.RoleId == "" {
+	if err != nil || q.RoleId == "" {
 		c.SecureJSON(respond.Message("传入参数错误"))
 		return
 	}
@@ -97,7 +95,7 @@ func (*roleGrop) AdminRoleDelete(c *gin.Context) {
 	}
 
 	logic.Role.Context(c)
-	err = logic.Role.AdminRoleDelete(q.Nanoid)
+	err = logic.Role.AdminRoleDelete(q.Uuid)
 
 	if err != nil {
 		c.SecureJSON(respond.Message(err.Error()))

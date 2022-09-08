@@ -8,6 +8,7 @@
 DROP TABLE IF EXISTS admin_logs;
 CREATE TABLE `admin_logs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `admin_id` int unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
   `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'ip地址',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '请求链接',
@@ -55,7 +56,15 @@ INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, t
 (29, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.63', '登录', '2022-08-30 09:27:36'),
 (30, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-08-31 18:46:47'),
 (31, 1, '192.168.50.35', '/admin/userGroup/create', 'POST', 'application/json', '{"ID":1,"GroupUuid":"twaAwNRZAxnHCVHrIhCuTbyeljquHJ","Title":"test","Content":"342"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '新增用户组', '2022-09-01 17:33:36'),
-(32, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-01 18:58:05');
+(32, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-01 18:58:05'),
+(33, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-02 18:00:06'),
+(34, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:05:06'),
+(35, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:05:29'),
+(36, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70', '登录', '2022-09-05 10:11:04'),
+(37, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:11:31'),
+(38, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:11:44'),
+(39, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:39:54'),
+(40, 0, '192.168.50.35', '/admin/admin/login', 'POST', 'application/json', '{"Id":1,"Name":"test","Password":"$2a$14$10BXVovf/FXpbo09bw7T1ukVgkpp/pYOYKMQIPCx3b8xSJHdzfRnm","Roles":["admin"],"CreatedAt":"2022-06-20 04:09:42","UpdatedAt":"2022-07-03 06:08:20"}', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.27', '登录', '2022-09-05 14:40:17');
 
 -- END TABLE admin_logs
 
@@ -63,8 +72,8 @@ INSERT INTO admin_logs (id, admin_id, ip, url, method, type, param, useragent, t
 DROP TABLE IF EXISTS admin_roles;
 CREATE TABLE `admin_roles` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
+  `parent_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '父级ID',
   `name` varchar(255) NOT NULL DEFAULT '',
   `rules` json,
   `description` varchar(255) NOT NULL DEFAULT '',
@@ -78,7 +87,7 @@ CREATE TABLE `admin_roles` (
 
 -- Inserting 15 rows into admin_roles
 -- Insert batch #1
-INSERT INTO admin_roles (id, nanoid, parent_nanoid, name, rules, description, state, created_at, updated_at, deleted_at) VALUES
+INSERT INTO admin_roles (id, uuid, parent_uuid, name, rules, description, state, created_at, updated_at, deleted_at) VALUES
 (1, '1', '', 'admin', '[""]', '超级管理员', 'allow', '2022-07-03 06:22:53', '2022-08-11 01:45:40', NULL),
 (2, '2', '1', 'admin1', NULL, '一级管理员', 'allow', '2022-08-01 08:08:54', '2022-08-10 10:46:54', NULL),
 (3, 'qxJ5ZHsZoEEYjLq6cyciI', '1', 'test', '["4", "5", "6", "7", "9", "10", "11", "12", "14", "15", "16", "17", "18", "20"]', 'testeeeee', 'allow', '2022-08-11 09:50:30', '2022-08-11 09:50:30', '2022-08-11 09:50:30'),
@@ -101,8 +110,8 @@ INSERT INTO admin_roles (id, nanoid, parent_nanoid, name, rules, description, st
 DROP TABLE IF EXISTS admin_rules;
 CREATE TABLE `admin_rules` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nanoid` varchar(255) NOT NULL COMMENT '唯一ID',
-  `parent_nanoid` varchar(255) NOT NULL COMMENT '父级ID',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
+  `parent_uuid` varchar(255) NOT NULL COMMENT '父级ID',
   `type` varchar(255) NOT NULL DEFAULT 'menu' COMMENT '类型:menu_dir=菜单目录,menu=菜单项,button=页面按钮',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `link` varchar(255) NOT NULL DEFAULT '' COMMENT '规则名称',
@@ -120,7 +129,7 @@ CREATE TABLE `admin_rules` (
 
 -- Inserting 79 rows into admin_rules
 -- Insert batch #1
-INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, icon, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
+INSERT INTO admin_rules (id, uuid, parent_uuid, type, title, link, `path`, icon, remark, sequence, active, created_at, updated_at, deleted_at) VALUES
 (1, '869326', '', 'menu', '控制台', 'dashboard/dashboard', 'dashboard', 'fa fa-dashboard', 'remark_text', 999, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:07', NULL),
 (2, '469424', '', 'menu_dir', '权限管理', 'permission', 'permission', 'fa fa-group', '', 1, 'allow', '2022-07-27 01:46:21', '2022-09-01 10:22:50', NULL),
 (3, '995496', '469424', 'menu', '角色组管理', 'permission/role', 'permission/role', 'fa fa-group', '', 99, 'allow', '2022-07-27 01:46:21', '2022-08-12 07:03:22', NULL),
@@ -210,6 +219,7 @@ INSERT INTO admin_rules (id, nanoid, parent_nanoid, type, title, link, `path`, i
 DROP TABLE IF EXISTS admin_users;
 CREATE TABLE `admin_users` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `name` varchar(255) NOT NULL DEFAULT '',
   `roles` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL DEFAULT '',
@@ -231,6 +241,7 @@ INSERT INTO admin_users (id, name, roles, password, created_at, updated_at, dele
 DROP TABLE IF EXISTS bank_prcptcds;
 CREATE TABLE `bank_prcptcds` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `bankname` varchar(255) NOT NULL NOT NULL,
   `bank_code` varchar(255) NOT NULL COMMENT '银行编号',
   `prcptcd` varchar(255) NOT NULL COMMENT '行号',
@@ -253,6 +264,7 @@ CREATE TABLE `bank_prcptcds` (
 DROP TABLE IF EXISTS banks;
 CREATE TABLE `banks` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `abbr` varchar(255) NOT NULL DEFAULT '',
   `state` int NOT NULL DEFAULT '1',
   `bankname` varchar(255) NOT NULL DEFAULT '',
@@ -272,6 +284,7 @@ CREATE TABLE `banks` (
 DROP TABLE IF EXISTS configs;
 CREATE TABLE `configs` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `type` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名称',
   `value` text CHARACTER SET utf8mb4,
@@ -293,6 +306,7 @@ CREATE TABLE `configs` (
 DROP TABLE IF EXISTS externals;
 CREATE TABLE `externals` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `type` varchar(255) NOT NULL DEFAULT '',
   `title` varchar(255) NOT NULL DEFAULT '',
   `app_key` varchar(255) NOT NULL DEFAULT '' COMMENT '访问key',
@@ -302,7 +316,7 @@ CREATE TABLE `externals` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `name` (`name`)
+  KEY `title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='对外开放接口';
 
 -- Table externals contains no data. No inserts have been genrated.
@@ -316,6 +330,7 @@ DROP TABLE IF EXISTS notification_setting;
 DROP TABLE IF EXISTS notify_setting;
 CREATE TABLE `notify_setting` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `name` varchar(255) NOT NULL COMMENT '节点名称',
   `title` varchar(255) NOT NULL COMMENT '显示名称',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '节点描述',
@@ -356,6 +371,7 @@ CREATE TABLE `notify_setting` (
 DROP TABLE IF EXISTS orders;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `order_number` varchar(255) NOT NULL COMMENT '唯一ID',
   `product_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
   `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
@@ -372,6 +388,7 @@ CREATE TABLE `orders` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `uuid` (`uuid`),
   KEY `order_number` (`order_number`),
   KEY `product_id` (`product_id`),
   KEY `queue` (`queue`),
@@ -388,7 +405,7 @@ CREATE TABLE `orders` (
 DROP TABLE IF EXISTS product_amounts;
 CREATE TABLE `product_amounts` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `amount_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品金额唯一ID',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品金额唯一ID',
   `amount` decimal(10,4) NOT NULL,
   `rate` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `rate_sys` decimal(10,4) NOT NULL DEFAULT '0.0000',
@@ -400,7 +417,7 @@ CREATE TABLE `product_amounts` (
 
 -- Table product_amounts contains no data. No inserts have been genrated.
 -- Inserting 0 rows into product_amounts
-INSERT INTO product_amounts (id, amount_uuid, amount, rate, rate_sys, created_at, updated_at, deleted_at) VALUES
+INSERT INTO product_amounts (id, uuid, amount, rate, rate_sys, created_at, updated_at, deleted_at) VALUES
 (1, '', 100, 0.94, 0.98, '2022-08-22 18:27:12', '2022-08-22 18:27:12', NULL),
 (2, '', 1000, 0.94, 0.98, '2022-08-22 18:27:25', '2022-08-22 18:27:25', NULL),
 (3, '', 200, 0.94, 0.98, '2022-08-22 18:27:36', '2022-08-22 18:27:36', NULL),
@@ -415,7 +432,7 @@ INSERT INTO product_amounts (id, amount_uuid, amount, rate, rate_sys, created_at
 DROP TABLE IF EXISTS product_cards;
 CREATE TABLE `product_cards` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `card_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品唯一ID',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品唯一ID',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `icon_url` varchar(255) NOT NULL DEFAULT '' COMMENT '图片1',
   `batch` varchar(255) NOT NULL DEFAULT 'deny' COMMENT '是否可以批量提交卡密 allow是, deny否',
@@ -428,12 +445,12 @@ CREATE TABLE `product_cards` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `card_uuid` (`card_uuid`)
+  KEY `uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品卡类';
 
 -- Inserting 1 row into product_cards
 -- Insert batch #1
-INSERT INTO product_cards (id, card_uuid, title, icon_url, batch, single, status, regularity, note, example, created_at, updated_at, deleted_at) VALUES
+INSERT INTO product_cards (id, uuid, title, icon_url, batch, single, status, regularity, note, example, created_at, updated_at, deleted_at) VALUES
 (1, '', '京东E卡', 'url', 'allow', 'allow', 'allow', 'rage', '京东E卡', '1234-1234-1234-1234', '2022-08-22 18:42:27', '2022-08-22 18:42:27', NULL);
 
 -- END TABLE product_cards
@@ -442,19 +459,19 @@ INSERT INTO product_cards (id, card_uuid, title, icon_url, batch, single, status
 DROP TABLE IF EXISTS product_channels;
 CREATE TABLE `product_channels` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `channel_uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品渠道唯一ID',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '产品渠道唯一ID',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '通道名称',
   `channel` varchar(255) NOT NULL DEFAULT '' COMMENT '通道(web.pc, web.mobile, api)',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `channel_uuid` (`channel_uuid`)
+  KEY `uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品可用渠道';
 
 -- Inserting 3 rows into product_channels
 -- Insert batch #1
-INSERT INTO product_channels (id, channel_uuid, title, channel, created_at, updated_at, deleted_at) VALUES
+INSERT INTO product_channels (id, uuid, title, channel, created_at, updated_at, deleted_at) VALUES
 (1, '', '手机', 'web.mobile', '2022-08-22 18:31:12', '2022-08-22 18:31:12', NULL),
 (2, '', '电脑', 'web.pc', '2022-08-22 18:31:26', '2022-08-22 18:31:26', NULL),
 (3, '', '接口', 'api', '2022-08-22 18:31:40', '2022-08-22 18:31:40', NULL);
@@ -490,6 +507,7 @@ INSERT INTO product_services (id, uuid, title, class, status, content, type, cre
 DROP TABLE IF EXISTS products;
 CREATE TABLE `products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `product_card_id` int unsigned NOT NULL DEFAULT '0' COMMENT '卡类ID',
   `product_amount_id` int unsigned NOT NULL DEFAULT '0' COMMENT '金额ID',
   `product_channel_id` int unsigned NOT NULL DEFAULT '0' COMMENT '渠道ID',
@@ -518,13 +536,13 @@ DROP TABLE IF EXISTS tmp;
 CREATE TABLE `tmp` (
   `id` int NOT NULL AUTO_INCREMENT,
   `string` varchar(128) DEFAULT '',
-  `nanoid` varchar(128) NOT NULL DEFAULT '',
+  `uuid` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Inserting 99 rows into tmp
 -- Insert batch #1
-INSERT INTO tmp (id, string, nanoid) VALUES
+INSERT INTO tmp (id, string, uuid) VALUES
 (1, 'rKxtBf', '869326'),
 (2, 'WiCMIs', '469424'),
 (3, 'HuYsuH', '995496'),
@@ -631,7 +649,7 @@ INSERT INTO tmp (id, string, nanoid) VALUES
 DROP TABLE IF EXISTS user_accounts;
 CREATE TABLE `user_accounts` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '' ,
+  `uuid` varchar(255) NOT NULL DEFAULT '' ,
   `before` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更前金额',
   `change` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更金额',
   `after` decimal(15,2) NOT NULL DEFAULT '0' COMMENT '变更后金额',
@@ -640,12 +658,12 @@ CREATE TABLE `user_accounts` (
   `table_id` bigint NOT NULL DEFAULT '0' COMMENT '变更对应表的ID',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_uuid` (`user_uuid`)
+  KEY `uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户余额变动表';
 
 -- Inserting 1 row into user_accounts
 -- Insert batch #1
-INSERT INTO user_accounts (id, user_uuid, `before`, `change`, `after`, remark, `table`, table_id, created_at) VALUES
+INSERT INTO user_accounts (id, uuid, `before`, `change`, `after`, remark, `table`, table_id, created_at) VALUES
 (1, 'TlauENMYypybGMstEfdGNPLwcDwPGg', 0, 0, 0, '', '', 0, '2022-09-01 01:43:31');
 
 -- END TABLE user_accounts
@@ -654,7 +672,7 @@ INSERT INTO user_accounts (id, user_uuid, `before`, `change`, `after`, remark, `
 DROP TABLE IF EXISTS user_banks;
 CREATE TABLE `user_banks` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡手机号',
   `province` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡开户省',
   `city` varchar(255) NOT NULL DEFAULT '' COMMENT '银行卡开户市',
@@ -673,12 +691,12 @@ CREATE TABLE `user_banks` (
   `updated_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `user_uuid` (`user_uuid`) USING BTREE
+  KEY `uuid` (`uuid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='用户银行账户表';
 
 -- Inserting 1 row into user_banks
 -- Insert batch #1
-INSERT INTO user_banks (id, user_uuid, mobile, province, city, type, abbreviation, bank, bin_digits, card_number, card_name, card_bin, card_digits, logo, is_luhn, images, created_at, updated_at, deleted_at) VALUES
+INSERT INTO user_banks (id, uuid, mobile, province, city, type, abbreviation, bank, bin_digits, card_number, card_name, card_bin, card_digits, logo, is_luhn, images, created_at, updated_at, deleted_at) VALUES
 (1, 'TlauENMYypybGMstEfdGNPLwcDwPGg', '', '', '', '', '', '', 0, '', '', 0, 0, '', '', NULL, '2022-09-01 01:43:47', NULL, NULL);
 
 -- END TABLE user_banks
@@ -686,7 +704,7 @@ INSERT INTO user_banks (id, user_uuid, mobile, province, city, type, abbreviatio
 DROP TABLE IF EXISTS user_groups;
 CREATE TABLE `user_groups` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `group_uuid` varchar(255) NOT NULL DEFAULT '',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `title` varchar(255) NOT NULL DEFAULT '',
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -698,7 +716,7 @@ CREATE TABLE `user_groups` (
 
 -- Inserting 1 row into user_groups
 -- Insert batch #1
-INSERT INTO user_groups (id, group_uuid, title, content, created_at, updated_at, deleted_at) VALUES
+INSERT INTO user_groups (id, uuid, title, content, created_at, updated_at, deleted_at) VALUES
 (1, 'twaAwNRZAxnHCVHrIhCuTbyeljquHJ', 'test', '342', '2022-09-01 17:33:36', '2022-09-01 17:33:36', NULL);
 
 -- END TABLE user_groups
@@ -708,7 +726,7 @@ DROP TABLE IF EXISTS user_auths;
 DROP TABLE IF EXISTS user_verifieds;
 CREATE TABLE `user_verifieds` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_uuid` varchar(255) NOT NULL DEFAULT '' ,
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `type` varchar(255) NOT NULL DEFAULT '' COMMENT 'personal, company',
   `state` varchar(255) NOT NULL DEFAULT '' COMMENT 'pass, fail',
   `method` varchar(255) NOT NULL DEFAULT '' COMMENT 'API认证, person本站, face人脸核身',
@@ -723,19 +741,19 @@ CREATE TABLE `user_verifieds` (
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_uuid` (`user_uuid`)
+  KEY `uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户实名认证表';
 
 -- Table user_verifieds contains no data. No inserts have been genrated.
 -- Inserting 0 rows into user_verifieds
-INSERT INTO user_verifieds (user_uuid, name) VALUES ('TlauENMYypybGMstEfdGNPLwcDwPGg', 'test');
+INSERT INTO user_verifieds (uuid, name) VALUES ('TlauENMYypybGMstEfdGNPLwcDwPGg', 'test');
 
 -- END TABLE user_verifieds
 -- BEGIN TABLE users
 DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一ID',
   `wechat_openid` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `avatar` varchar(255) NOT NULL DEFAULT '',

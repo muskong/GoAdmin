@@ -16,7 +16,7 @@ var Rule = &_rule{}
 func (l *_rule) AdminRule(ruleId string) (rule *entity.AdminRule, err error) {
 
 	rule, err = entity.Rule.GetRule(ruleId)
-	if rule.Id <= 0 || err != nil {
+	if rule.ID <= 0 || err != nil {
 		err = errors.New("权限节点无数据")
 		return
 	}
@@ -41,7 +41,7 @@ func (l *_rule) AdminRuleList(page Page) (result Result, err error) {
 
 func (l *_rule) AdminRuleCreate(u entity.AdminRule) error {
 	rule, err := entity.Rule.InsertAdminRule(&u)
-	if rule.Id <= 0 || err != nil {
+	if rule.ID <= 0 || err != nil {
 		return errors.New("新增权限节点失败")
 	}
 	l.Log("新增权限节点", rule)
@@ -50,7 +50,7 @@ func (l *_rule) AdminRuleCreate(u entity.AdminRule) error {
 
 func (l *_rule) AdminRuleUpdate(u entity.AdminRule) error {
 	rule, err := entity.Rule.UpdateAdminRule(&u)
-	if rule.Id <= 0 || err != nil {
+	if rule.ID <= 0 || err != nil {
 		return errors.New("更新权限节点失败")
 	}
 	l.Log("更新权限节点", rule)
@@ -76,7 +76,7 @@ func (l *_rule) AdminRuleAll(id string) (result Result, err error) {
 	ruleAll := []SelectInterface{}
 	for _, rule := range ruleData {
 		ruleAll = append(ruleAll, SelectInterface{
-			rule.Nanoid,
+			rule.Uuid,
 			rule.Title,
 			false})
 	}
@@ -140,19 +140,19 @@ func _tree(ruleData []*entity.AdminRule, pid int) []RuleTree {
 
 	pdata := map[string][]RuleTreeNode{}
 	for _, rule := range ruleData {
-		pdata[rule.ParentNanoid] = append(pdata[rule.ParentNanoid], RuleTreeNode{
-			Id:           rule.Id,
-			Nanoid:       rule.Nanoid,
-			ParentNanoid: rule.ParentNanoid,
-			Type:         rule.Type,
-			Title:        rule.Title,
-			Path:         rule.Path,
-			Icon:         rule.Icon,
-			Remark:       rule.Remark,
-			Active:       rule.Active,
-			Sequence:     rule.Sequence,
-			CreatedAt:    string(rule.CreatedAt),
-			UpdatedAt:    string(rule.UpdatedAt),
+		pdata[rule.ParentUuid] = append(pdata[rule.ParentUuid], RuleTreeNode{
+			Id:         rule.ID,
+			Uuid:       rule.Uuid,
+			ParentUuid: rule.ParentUuid,
+			Type:       rule.Type,
+			Title:      rule.Title,
+			Path:       rule.Path,
+			Icon:       rule.Icon,
+			Remark:     rule.Remark,
+			Active:     rule.Active,
+			Sequence:   rule.Sequence,
+			CreatedAt:  string(rule.CreatedAt),
+			UpdatedAt:  string(rule.UpdatedAt),
 		})
 	}
 
@@ -163,7 +163,7 @@ func _ruleChildren(pid string, pdata map[string][]RuleTreeNode) (tree []RuleTree
 	for _, rule := range pdata[pid] {
 		var _tree RuleTree
 		_tree.RuleTreeNode = rule
-		_tree.Children = _ruleChildren(rule.Nanoid, pdata)
+		_tree.Children = _ruleChildren(rule.Uuid, pdata)
 
 		tree = append(tree, _tree)
 	}
@@ -183,8 +183,8 @@ func (l *_rule) AdminRuleTree() (result any, err error) {
 	pdata := map[string][]AntTreeNode{}
 
 	for _, item := range ruleData {
-		pdata[item.ParentNanoid] = append(pdata[item.ParentNanoid], AntTreeNode{
-			Value: item.Nanoid,
+		pdata[item.ParentUuid] = append(pdata[item.ParentUuid], AntTreeNode{
+			Value: item.Uuid,
 			Title: item.Title,
 		})
 	}

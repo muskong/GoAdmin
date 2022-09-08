@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -12,19 +11,15 @@ import (
 type (
 	rule      struct{}
 	AdminRule struct {
-		Id           int             `json:"Id,omitempty" db:"id"`
-		Nanoid       string          `json:"Nanoid,omitempty" db:"nanoid"`
-		ParentNanoid string          `json:"ParentNanoId,omitempty" db:"parent_nanoid"`
-		Type         string          `json:"Type,omitempty" db:"type"`
-		Title        string          `json:"Title,omitempty" db:"title"`
-		Path         string          `json:"Path,omitempty" db:"path"`
-		Icon         string          `json:"Icon,omitempty" db:"icon"`
-		Remark       string          `json:"Remark,omitempty" db:"remark"`
-		Active       string          `json:"Active,omitempty" db:"active"`
-		Sequence     string          `json:"Sequence,omitempty" db:"sequence"`
-		CreatedAt    gorm.TimeString `json:"CreatedAt,omitempty" db:"created_at"`
-		UpdatedAt    gorm.TimeString `json:"UpdatedAt,omitempty" db:"updated_at"`
-		DeletedAt    gorm.NullString `json:"DeletedAt,omitempty" db:"deleted_at"`
+		gorm.Model
+		ParentUuid string `json:"ParentUuid,omitempty" db:"parent_uuid"`
+		Type       string `json:"Type,omitempty" db:"type"`
+		Title      string `json:"Title,omitempty" db:"title"`
+		Path       string `json:"Path,omitempty" db:"path"`
+		Icon       string `json:"Icon,omitempty" db:"icon"`
+		Remark     string `json:"Remark,omitempty" db:"remark"`
+		Active     string `json:"Active,omitempty" db:"active"`
+		Sequence   string `json:"Sequence,omitempty" db:"sequence"`
 	}
 )
 
@@ -48,19 +43,19 @@ func (m *rule) ActiveDeny() string {
 	return "deny"
 }
 
-func (u *rule) GetRule(nanoid string) (*AdminRule, error) {
+func (u *rule) GetRule(uuid string) (*AdminRule, error) {
 
 	var rule AdminRule
-	err := u.db().Where("nanoid = ?", nanoid).First(&rule).Error
+	err := u.db().Where("uuid = ?", uuid).First(&rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 	return &rule, err
 }
 
-func (u *rule) GetRuleAllByPid(parentNanoid string) (rules []*AdminRule, err error) {
+func (u *rule) GetRuleAllByPid(parentUuid string) (rules []*AdminRule, err error) {
 
-	err = u.db().Where("parent_nanoid = ?", parentNanoid).Find(&rules).Error
+	err = u.db().Where("parent_uuid = ?", parentUuid).Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -76,7 +71,7 @@ func (u *rule) GetRuleAll() (rules []*AdminRule, err error) {
 }
 
 func (u *rule) GetRulesByIds(ids []string) (rules []*AdminRule, err error) {
-	err = u.db().Where("active=?", u.ActiveAllow()).Where("nanoid IN (?)", ids).Order("sequence DESC").Find(&rules).Error
+	err = u.db().Where("active=?", u.ActiveAllow()).Where("uuid IN (?)", ids).Order("sequence DESC").Find(&rules).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -92,8 +87,6 @@ func (u *rule) GetRules(offset, limit int) (rules []*AdminRule, count int64, err
 	return
 }
 func (u *rule) InsertAdminRule(rule *AdminRule) (*AdminRule, error) {
-	rule.Nanoid = idworker.NumberNanoid(16)
-
 	err := u.db().Create(rule).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -110,7 +103,7 @@ func (u *rule) UpdateAdminRule(rule *AdminRule) (*AdminRule, error) {
 func (u *rule) DeleteAdminRule(ruleId string) error {
 	ar := AdminRule{}
 	ar.DeletedAt = gorm.NullString(time.Now().Format("2006-01-02 15:04:05"))
-	err := u.db().Where("nanoid = ?", ruleId).Updates(ar).Error
+	err := u.db().Where("uuid = ?", ruleId).Updates(ar).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

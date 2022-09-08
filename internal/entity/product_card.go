@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -12,7 +11,6 @@ import (
 type (
 	ProductCard struct {
 		gorm.Model
-		CardUuid   string `json:"CardUuid,omitempty" db:"card_uuid"`
 		Title      string `json:"Title,omitempty" db:"title"`
 		IconUrl    string `json:"IconUrl,omitempty" db:"icon_url"`
 		Batch      string `json:"Batch,omitempty" db:"batch"`
@@ -54,7 +52,7 @@ func (e *_productCard) StatusDeny() string {
 
 func (e *_productCard) GetProductCard(uuid string) (*ProductCard, error) {
 	var data ProductCard
-	err := e.db().Where("card_uuid = ?", uuid).First(&data).Error
+	err := e.db().Where("uuid = ?", uuid).First(&data).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -70,7 +68,6 @@ func (e *_productCard) GetProductCards(offset, limit int) (products []*ProductCa
 }
 
 func (e *_productCard) Insert(card *ProductCard) (err error) {
-	card.CardUuid = idworker.StringNanoid(16)
 	err = e.db().Create(card).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

@@ -37,7 +37,7 @@ func (l *_role) AdminRoleList(page Page) (result Result, err error) {
 }
 func (l *_role) AdminRoleCreate(u entity.AdminRole) error {
 	err := entity.Role.InsertAdminRole(&u)
-	if u.Id <= 0 || err != nil {
+	if u.ID <= 0 || err != nil {
 		return errors.New("新增角色失败")
 	}
 
@@ -46,7 +46,7 @@ func (l *_role) AdminRoleCreate(u entity.AdminRole) error {
 }
 func (l *_role) AdminRoleUpdate(u entity.AdminRole) error {
 	err := entity.Role.UpdateAdminRole(&u)
-	if u.Id <= 0 || err != nil {
+	if u.ID <= 0 || err != nil {
 		return errors.New("更新角色失败")
 	}
 	l.Log("更新角色", u)
@@ -82,7 +82,7 @@ func (l *_role) AdminRoleRuleList(roleId string) (result []SelectInterface, err 
 
 	roleRuleSelected := map[string]bool{}
 	rule, err := entity.Role.GetRole(roleId)
-	if rule.Id > 0 && err == nil {
+	if rule.ID > 0 && err == nil {
 		for _, v := range rule.Rules {
 			roleRuleSelected[v] = true
 		}
@@ -90,10 +90,10 @@ func (l *_role) AdminRoleRuleList(roleId string) (result []SelectInterface, err 
 
 	for _, rule := range ruleData {
 		ruleSelect := SelectInterface{
-			rule.Nanoid,
+			rule.Uuid,
 			rule.Title,
 			false}
-		if roleRuleSelected[rule.Nanoid] {
+		if roleRuleSelected[rule.Uuid] {
 			ruleSelect.Checked = true
 		}
 		result = append(result, ruleSelect)
@@ -122,15 +122,15 @@ func (l *_role) AdminRoleGroupList() (result []RoleTree, err error) {
 
 	for _, role := range roleData {
 
-		pdata[role.ParentNanoid] = append(pdata[role.ParentNanoid], RoleTreeNode{
-			Id:           role.Id,
-			Nanoid:       role.Nanoid,
-			ParentNanoid: role.ParentNanoid,
-			Name:         role.Name,
-			Description:  role.Description,
-			State:        role.State,
-			CreatedAt:    string(role.CreatedAt),
-			UpdatedAt:    string(role.UpdatedAt),
+		pdata[role.ParentUuid] = append(pdata[role.ParentUuid], RoleTreeNode{
+			Id:          role.ID,
+			Uuid:        role.Uuid,
+			ParentUuid:  role.ParentUuid,
+			Name:        role.Name,
+			Description: role.Description,
+			State:       role.State,
+			CreatedAt:   string(role.CreatedAt),
+			UpdatedAt:   string(role.UpdatedAt),
 		})
 	}
 
@@ -142,7 +142,7 @@ func _roleChildren(pid string, pdata map[string][]RoleTreeNode) (tree []RoleTree
 	for _, role := range pdata[pid] {
 		var _tree RoleTree
 		_tree.RoleTreeNode = role
-		_tree.Children = _roleChildren(role.Nanoid, pdata)
+		_tree.Children = _roleChildren(role.Uuid, pdata)
 
 		tree = append(tree, _tree)
 	}
@@ -159,8 +159,8 @@ func (l *_role) AdminRoleTree() (result []AntTreeSelect, err error) {
 	pdata := map[string][]AntTreeNode{}
 
 	for _, item := range roleData {
-		pdata[item.ParentNanoid] = append(pdata[item.ParentNanoid], AntTreeNode{
-			Value: item.Nanoid,
+		pdata[item.ParentUuid] = append(pdata[item.ParentUuid], AntTreeNode{
+			Value: item.Uuid,
 			Title: item.Name,
 		})
 	}

@@ -12,7 +12,6 @@ import (
 type (
 	ProductService struct {
 		gorm.Model
-		Uuid    string             `json:"Uuid,omitempty" db:"uuid"`
 		Title   string             `json:"Title,omitempty" db:"title"`
 		Class   string             `json:"Class,omitempty" db:"class"`
 		Status  string             `json:"Status,omitempty" db:"status"`
@@ -51,7 +50,7 @@ func (e *_productService) TypeTel() string {
 
 func (e *_productService) GetProductService(uuid string) (*ProductService, error) {
 	var data ProductService
-	err := e.db().Where("service_uuid = ?", uuid).First(&data).Error
+	err := e.db().Where("uuid = ?", uuid).First(&data).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -8,16 +8,15 @@ import (
 
 type (
 	AdminLogs struct {
-		Id        int             `json:"Id,omitempty" db:"id"`
-		AdminId   string          `db:"admin_id"`
-		Ip        string          `db:"ip"`
-		Url       string          `db:"url"`
-		Method    string          `db:"method"`
-		Type      string          `db:"type"`
-		Param     string          `db:"param"`
-		Useragent string          `db:"useragent"`
-		Title     string          `db:"title"`
-		CreatedAt gorm.TimeString `db:"created_at"`
+		gorm.Model
+		AdminId   string `db:"admin_id"`
+		Ip        string `db:"ip"`
+		Url       string `db:"url"`
+		Method    string `db:"method"`
+		Type      string `db:"type"`
+		Param     string `db:"param"`
+		Useragent string `db:"useragent"`
+		Title     string `db:"title"`
 	}
 	_log struct{}
 )
@@ -25,7 +24,7 @@ type (
 var AdminLogEntity = new(_log)
 
 func (e *_log) db() *gdb.DB {
-	return gorm.NewModel(&AdminLogs{})
+	return gorm.NewModel(&AdminLogs{}).Omit("UpdatedAt", "DeletedAt")
 }
 
 // 按选项查询集合

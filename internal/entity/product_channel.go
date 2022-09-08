@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -12,9 +11,8 @@ import (
 type (
 	ProductChannel struct {
 		gorm.Model
-		ChannelUuid string `json:"ChannelUuid,omitempty" db:"channel_uuid"`
-		Title       string `json:"Title,omitempty" db:"title"`
-		Channel     string `json:"Channel,omitempty" db:"channel"`
+		Title   string `json:"Title,omitempty" db:"title"`
+		Channel string `json:"Channel,omitempty" db:"channel"`
 	}
 	_productChannel struct{}
 )
@@ -39,7 +37,7 @@ func (e *_productChannel) ChannelApi() string {
 
 func (e *_productChannel) GetProductChannel(uuid string) (*ProductChannel, error) {
 	var data ProductChannel
-	err := e.db().Where("channel_uuid = ?", uuid).First(&data).Error
+	err := e.db().Where("uuid = ?", uuid).First(&data).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -55,7 +53,6 @@ func (e *_productChannel) GetProductChannels(offset, limit int) (products []*Pro
 }
 
 func (e *_productChannel) Insert(channel *ProductChannel) (err error) {
-	channel.ChannelUuid = idworker.StringNanoid(16)
 	err = e.db().Create(channel).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

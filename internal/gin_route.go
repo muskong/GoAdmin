@@ -30,7 +30,7 @@ func GinRouter() *gin.Engine {
 	router.GET("/", admin.Index)
 	adm := router.Group("/admin")
 	{
-		adm.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
+		adm.Use(middlewares.GinAdminMiddleware(tokenName, notAuth))
 
 		adm.GET("/sites", admin.Sites)
 		adm.GET("/dashboard", admin.Dashboard)
@@ -163,7 +163,7 @@ func GinRouter() *gin.Engine {
 	}
 	api := router.Group("/api")
 	{
-		api.Use(middlewares.GinUserMiddleware(tokenName, notAuth))
+		api.Use(middlewares.GinApiMiddleware(tokenName))
 		api.GET("/", admin.Index)
 	}
 	usr := router.Group("/user")

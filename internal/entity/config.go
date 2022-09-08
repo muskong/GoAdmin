@@ -25,7 +25,7 @@ func (*_config) db() *gdb.DB {
 
 func (o *_config) GetConfig(configId string) (*Config, error) {
 	var config Config
-	err := o.db().Where("nanoid = ?", configId).First(&config).Error
+	err := o.db().Where("uuid = ?", configId).First(&config).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -41,8 +41,6 @@ func (e *_config) GetConfigs(offset, limit int) (configs []*Config, count int64,
 }
 
 func (e *_config) Insert(config *Config) (err error) {
-	// config.ConfigNumber = idworker.IdWorker("C")
-
 	err = e.db().Create(config).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
