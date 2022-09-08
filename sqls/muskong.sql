@@ -18,6 +18,7 @@ CREATE TABLE `admin_logs` (
   `useragent` text COMMENT 'User-Agent',
   `title` longtext COMMENT '日志',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员日志';
