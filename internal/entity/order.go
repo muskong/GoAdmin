@@ -10,8 +10,13 @@ import (
 type (
 	Order struct {
 		gorm.Model
-		OrderNumber  string       `json:"OrderNumber" db:"order_number"`
-		ProductId    string       `json:"ProductId" db:"product_id"`
+		OrderNumber string `json:"OrderNumber" db:"order_number"`
+
+		ProductCardId    int `json:"ProductCardId,omitempty" db:"product_card_id"`
+		ProductAmountId  int `json:"ProductAmountId,omitempty" db:"product_amount_id"`
+		ProductChannelId int `json:"ProductChannelId,omitempty" db:"product_channel_id"`
+		ProductServiceId int `json:"ProductServiceId,omitempty" db:"product_service_id"`
+
 		UserId       string       `json:"UserId" db:"user_id"`
 		ExternalId   string       `json:"ExternalId" db:"external_id"`
 		Channel      string       `json:"Channel" db:"channel"`

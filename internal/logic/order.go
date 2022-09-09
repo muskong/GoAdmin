@@ -27,13 +27,15 @@ func (l *_order) List(page Page) (result Result, err error) {
 	return
 }
 
-func (l *_order) Create(data entity.Order) error {
-	err := entity.OrderEntity.Insert(&data)
-	if data.ID <= 0 || err != nil {
+func (l *_order) Create(order entity.Order) error {
+	err := entity.OrderEntity.Insert(&order)
+	if order.ID <= 0 || err != nil {
 		return errors.New("新增订单失败")
 	}
 
-	l.Log("新增订单", data)
+	OrderCardPublish(order)
+
+	l.Log("新增订单", order)
 	return err
 }
 func (l *_order) Update(data entity.Order) (err error) {

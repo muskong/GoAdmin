@@ -2,6 +2,7 @@ package logic
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/muskong/GoAdmin/internal/entity"
 )
@@ -78,4 +79,58 @@ func (l *_product) Delete(productId int) error {
 	}
 	l.Log("删除产品", productId)
 	return err
+}
+
+var weightServiceNodes map[string][]*entity.Product
+
+func (l *_product) WeightService(cardId, amountId, channelId int) (service *entity.ProductService, err error) {
+
+	nodeId := fmt.Sprintf("%d-%d-%d", cardId, amountId, channelId)
+	nodes, ok := weightServiceNodes[nodeId]
+	if !ok {
+		nodes, err = entity.ProductEntity.GetServices(cardId, amountId, channelId)
+		if len(nodes) <= 0 || err != nil {
+			err = errors.New("产品无数据")
+			return
+		}
+
+		weightServiceNodes[nodeId] = nodes
+	}
+
+	product := smoothWeight(nodes)
+
+	service, err = entity.ProductServiceEntity.GetProductServiceById(product.ProductServiceId)
+	// if len(productData) <= 0 || err != nil {
+	// 	err = errors.New("产品无数据")
+	// 	return
+	// }
+
+	return
+}
+func smoothWeight(nodes []*entity.Product) (best *entity.Product) {
+	if len(nodes) == 0 {
+		return
+	}
+
+	total := 0
+	for _, node := range nodes {
+		if node == nil {
+			continue
+		}
+
+		total += node.Weight
+		node.Current += node.Weight
+
+		if best == nil || node.Current > best.Current {
+			best = node
+		}
+	}
+
+	if best == nil {
+		return
+	}
+
+	best.Current -= total
+
+	return
 }

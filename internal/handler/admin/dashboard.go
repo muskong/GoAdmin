@@ -42,6 +42,7 @@ func Sites(ctx *gin.Context) {
 		},
 	}))
 }
+
 func Index(ctx *gin.Context) {
-	ctx.SecureJSON(respond.Data("ok"))
+	ctx.SecureJSON(respond.Data("best"))
 }

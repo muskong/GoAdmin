@@ -17,6 +17,7 @@ type (
 		ProductChannelId int    `json:"ProductChannelId,omitempty" db:"product_channel_id"`
 		ProductServiceId int    `json:"ProductServiceId,omitempty" db:"product_service_id"`
 		Weight           int    `json:"Weight,omitempty" db:"weight"`
+		Current          int    `json:"-" db:"-"`
 		Status           string `json:"Status,omitempty" db:"status"`
 
 		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
@@ -51,6 +52,14 @@ func (e *_product) GetProduct(uuid string) (*Product, error) {
 
 func (e *_product) GetProducts(offset, limit int) (products []*Product, count int64, err error) {
 	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&products).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return
+}
+
+func (e *_product) GetServices(cardId, amountId, channelId int) (products []*Product, err error) {
+	err = e.db().Where("product_card_id=? AND product_amount_id=? AND product_channel_id=?", cardId, amountId, channelId).Find(&products).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

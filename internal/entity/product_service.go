@@ -57,8 +57,17 @@ func (e *_productService) GetProductService(uuid string) (*ProductService, error
 	return &data, err
 }
 
-func (e *_productService) GetProductServices(offset, limit int) (products []*ProductService, count int64, err error) {
-	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&products).Error
+func (e *_productService) GetProductServiceById(id int) (*ProductService, error) {
+	var data ProductService
+	err := e.db().Where("id = ?", id).First(&data).Error
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+	return &data, err
+}
+
+func (e *_productService) GetProductServices(offset, limit int) (services []*ProductService, count int64, err error) {
+	err = e.db().Count(&count).Order("id desc").Limit(limit).Offset(offset).Find(&services).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -85,8 +94,8 @@ func (e *_productService) Delete(productId int) error {
 	return err
 }
 
-func (e *_productService) GetAll() (products []*ProductService, err error) {
-	err = e.db().Order("id desc").Find(&products).Error
+func (e *_productService) GetAll() (services []*ProductService, err error) {
+	err = e.db().Order("id desc").Find(&services).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
