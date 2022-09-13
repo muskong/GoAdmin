@@ -7,7 +7,7 @@ import (
 )
 
 // 发起第三方请求
-func ExternalPublish(order *entity.Order) {
+func CardPublish(order *entity.Order) {
 	service, err := Product.WeightService(order.ProductCardId, order.ProductAmountId, order.ProductChannelId)
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -38,13 +38,80 @@ func ExternalPublish(order *entity.Order) {
 }
 
 // 第三方通知
-func ExternalNotify(orderNumber string) {
+func CardNotify(orderNumber string, data any) {
 	order, err := Order.Detail(orderNumber)
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
 
-	if order.State != entity.OrderEntity.StateHang() {
+	if order.State == entity.OrderEntity.StateSuccess() {
+		zaplog.Sugar.Infof("订单已完成:%#+v", order)
+	}
 
+	var rsp respond.Response
+	err = Plugin(order.Service.Class).Notify(data, &rsp)
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+
+	if rsp.Message != "" {
+		zaplog.Sugar.Error(rsp.Message)
+		order.Queue = entity.OrderEntity.QueueCardError()
+	} else {
+		order.Queue = entity.OrderEntity.QueueCardSuccess()
+	}
+	order.ResultCard = []any{rsp.Data}
+
+	err = Order.Update(*order)
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+
+	go PayPublish(order.OrderNumber)
+}
+
+// 第三方通知
+func PayPublish(orderNumber string) {
+	order, err := Order.Detail(orderNumber)
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+
+	if order.State == entity.OrderEntity.StateSuccess() {
+		zaplog.Sugar.Infof("订单已完成:%#+v", order)
+	}
+
+	// 获取支付
+	pay, err := Pay.WeightService()
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+
+	data := map[string]any{
+		"orderid":  "",
+		"userid":   "userid",
+		"money":    "money",
+		"remarks":  "remarks",
+		"username": "user",
+	}
+	var rsp respond.Response
+	err = Plugin(pay.Class).Send(data, &rsp)
+	if err != nil {
+		zaplog.Sugar.Error(err)
+	}
+
+	if rsp.Message != "" {
+		zaplog.Sugar.Error(rsp.Message)
+		order.Queue = entity.OrderEntity.QueuePayError()
+		order.State = entity.OrderEntity.StateError()
+	} else {
+		order.Queue = entity.OrderEntity.QueuePaySuccess()
+		order.State = entity.OrderEntity.StateSuccess()
+	}
+	order.ResultPay = []any{rsp.Data}
+
+	err = Order.Update(*order)
+	if err != nil {
+		zaplog.Sugar.Error(err)
 	}
 }

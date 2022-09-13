@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -75,8 +74,6 @@ func (e *_productService) GetProductServices(offset, limit int) (services []*Pro
 }
 
 func (e *_productService) Insert(service *ProductService) (err error) {
-	service.Uuid = idworker.StringNanoid(16)
-
 	err = e.db().Create(service).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)

@@ -14,7 +14,7 @@ type (
 		Info(dest *[]any) error                                       // 安装
 		Send(request map[string]any, respond any) error               // 提交数据
 		Search(request map[string]any, respond *map[string]any) error // 查询数据
-		Notify(request map[string]any, respond *map[string]any) error // 回调处理
+		Notify(request any, respond any) error                        // 回调处理
 	}
 	ApiInfo struct {
 		Key   string
