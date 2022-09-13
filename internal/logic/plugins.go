@@ -12,6 +12,7 @@ func Plugin(path string) Api {
 	if err != nil {
 		zaplog.Sugar.Error("open fail : ", err)
 	}
+	zaplog.Sugar.Infof(" plug %+v", plug)
 
 	_, lookupName, _ := strings.Cut(path, "_")
 	lookupName = strings.TrimSuffix(lookupName, ".so")
@@ -20,8 +21,7 @@ func Plugin(path string) Api {
 		zaplog.Sugar.Error("plugin name error : ", err)
 		return nil
 	}
-	zaplog.Sugar.Infof(" plug.Lookup %+v", lookup)
-	zaplog.Sugar.Infof(" plug.Lookup %#v", lookup)
+	zaplog.Sugar.Infof(" plug.Lookup %#+v", lookup)
 	api, ok := lookup.(Api)
 	if !ok {
 		zaplog.Sugar.Error("plugin interface fail")

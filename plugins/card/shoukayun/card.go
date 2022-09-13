@@ -77,6 +77,7 @@ func (p shouKaYun) Notify(request map[string]any, respond *map[string]any) error
 	return nil
 }
 
+// go build -buildmode=plugin -o plugins/card_ShouKaYun.so plugins/card/shoukayun/card.go
 var ShouKaYun = shouKaYun{
 	Today: time.Now().Format("2006-01-02 15:04:05"),
 }

@@ -10,16 +10,9 @@ import (
 type (
 	Order struct {
 		gorm.Model
-		OrderNumber string `json:"OrderNumber" db:"order_number"`
-
-		ProductCardId    int `json:"ProductCardId,omitempty" db:"product_card_id"`
-		ProductAmountId  int `json:"ProductAmountId,omitempty" db:"product_amount_id"`
-		ProductChannelId int `json:"ProductChannelId,omitempty" db:"product_channel_id"`
-		ProductServiceId int `json:"ProductServiceId,omitempty" db:"product_service_id"`
-
+		OrderNumber  string       `json:"OrderNumber" db:"order_number"`
 		UserId       string       `json:"UserId" db:"user_id"`
 		ExternalId   string       `json:"ExternalId" db:"external_id"`
-		Channel      string       `json:"Channel" db:"channel"`
 		Queue        string       `json:"Queue" db:"queue"`
 		State        string       `json:"State" db:"state"`
 		CardNumber   string       `json:"CardNumber" db:"card_number"`
@@ -27,6 +20,18 @@ type (
 		CardCvv      string       `json:"CardCvv" db:"card_cvv"`
 		ResultCard   gorm.JsonAny `json:"ResultCard" db:"result_card"`
 		ResultPay    gorm.JsonAny `json:"ResultPay" db:"result_pay"`
+
+		ProductCardId    int `json:"ProductCardId,omitempty" db:"product_card_id"`
+		ProductAmountId  int `json:"ProductAmountId,omitempty" db:"product_amount_id"`
+		ProductChannelId int `json:"ProductChannelId,omitempty" db:"product_channel_id"`
+		ProductServiceId int `json:"ProductServiceId,omitempty" db:"product_service_id"`
+		PayId            int `json:"PayId,omitempty" db:"pay_id"`
+
+		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
+		Amount  ProductAmount  `gorm:"foreignkey:ID;references:ProductAmountId"`
+		Channel ProductChannel `gorm:"foreignkey:ID;references:ProductChannelId"`
+		Service ProductService `gorm:"foreignkey:ID;references:ProductServiceId"`
+		Pay     Pay            `gorm:"foreignkey:ID;references:PayId"`
 	}
 	_order struct{}
 )
@@ -34,7 +39,7 @@ type (
 var OrderEntity = new(_order)
 
 func (*_order) db() *gdb.DB {
-	return gorm.NewModel(&Order{}).Where("deleted_at IS NULL")
+	return gorm.NewModel(&Order{}).Preload("Card").Preload("Amount").Preload("Channel").Preload("Service").Where("deleted_at IS NULL")
 }
 
 func (*_order) ChannelPC() string {

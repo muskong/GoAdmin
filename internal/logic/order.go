@@ -12,6 +12,17 @@ type _order struct {
 
 var Order = &_order{}
 
+func (l *_order) Detail(orderNumber string) (order *entity.Order, err error) {
+
+	order, err = entity.OrderEntity.GetOrder(orderNumber)
+	if order.ID <= 0 || err != nil {
+		err = errors.New("订单无数据")
+		return
+	}
+
+	return
+}
+
 func (l *_order) List(page Page) (result Result, err error) {
 
 	data, count, err := entity.OrderEntity.GetOrders(page.getOffset(), page.getLimit())
@@ -33,7 +44,7 @@ func (l *_order) Create(order entity.Order) error {
 		return errors.New("新增订单失败")
 	}
 
-	OrderCardPublish(order)
+	go CardPublish(&order)
 
 	l.Log("新增订单", order)
 	return err

@@ -21,7 +21,7 @@ func OrderCardTopic() {
 		order := Broker.GetPayLoad(ch).(*entity.Order)
 
 		if order != nil {
-			service, err := Product.WeightService(order.ProductCardId, order.ProductAmountId, order.ProductChannelId)
+			_, err := Product.WeightService(order.ProductCardId, order.ProductAmountId, order.ProductChannelId)
 			if err != nil {
 
 			}
