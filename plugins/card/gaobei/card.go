@@ -38,18 +38,27 @@ func (a _gaoBei) Info(dest *[]any) error {
 	return nil
 }
 
-func (a _gaoBei) Send(request map[string]any, respond *map[string]any) error {
-	*respond = request
+func (a _gaoBei) Send(request map[string]any, respond any) error {
+	resp := struct {
+		Message string
+		Data    any
+		Time    time.Time
+	}{
+		Data: request,
+		Time: time.Now(),
+	}
+
+	respond = &resp
 	log.Println("GaoBei Send test", request, respond)
 	return nil
 }
-func (a _gaoBei) Search(request map[string]any, respond *map[string]any) error {
-	*respond = request
+func (a _gaoBei) Search(request map[string]any, respond any) error {
+	respond = request
 	log.Println("GaoBei Search test", request, respond)
 	return nil
 }
-func (a _gaoBei) Notify(request map[string]any, respond *map[string]any) error {
-	*respond = request
+func (a _gaoBei) Notify(request map[string]any, respond any) error {
+	respond = request
 	log.Println("GaoBei Notify test", request, respond)
 	return nil
 }

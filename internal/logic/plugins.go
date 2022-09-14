@@ -7,7 +7,23 @@ import (
 	"github.com/muskong/GoPkg/zaplog"
 )
 
-func Plugin(path string) Api {
+type _plugin struct {
+}
+
+var Plugin = &_plugin{}
+
+func (p *_plugin) New(path string, config map[string]string) Api {
+	api := p.Load(path)
+	err := api.SetConfig(config)
+	if err != nil {
+		zaplog.Sugar.Error("plugin set config error : ", err)
+		return nil
+	}
+
+	return api
+}
+
+func (p *_plugin) Load(path string) Api {
 	plug, err := plugin.Open(path)
 	if err != nil {
 		zaplog.Sugar.Error("open fail : ", err)

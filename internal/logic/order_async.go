@@ -8,26 +8,32 @@ import (
 
 // 发起第三方请求
 func CardPublish(order *entity.Order) {
+	zaplog.Sugar.Info("CardPublish Start")
+	defer func() {
+		zaplog.Sugar.Info("CardPublish END")
+	}()
+
 	service, err := Product.WeightService(order.ProductCardId, order.ProductAmountId, order.ProductChannelId)
 	if err != nil {
 		zaplog.Sugar.Error(err)
+		return
 	}
 
-	api := Plugin(service.Class)
-
-	req := map[string]any{
+	req := map[string]string{
 		"card_number":   order.CardNumber,
 		"card_password": order.CardPassword,
 		"card_cvv":      order.CardCvv,
 	}
 	var rsp respond.Response
-	err = api.Send(req, &rsp)
+	err = Plugin.New(service.Class, service.Content).Send(req, &rsp)
 	if err != nil {
 		zaplog.Sugar.Error(err)
+		return
 	}
 
 	if rsp.Message != "" {
 		zaplog.Sugar.Error(rsp.Message)
+		return
 	}
 
 	order.Queue = entity.OrderEntity.QueueCardRequest()
@@ -49,7 +55,7 @@ func CardNotify(orderNumber string, data any) {
 	}
 
 	var rsp respond.Response
-	err = Plugin(order.Service.Class).Notify(data, &rsp)
+	err = Plugin.New(order.Service.Class, order.Service.Content).Notify(data, &rsp)
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}
@@ -87,7 +93,7 @@ func PayPublish(orderNumber string) {
 		zaplog.Sugar.Error(err)
 	}
 
-	data := map[string]any{
+	data := map[string]string{
 		"orderid":  "",
 		"userid":   "userid",
 		"money":    "money",
@@ -95,7 +101,7 @@ func PayPublish(orderNumber string) {
 		"username": "user",
 	}
 	var rsp respond.Response
-	err = Plugin(pay.Class).Send(data, &rsp)
+	err = Plugin.New(pay.Class, pay.Content).Send(data, &rsp)
 	if err != nil {
 		zaplog.Sugar.Error(err)
 	}

@@ -11,10 +11,11 @@ import (
 
 type (
 	Api interface {
-		Info(dest *[]any) error                                       // 安装
-		Send(request map[string]any, respond any) error               // 提交数据
-		Search(request map[string]any, respond *map[string]any) error // 查询数据
-		Notify(request any, respond any) error                        // 回调处理
+		Info(dest *[]any) error                              // 安装
+		SetConfig(request map[string]string) error           // 设置配置
+		Send(request map[string]string, respond any) error   // 提交数据
+		Search(request map[string]string, respond any) error // 查询数据
+		Notify(request any, respond any) error               // 回调处理
 	}
 	ApiInfo struct {
 		Key   string

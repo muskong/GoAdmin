@@ -120,7 +120,7 @@ func (l *_productService) PluginList() ([]map[string]any, error) {
 
 func (l *_productService) Plugin(fileName string) ([]any, error) {
 	dir := config.App.GetString("plugins.path")
-	api := Plugin(dir + fileName)
+	api := Plugin.Load(dir + fileName)
 	if api == nil {
 		zaplog.Sugar.Info("err")
 		return nil, nil

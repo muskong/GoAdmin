@@ -1,11 +1,18 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/base64"
+	"encoding/hex"
+	"fmt"
 	"log"
 	"net/url"
+	"sort"
+	"strings"
 	"time"
 
-	"github.com/muskong/GoPkg/zaplog"
+	"github.com/forgoer/openssl"
+	"github.com/muskong/GoPkg/plugin"
 )
 
 func init() {
@@ -14,12 +21,19 @@ func init() {
 
 type (
 	shouKaYun struct {
-		Today      string
-		Data       url.Values
-		SendPath   string // 提交数据的接口地址
-		SearchPath string // 查询数据地址
+		Data url.Values
+		// PayPid     string
+		// PayKey     string
+		// PayAccount string
+		Http       plugin.PluginApi
+		Title      string
+		Class      string
 		PayPid     string
+		PayKey     string
+		PayName    string
 		PayAccount string
+		SendUrl    string
+		SearchUrl  string
 	}
 	pluginInfo struct {
 		Name     string
@@ -29,8 +43,7 @@ type (
 	}
 )
 
-func (a shouKaYun) Info(dest *[]any) error {
-	zaplog.Sugar.Info(a.Today)
+func (a *shouKaYun) Info(dest *[]any) error {
 
 	*dest = append(*dest, &pluginInfo{Name: "Title", Label: "接口名称", Value: "收卡云", Disabled: true})
 	*dest = append(*dest, &pluginInfo{Name: "Class", Label: "包名称", Value: "ShouKaYun", Disabled: true})
@@ -44,27 +57,81 @@ func (a shouKaYun) Info(dest *[]any) error {
 	return nil
 }
 
-func (a shouKaYun) encrypt(data string) string {
-	return data
+func (a *shouKaYun) encrypt(data string) string {
+	h := md5.New()
+	crypto := h.Sum([]byte(a.PayKey))
+	iv := hex.EncodeToString(crypto)
+	iv = iv[8:24]
+
+	dst, _ := openssl.AesCBCEncrypt([]byte(data), []byte(a.PayKey), []byte(iv), openssl.PKCS7_PADDING)
+	return base64.StdEncoding.EncodeToString(dst)
 }
-func (a shouKaYun) sign() {
-	a.Data.Set("sign", "")
+func (a *shouKaYun) sign() {
+	ksort := []string{}
+	for k, _ := range a.Data {
+		ksort = append(ksort, k)
+	}
+
+	sort.Strings(ksort)
+
+	var str string
+	for _, v := range ksort {
+		if v == "sign" || v == "account" {
+			continue
+		}
+		data := a.Data.Get(v)
+		if len(data) == 0 {
+			continue
+		}
+		str += fmt.Sprintf("%s=%s&", v, data)
+	}
+	str += fmt.Sprintf("key=%s", a.PayKey)
+
+	h := md5.New()
+	crypto := h.Sum([]byte(str))
+	sign := strings.ToUpper(hex.EncodeToString(crypto))
+
+	a.Data.Set("sign", sign)
 }
 
-func (a shouKaYun) Send(request map[string]any, respond *map[string]any) error {
+func (a *shouKaYun) SetConfig(conf map[string]string) {
+	a.Title = conf["Title"]
+	a.Class = conf["Class"]
+	a.PayPid = conf["PayPid"]
+	a.PayKey = conf["PayKey"]
+	a.PayName = conf["PayName"]
+	a.PayAccount = conf["PayAccount"]
+	a.SendUrl = conf["SendUrl"]
+	a.SearchUrl = conf["SearchUrl"]
+}
 
-	// a.Data.Add("account", a.PayPid)
-	// a.Data.Add("order_no", request["order_number"])
-	// a.Data.Add("product_no", request["product_no"])
-	// a.Data.Add("card_no", a.encrypt(request["card_no"]))
-	// a.Data.Add("card_password", a.encrypt(request["card_password"]))
-	// a.Data.Add("notify_url", request["notify_url"])
+func (a *shouKaYun) Send(request map[string]string, respond any) error {
+	resp := struct {
+		Message string
+		Data    any
+		Time    time.Time
+	}{
+		Time: time.Now(),
+	}
 
-	// a.sign()
+	a.Data.Add("account", a.PayPid)
+	a.Data.Add("order_no", request["order_number"])
+	a.Data.Add("product_no", request["product_no"])
+	a.Data.Add("card_no", a.encrypt(request["card_no"]))
+	a.Data.Add("card_password", a.encrypt(request["card_password"]))
+	a.Data.Add("notify_url", request["notify_url"])
 
-	// err := post(a.SendPath, respond)
+	a.sign()
+	var result map[string]any
+	err := a.Http.Post(a.SendUrl, &result)
+	if err == nil {
+		resp.Message = err.Error()
+	}
 
-	return nil
+	// if
+
+	respond = &resp
+	return err
 }
 func (p shouKaYun) Search(request map[string]any, respond *map[string]any) error {
 	*respond = request
@@ -78,6 +145,7 @@ func (p shouKaYun) Notify(request map[string]any, respond *map[string]any) error
 }
 
 // go build -buildmode=plugin -o plugins/card_ShouKaYun.so plugins/card/shoukayun/card.go
-var ShouKaYun = shouKaYun{
-	Today: time.Now().Format("2006-01-02 15:04:05"),
+var ShouKaYun = &shouKaYun{
+	// Today: time.Now().Format("2006-01-02 15:04:05"),
+	Http: plugin.PluginApi{},
 }
