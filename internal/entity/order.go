@@ -21,12 +21,14 @@ type (
 		ResultCard   gorm.JsonAny `json:"ResultCard" db:"result_card"`
 		ResultPay    gorm.JsonAny `json:"ResultPay" db:"result_pay"`
 
+		ProductId        int `json:"ProductId,omitempty" db:"product_id"`
 		ProductCardId    int `json:"ProductCardId,omitempty" db:"product_card_id"`
 		ProductAmountId  int `json:"ProductAmountId,omitempty" db:"product_amount_id"`
 		ProductChannelId int `json:"ProductChannelId,omitempty" db:"product_channel_id"`
 		ProductServiceId int `json:"ProductServiceId,omitempty" db:"product_service_id"`
 		PayId            int `json:"PayId,omitempty" db:"pay_id"`
 
+		Product Product        `gorm:"foreignkey:ID;references:ProductId"`
 		Card    ProductCard    `gorm:"foreignkey:ID;references:ProductCardId"`
 		Amount  ProductAmount  `gorm:"foreignkey:ID;references:ProductAmountId"`
 		Channel ProductChannel `gorm:"foreignkey:ID;references:ProductChannelId"`
@@ -39,7 +41,7 @@ type (
 var OrderEntity = new(_order)
 
 func (*_order) db() *gdb.DB {
-	return gorm.NewModel(&Order{}).Preload("Card").Preload("Amount").Preload("Channel").Preload("Service").Where("deleted_at IS NULL")
+	return gorm.NewModel(&Order{}).Preload("Product").Preload("Card").Preload("Amount").Preload("Channel").Preload("Service").Preload("Pay").Where("deleted_at IS NULL")
 }
 
 func (*_order) ChannelPC() string {

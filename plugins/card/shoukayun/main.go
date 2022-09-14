@@ -116,8 +116,8 @@ func (a *shouKaYun) Send(request map[string]string, respond any) error {
 
 	a.Data.Add("account", a.PayPid)
 	a.Data.Add("order_no", request["order_number"])
-	a.Data.Add("product_no", request["product_no"])
-	a.Data.Add("card_no", a.encrypt(request["card_no"]))
+	a.Data.Add("product_no", request["product_number"])
+	a.Data.Add("card_no", a.encrypt(request["card_number"]))
 	a.Data.Add("card_password", a.encrypt(request["card_password"]))
 	a.Data.Add("notify_url", request["notify_url"])
 

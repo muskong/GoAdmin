@@ -1,6 +1,8 @@
 package logic
 
 import (
+	"fmt"
+
 	"github.com/muskong/GoAdmin/internal/entity"
 	"github.com/muskong/GoCore/respond"
 	"github.com/muskong/GoPkg/zaplog"
@@ -20,10 +22,13 @@ func CardPublish(order *entity.Order) {
 	}
 
 	req := map[string]string{
-		"card_number":   order.CardNumber,
-		"card_password": order.CardPassword,
-		"card_cvv":      order.CardCvv,
+		"order_number":   order.Uuid,
+		"product_number": order.Product.ProductNumber,
+		"card_number":    order.CardNumber,
+		"card_password":  order.CardPassword,
+		"notify_url":     fmt.Sprintf("public/notify/%s", OrderToken.GenerateToken(order)),
 	}
+
 	var rsp respond.Response
 	err = Plugin.New(service.Class, service.Content).Send(req, &rsp)
 	if err != nil {

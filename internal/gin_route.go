@@ -2,6 +2,7 @@ package internal
 
 import (
 	"github.com/muskong/GoAdmin/internal/handler/admin"
+	"github.com/muskong/GoAdmin/internal/handler/public"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -173,7 +174,8 @@ func GinRouter() *gin.Engine {
 	}
 	pub := router.Group("/public")
 	{
-		pub.GET("/", admin.Index)
+		pub.GET("/", public.Index)
+		pub.Any("notify/:token", public.OrderHandler.Notify)
 	}
 
 	return router

@@ -37,14 +37,17 @@ func (e *_productService) StatusDeny() string {
 func (e *_productService) TypeApi() string {
 	return "api"
 }
-func (e *_productService) TypeBank() string {
-	return "bank"
-}
 func (e *_productService) TypeRecharge() string {
 	return "recharge"
 }
 func (e *_productService) TypeTel() string {
 	return "tel"
+}
+func (e *_productService) TypeBank() string {
+	return "pay.bank"
+}
+func (e *_productService) TypePay() string {
+	return "pay.alipay"
 }
 
 func (e *_productService) GetProductService(uuid string) (*ProductService, error) {

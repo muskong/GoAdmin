@@ -11,7 +11,7 @@ import (
 type (
 	Product struct {
 		gorm.Model
-
+		ProductNumber    string `json:"ProductNumber,omitempty" db:"product_number"`
 		ProductCardId    int    `json:"ProductCardId,omitempty" db:"product_card_id"`
 		ProductAmountId  int    `json:"ProductAmountId,omitempty" db:"product_amount_id"`
 		ProductChannelId int    `json:"ProductChannelId,omitempty" db:"product_channel_id"`

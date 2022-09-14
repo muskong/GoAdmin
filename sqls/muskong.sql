@@ -513,6 +513,7 @@ CREATE TABLE `products` (
   `product_amount_id` int unsigned NOT NULL DEFAULT '0' COMMENT '金额ID',
   `product_channel_id` int unsigned NOT NULL DEFAULT '0' COMMENT '渠道ID',
   `product_service_id` int unsigned NOT NULL DEFAULT '0' COMMENT '第三方处理ID',
+  `product_number` varchar(255) NOT NULL DEFAULT '' COMMENT '第三方编码',
   `weight` int unsigned NOT NULL DEFAULT '0' COMMENT '金额在销卡中服务商占比, 权重[满分100]',
   `status` varchar(255) NOT NULL DEFAULT 'allow' COMMENT '状态:deny=禁用,allow=启用',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
