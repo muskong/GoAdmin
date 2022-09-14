@@ -89,6 +89,7 @@ func (l *_productService) PluginList() ([]map[string]any, error) {
 		}
 
 		plugins = append(plugins, map[string]any{
+			"FullPath":    dir + f.Name(),
 			"FileName":    f.Name(),
 			"FileSize":    f.Size(),
 			"FileModTime": f.ModTime().Format("2006-01-02 15:04:05"),

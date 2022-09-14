@@ -2,7 +2,6 @@ package entity
 
 import (
 	"github.com/muskong/GoPkg/gorm"
-	"github.com/muskong/GoPkg/idworker"
 	"github.com/muskong/GoPkg/zaplog"
 	gdb "gorm.io/gorm"
 )
@@ -49,8 +48,6 @@ func (e *_user) GetUsers(offset, limit int) (users []*User, count int64, err err
 }
 
 func (e *_user) Insert(user *User) (err error) {
-	user.Uuid = idworker.StringNanoid(30)
-
 	err = e.db().Create(user).Error
 	if err != nil {
 		zaplog.Sugar.Error(err)
