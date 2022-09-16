@@ -20,8 +20,12 @@ type _orderToken struct {
 	Claims *OrderClaims
 }
 
-var OrderToken = &_orderToken{
-	secret: []byte(config.App.GetString("token.order.secret")),
+var OrderToken *_orderToken
+
+func InitToken() {
+	OrderToken = &_orderToken{
+		secret: []byte(config.App.GetString("token.order.secret")),
+	}
 }
 
 // token有效时间（纳秒）

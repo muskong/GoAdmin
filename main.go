@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/muskong/GoAdmin/internal"
+	"github.com/muskong/GoAdmin/internal/logic"
 
 	"github.com/muskong/GoCore/config"
 	"github.com/muskong/GoPkg/gorm"
@@ -47,6 +48,9 @@ func main() {
 		Pub:       config.Rsa.GetString("rsa.public"),
 		Pri:       config.Rsa.GetString("rsa.private"),
 	})
+
+	logic.InitToken()
+	logic.InitCard()
 
 	// 服务器
 	listenAddr := config.App.GetString("app.server")

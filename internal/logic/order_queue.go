@@ -1,7 +1,29 @@
 package logic
 
+import (
+	"container/list"
+	"log"
+)
+
 type _orderQueue struct {
 	Logic
+	card *list.List
+}
+
+var OrderQueue *_orderQueue = &_orderQueue{
+	card: list.New(),
+}
+
+func InitCard() {
+	// OrderQueue = &_orderQueue{
+	// 	card: list.New(),
+	// }
+	OrderQueue.Card()
+}
+func (o *_orderQueue) Card() {
+	for {
+		log.Println(o.card.Len())
+	}
 }
 
 // func QueueTestGaobei() {

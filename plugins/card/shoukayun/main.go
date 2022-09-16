@@ -128,7 +128,16 @@ func (a *shouKaYun) Send(request map[string]string, respond any) error {
 		resp.Message = err.Error()
 	}
 
-	// if
+	if result["code"] == "0" {
+		resData := result["data"].(map[string]any)
+		if resData["status"].(string) == "0" {
+			resp.Data = result["data"]
+		} else {
+			resp.Message = "--"
+		}
+	} else {
+		resp.Message = result["msg"].(string)
+	}
 
 	respond = &resp
 	return err
