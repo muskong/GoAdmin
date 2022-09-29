@@ -10,13 +10,19 @@ import (
 	"github.com/muskong/GoPkg/jwt"
 )
 
-func GinRouter() *gin.Engine {
+type Flags struct {
+	Mode string
+	Port int
+}
+
+func GinRouter(opts *Flags) *gin.Engine {
 	tokenName := jwt.Jwt.GetTokenName()
 	notAuth := map[string]bool{
 		"/admin/admin/login": true,
 		// "/admin/sites":      true,
 	}
 
+	gin.SetMode(opts.Mode)
 	router := gin.Default()
 
 	config := cors.DefaultConfig()

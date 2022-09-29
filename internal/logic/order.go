@@ -44,7 +44,8 @@ func (l *_order) Create(order entity.Order) error {
 		return errors.New("新增订单失败")
 	}
 
-	go CardPublish(&order)
+	go Job.PublishCard(&order)
+	// go CardPublish(&order)
 
 	l.Log("新增订单", order)
 	return err

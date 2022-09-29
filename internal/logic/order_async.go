@@ -8,8 +8,12 @@ import (
 	"github.com/muskong/GoPkg/zaplog"
 )
 
+type _orderAsync struct{}
+
+var OrderAsync = &_orderAsync{}
+
 // 发起第三方请求
-func CardPublish(order *entity.Order) {
+func (*_orderAsync) CardPublish(order *entity.Order) {
 	zaplog.Sugar.Info("CardPublish Start")
 	defer func() {
 		zaplog.Sugar.Info("CardPublish END")
@@ -49,7 +53,7 @@ func CardPublish(order *entity.Order) {
 }
 
 // 第三方通知
-func CardNotify(orderNumber string, data any) {
+func (a *_orderAsync) CardNotify(orderNumber string, data any) {
 	order, err := Order.Detail(orderNumber)
 	if err != nil {
 		zaplog.Sugar.Error(err)
@@ -78,11 +82,11 @@ func CardNotify(orderNumber string, data any) {
 		zaplog.Sugar.Error(err)
 	}
 
-	go PayPublish(order.OrderNumber)
+	go Job.PublishPay(order)
 }
 
 // 第三方通知
-func PayPublish(orderNumber string) {
+func (*_orderAsync) PayPublish(orderNumber string) {
 	order, err := Order.Detail(orderNumber)
 	if err != nil {
 		zaplog.Sugar.Error(err)

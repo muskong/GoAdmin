@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
+	"flag"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
 
 	"github.com/muskong/GoAdmin/internal"
-	"github.com/muskong/GoAdmin/internal/logic"
 
 	"github.com/muskong/GoCore/config"
 	"github.com/muskong/GoPkg/gorm"
@@ -16,7 +17,24 @@ import (
 	"github.com/muskong/GoPkg/zaplog"
 )
 
+var flags internal.Flags
+
+func init() {
+	flag.StringVar(&flags.Mode, "mode", "debug", "gin mode[debug, release]")
+}
 func main() {
+	flag.Parse()
+	// worker()
+	// taskCh := make(chan int, 3)
+	// go workerChan(taskCh)
+	// for i := 0; i < 10; i++ {
+	// 	taskCh <- i
+	// }
+	// select {
+	// case <-time.After(time.Minute):
+	// }
+	// return
+
 	config.Init()
 
 	zaplog.InitLogger(&zaplog.ZapConfig{
@@ -49,8 +67,8 @@ func main() {
 		Pri:       config.Rsa.GetString("rsa.private"),
 	})
 
-	logic.InitToken()
-	logic.InitCard()
+	// go logic.InitToken()
+	// go logic.InitCard()
 
 	// 服务器
 	listenAddr := config.App.GetString("app.server")
@@ -59,7 +77,7 @@ func main() {
 		Addr:         listenAddr,
 		ReadTimeout:  60 * time.Second,
 		WriteTimeout: 60 * time.Second,
-		Handler:      internal.GinRouter(),
+		Handler:      internal.GinRouter(&flags),
 	}
 
 	go func() {
@@ -81,4 +99,29 @@ func main() {
 		zaplog.Sugar.Fatal("Server Shutdown:", err)
 	}
 	zaplog.Sugar.Info("Server exiting")
+}
+
+func worker() {
+	ticker := time.Tick(3 * time.Second)
+	for {
+		select {
+		case <-ticker:
+			// 执行定时任务
+			log.Println("执行 3s 定时任务")
+		}
+	}
+}
+
+func workerChan(taskCh <-chan int) {
+	const N = 5
+	// 启动 5 个工作协程
+	for i := 0; i < N; i++ {
+		go func(id int) {
+			for {
+				task := <-taskCh
+				log.Printf("finish task: %d by worker %d\n", task, id)
+				// time.Sleep(time.Second)
+			}
+		}(i)
+	}
 }

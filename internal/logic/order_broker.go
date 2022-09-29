@@ -23,7 +23,7 @@ func OrderCardTopic() {
 		if order != nil {
 			_, err := Product.WeightService(order.ProductCardId, order.ProductAmountId, order.ProductChannelId)
 			if err != nil {
-
+				zaplog.Sugar.Error(order)
 			}
 
 		}
