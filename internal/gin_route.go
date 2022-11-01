@@ -42,6 +42,7 @@ func GinRouter(opts *Flags) *gin.Engine {
 		adm.GET("/sites", admin.Sites)
 		adm.GET("/dashboard", admin.Dashboard)
 		adm.GET("/logs", admin.Log.AdminLogList)
+		adm.POST("/upload", admin.UploadHandler.Upload)
 
 		adminUser := adm.Group("/admin")
 		{

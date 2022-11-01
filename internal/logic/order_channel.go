@@ -14,10 +14,10 @@ var Job *_asyncWorkerCard
 // var jobCard chan *entity.Order
 
 func init() {
-	Job.jobCard = make(chan *entity.Order, 99)
-	Job.jobPay = make(chan *entity.Order, 99)
-	go cardWorker(Job.jobCard)
-	go payWorker(Job.jobPay)
+	// Job.jobCard = make(chan *entity.Order, 99)
+	// Job.jobPay = make(chan *entity.Order, 99)
+	// go cardWorker(Job.jobCard)
+	// go payWorker(Job.jobPay)
 }
 
 func cardWorker(jobCard <-chan *entity.Order) {
